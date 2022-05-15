@@ -5,6 +5,3 @@
 - Tailwind css
 
 # TO-DO
-- tailwind setup
-- firebase setup
-- automatic firebase deploy setup

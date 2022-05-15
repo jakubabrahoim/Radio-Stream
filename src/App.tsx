@@ -11,9 +11,6 @@ function App() {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <div className="App">
-                <h1 className='heading'>React app 😎 with firebase deploy</h1>
-            </div>
             
             <BrowserRouter>
                 <Navigation />
