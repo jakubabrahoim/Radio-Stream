@@ -27,16 +27,16 @@
 
     /* Login and registration */
     .signUpContainer {
-        @apply grid grid-cols-2 justify-items-center;
-        height: calc(100vh - 48px);
+        @apply grid grid-cols-2 justify-items-center content-center;
+        height: calc(100vh - 48px - 135px);
     }
 
     .formWrapper {
-        @apply col-span-1 flex;
+        @apply col-span-1 align-middle;
     }
 
     .imageWrapper {
-        @apply col-span-1;
+        @apply col-span-1 align-middle;
     }
 
     .form {
