@@ -14,7 +14,7 @@
     }
 
     .navGroupRight {
-        @apply basis-5/6 flex justify-end;
+        @apply basis-1/6 flex justify-end;
     }
     
     .navigationButton {
@@ -26,8 +26,21 @@
     }
 
     /* Login and registration */
+    .signUpContainer {
+        @apply grid grid-cols-2 justify-items-center;
+        height: calc(100vh - 48px);
+    }
+
     .formWrapper {
-        @apply mx-auto px-2 sm:px-6 lg:px-8 h-auto flex flex-row;
+        @apply col-span-1 flex;
+    }
+
+    .imageWrapper {
+        @apply col-span-1;
+    }
+
+    .form {
+        @apply flex flex-col items-center;
     }
 
     .formHeading {
@@ -35,11 +48,11 @@
     }
 
     .inputLabel {
-
+        @apply my-1;
     }
 
     .formInput {
-
+        
     }
 
     .submitButton {
