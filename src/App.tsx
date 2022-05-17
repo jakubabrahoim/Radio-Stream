@@ -8,6 +8,23 @@ import Login from './components/login-signup/Login';
 import SignUp from './components/login-signup/SignUp';
 import AudioPlayer from './components/audio-player/AudioPlayer';
 
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAkSTkF9OnUVDjWZEOuhABQXan1aqZMTks",
+    authDomain: "radio-sh.firebaseapp.com",
+    projectId: "radio-sh",
+    storageBucket: "radio-sh.appspot.com",
+    messagingSenderId: "573057895617",
+    appId: "1:573057895617:web:28b6e1bfb7efeafdf31840",
+    measurementId: "G-HS77NGNZYS"
+};
+  
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 function App() {
 
     let queryClient = new QueryClient();
@@ -16,6 +33,7 @@ function App() {
         <QueryClientProvider client={queryClient}>
             
             <Navigation/>
+            <AudioPlayer/>
 
             <Router>
                 <Routes>
@@ -24,7 +42,7 @@ function App() {
                 </Routes>
             </Router>
 
-            <AudioPlayer/>
+            
 
             <ReactQueryDevtools/>
         </QueryClientProvider>
