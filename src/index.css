@@ -3,16 +3,47 @@
 @tailwind utilities;
 
 @layer components {
-    .heading {
-        @apply text-3xl font-bold underline;
-    }
-
+    
+    /* Navigation */
     .navWrapper {
         @apply mx-auto px-2 sm:px-6 lg:px-8 h-12 flex flex-row items-center;
+    }
+
+    .navGroupLeft {
+        @apply basis-5/6 flex justify-start;
+    }
+
+    .navGroupRight {
+        @apply basis-5/6 flex justify-end;
     }
     
     .navigationButton {
         @apply text-white ml-2 mr-2 pl-2 pr-2 h-8 rounded-lg hover:bg-gray-500;        
+    }
+
+    .themeSwitch {
+        @apply text-white ml-2 mr-2 pl-2 pr-2 h-8 rounded-lg hover:bg-gray-500;
+    }
+
+    /* Login and registration */
+    .formWrapper {
+        @apply mx-auto px-2 sm:px-6 lg:px-8 h-auto flex flex-row;
+    }
+
+    .formHeading {
+        @apply text-center text-2xl font-bold mb-4;
+    }
+
+    .inputLabel {
+
+    }
+
+    .formInput {
+
+    }
+
+    .submitButton {
+        @apply text-black bg-gray-200 hover:bg-gray-300 border border-gray-600 rounded-lg hover:cursor-pointer px-2 py-2 my-2;
     }
 
 }

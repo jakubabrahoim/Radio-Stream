@@ -1,9 +1,11 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
-import Navigation from './components/Navigation';
+import Navigation from './components/navigation/Navigation';
+import Login from './components/login-signup/Login';
+import SignUp from './components/login-signup/SignUp';
 
 function App() {
 
@@ -12,9 +14,14 @@ function App() {
     return (
         <QueryClientProvider client={queryClient}>
             
-            <BrowserRouter>
-                <Navigation />
-            </BrowserRouter>
+            <Navigation/>
+
+            <Router>
+                <Routes>
+                    <Route path='/login' element={<Login/>}/>
+                    <Route path='/signup' element={<SignUp/>}/>
+                </Routes>
+            </Router>
 
             <ReactQueryDevtools/>
         </QueryClientProvider>
