@@ -59,4 +59,11 @@
         @apply text-black bg-gray-200 hover:bg-gray-300 border border-gray-600 rounded-lg hover:cursor-pointer px-2 py-2 my-2;
     }
 
+
+    /* Audio player */
+
+    .audioPlayer {
+        @apply font-serif text-center fixed bottom-0 w-screen;
+    }
+
 }

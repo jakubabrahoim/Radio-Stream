@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Navigation from './components/navigation/Navigation';
 import Login from './components/login-signup/Login';
 import SignUp from './components/login-signup/SignUp';
+import AudioPlayer from './components/audio-player/AudioPlayer';
 
 function App() {
 
@@ -22,6 +23,8 @@ function App() {
                     <Route path='/signup' element={<SignUp/>}/>
                 </Routes>
             </Router>
+
+            <AudioPlayer/>
 
             <ReactQueryDevtools/>
         </QueryClientProvider>
