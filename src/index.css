@@ -18,7 +18,7 @@
     }
     
     .navigationButton {
-        @apply text-white ml-2 mr-2 pl-2 pr-2 h-8 rounded-lg hover:bg-gray-500;        
+        @apply text-white mx-2 pl-2 pr-2 h-8 rounded-lg hover:bg-gray-500;        
     }
 
     .themeSwitch {
@@ -43,6 +43,10 @@
         @apply flex flex-col items-center;
     }
 
+    .form input[type=text], input[type=email], input[type=password] {
+        @apply border border-gray-300 hover:border-2 hover:border-gray-400 rounded-md h-9 w-56 pl-4 ;
+    }
+
     .formHeading {
         @apply text-center text-2xl font-bold mb-4;
     }
@@ -51,12 +55,8 @@
         @apply my-1;
     }
 
-    .formInput {
-        
-    }
-
     .submitButton {
-        @apply text-black bg-gray-200 hover:bg-gray-300 border border-gray-600 rounded-lg hover:cursor-pointer px-2 py-2 my-2;
+        @apply text-black bg-gray-200 hover:bg-gray-300 border border-gray-600 rounded-lg hover:cursor-pointer px-2 py-2 my-2 w-44;
     }
 
 
