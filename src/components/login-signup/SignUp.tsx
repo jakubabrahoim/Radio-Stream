@@ -1,13 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { createUserWithEmailAndPassword, getAuth} from 'firebase/auth';
+//import { UserContext } from '../../App';
 
 interface Props {
     firebaseApp: any;
 }
 
 function SignUp(props: Props) {
-
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    //let {user, setUser} = useContext(UserContext);
+        
     const auth = getAuth(props.firebaseApp);
     let navigate = useNavigate();
 
@@ -47,14 +51,13 @@ function SignUp(props: Props) {
 
         let firebaseSignUp;
         try {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             firebaseSignUp = await createUserWithEmailAndPassword(auth, email, passwordInput);
             navigate('/');
         } catch (error) {
             console.log(error);
             return;
         }
-
-        console.log(firebaseSignUp);
     }
 
     return (

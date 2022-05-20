@@ -10,11 +10,11 @@
     }
 
     .navGroupLeft {
-        @apply basis-5/6 flex justify-start;
+        @apply basis-3/6 flex justify-start;
     }
 
     .navGroupRight {
-        @apply basis-1/6 flex justify-end;
+        @apply basis-3/6 flex justify-end;
     }
     
     .navigationButton {

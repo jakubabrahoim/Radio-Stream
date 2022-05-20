@@ -27,13 +27,18 @@ const app = initializeApp(firebaseConfig);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const analytics = getAnalytics(app);
 
+// export let UserContext = React.createContext(null);
+
 function App() {
 
     let queryClient = new QueryClient();
+    // let [user, setUser] = useState({});
 
     return (
         <QueryClientProvider client={queryClient}>
             
+            {/* @ts-ignore*/}
+            {/*<UserContext.Provider value={{user, setUser}}>*/}
             <Navigation/>
             <AudioPlayer/>
 
@@ -45,7 +50,7 @@ function App() {
                     <Route path='/signup' element={<SignUp firebaseApp={app}/>}/>
                 </Routes>
             </Router>
-
+            {/*</UserContext.Provider>*/}
             
 
             <ReactQueryDevtools/>
