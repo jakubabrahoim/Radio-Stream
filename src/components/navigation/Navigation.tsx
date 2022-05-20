@@ -10,7 +10,7 @@ function Navigation() {
         let auth = getAuth();
         onAuthStateChanged(auth, user => {
             if(user) {
-                console.log(user);
+                //console.log(user);
                 setUser(user);
             }
         });
