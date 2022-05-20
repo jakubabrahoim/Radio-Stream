@@ -43,8 +43,16 @@
         @apply flex flex-col items-center;
     }
 
-    .form input[type=text], input[type=email], input[type=password] {
-        @apply border border-gray-300 hover:border-2 hover:border-gray-400 rounded-md h-9 w-56 pl-4 ;
+    .form input[type=text], input[type=email] {
+        @apply border border-gray-300 hover:border-2 hover:border-gray-400 rounded-md h-9 w-56 px-2 text-sm ;
+    }
+
+    .formPassword {
+        @apply border border-gray-300 hover:border-2 hover:border-gray-400 rounded-md h-9 w-56 px-2 ;
+    }
+
+    .formPasswordIncorrect {
+        @apply border border-red-400 rounded-md h-9 w-56 px-2 ;
     }
 
     .formHeading {
@@ -52,10 +60,14 @@
     }
 
     .inputLabel {
-        @apply my-1;
+        @apply my-1 text-left w-56;
     }
 
     .submitButton {
+        @apply text-black bg-gray-200 hover:bg-gray-300 border border-gray-600 rounded-lg hover:cursor-pointer px-2 py-2 mb-2 mt-4 w-44;
+    }
+
+    .googleButton {
         @apply text-black bg-gray-200 hover:bg-gray-300 border border-gray-600 rounded-lg hover:cursor-pointer px-2 py-2 my-2 w-44;
     }
 

@@ -1,23 +1,80 @@
+import { useState } from 'react';
+
 function SignUp() {
+
+    let [passwordInput, setPasswordInput] = useState('');
+    let [confirmPasswordInput, setConfirmpasswordInput] = useState('');
+    let [isPasswordValid, setIsPasswordValid] = useState(true);
+    let [passwordMatch, setPasswordMatch] = useState(true);
+
+    function handlePasswordChange(event: any) {
+        setPasswordInput(event.target.value);
+    }
+
+    function handleConfirmPasswordChange(event: any) {
+        setConfirmpasswordInput(event.target.value);
+    }
+
+    function handleSubmit(event: any) {
+        event.preventDefault();
+
+        // Validate entered password - one uppercase, one lowercase, one number
+        let passwordRegex: RegExp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/g
+        let passwordValidation: boolean = passwordRegex.test(passwordInput);
+
+        if(passwordValidation === false) setIsPasswordValid(false);
+        else setIsPasswordValid(true);
+
+        if(passwordInput !== confirmPasswordInput) setPasswordMatch(false);
+        else setPasswordMatch(true);
+
+        let firstName: string = event.target.firstName.value;
+        let lastName: string = event.target.lastName.value;
+        let email: string = event.target.email.value;
+
+        console.log(firstName, lastName, email);
+    }
 
     return (
         <article className='signUpContainer'>
             <section className='formWrapper'>
-                <form className='form'>
+                <form className='form' onSubmit={handleSubmit}>
                     <h1 className='formHeading'>Create a new account</h1>
-                    <label className='inputLabel'>First name:</label>
-                    <input type='text' name='firstName'/>
-                    <label className='inputLabel'>Last name:</label>
-                    <input type='text' name='lastName'/>
-                    <label className='inputLabel'>Email:</label>
-                    <input type='email' name='email'/>
+
+                    <label className='inputLabel'>First name</label>
+                    <input type='text' name='firstName' required/>
+
+                    <label className='inputLabel'>Last name</label>
+                    <input type='text' name='lastName' required/>
+
+                    <label className='inputLabel'>Email</label>
+                    <input type='email' name='email' required/>
+
                     <label className='inputLabel'>Password</label>
-                    <input type='password' name='password'></input>
+                    <input className={isPasswordValid && passwordMatch ? 'formPassword' : 'formPasswordIncorrect'} type='password' name='password' value={passwordInput} onChange={handlePasswordChange} required></input>
+                    {
+                        isPasswordValid === false && 
+                        <p className='w-56 mt-1 text-left text-red-400 text-xs'>
+                            * Password must have:<br/>
+                            - at least 8 characters<br/>
+                            - at least one uppercase character<br/>
+                            - at least one lowercase character<br/>
+                            - at least one number
+                        </p>
+                    }
+
                     <label className='inputLabel'>Confirm password</label>
-                    <input type='password' name='password' className='mb-2'></input>
+                    <input className={passwordMatch ? 'formPassword' : 'formPasswordIncorrect'} type='password' name='confirmPassword' value={confirmPasswordInput} onChange={handleConfirmPasswordChange} required></input>
+                    {
+                        passwordMatch === false && 
+                        <p className='w-56 mt-1 text-left text-red-400 text-xs'>
+                            * Passwords must match
+                        </p>
+                    }
+
                     <input type='submit' className='submitButton' value='Create account'/>
-                    <label className='inputLabel'>OR</label>
-                    <input type='submit' className='submitButton' value='Sign up with Google'/>
+                    <label className='my-1'>OR</label>
+                    <input type='submit' className='googleButton' value='Sign up with Google'/>
                     <p>Already have an account? <a href='/login' className='text-blue-500 underline'>Log in</a></p>
                 </form>
             </section>
