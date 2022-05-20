@@ -49,6 +49,7 @@ function Login() {
                     <input type='submit' className='submitButton' value='Log in'/>
                     <label className='my-1'>OR</label>
                     <input type='submit' className='googleButton' value='Log in with Google'/>
+                    <p>Don't have an account yet? <a href='/signup' className='text-blue-500 underline'>Sign up</a></p>
                 </form>
             </section>
             <section className='imageWrapper'>
