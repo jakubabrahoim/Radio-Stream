@@ -4,7 +4,7 @@ function Navigation() {
         <nav className='bg-gray-800 h-12'>
             <div className='navWrapper'>
                 <div className='navGroupLeft'>
-                    <button className='navigationButton'><a href='/'>Home</a></button>
+                    <button className='navigationButton'><a href='/home'>Home</a></button>
                     <button className='navigationButton'>Countries</button>
                     <button className='navigationButton'>About</button>
                 </div>

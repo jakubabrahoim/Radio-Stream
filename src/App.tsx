@@ -1,8 +1,9 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 
+import Home from './components/home/Home';
 import Navigation from './components/navigation/Navigation';
 import Login from './components/login-signup/Login';
 import SignUp from './components/login-signup/SignUp';
@@ -38,8 +39,10 @@ function App() {
 
             <Router>
                 <Routes>
+                    <Route path='/' element={<Navigate to='/home' />}/>
+                    <Route path='/home' element={<Home/>}/>
                     <Route path='/login' element={<Login/>}/>
-                    <Route path='/signup' element={<SignUp/>}/>
+                    <Route path='/signup' element={<SignUp firebaseApp={app}/>}/>
                 </Routes>
             </Router>
 

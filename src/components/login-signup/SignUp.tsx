@@ -1,6 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { createUserWithEmailAndPassword, getAuth} from 'firebase/auth';
 
-function SignUp() {
+interface Props {
+    firebaseApp: any;
+}
+
+function SignUp(props: Props) {
+
+    const auth = getAuth(props.firebaseApp);
+    let navigate = useNavigate();
 
     let [passwordInput, setPasswordInput] = useState('');
     let [confirmPasswordInput, setConfirmpasswordInput] = useState('');
@@ -15,24 +24,37 @@ function SignUp() {
         setConfirmpasswordInput(event.target.value);
     }
 
-    function handleSubmit(event: any) {
+    async function handleSubmit(event: any) {
         event.preventDefault();
 
         // Validate entered password - one uppercase, one lowercase, one number
         let passwordRegex: RegExp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/g
         let passwordValidation: boolean = passwordRegex.test(passwordInput);
 
-        if(passwordValidation === false) setIsPasswordValid(false);
+        if(passwordValidation === false) {
+            setIsPasswordValid(false);
+            return; 
+        }
         else setIsPasswordValid(true);
 
-        if(passwordInput !== confirmPasswordInput) setPasswordMatch(false);
+        if(passwordInput !== confirmPasswordInput) {
+            setPasswordMatch(false);
+            return;
+        } 
         else setPasswordMatch(true);
 
-        let firstName: string = event.target.firstName.value;
-        let lastName: string = event.target.lastName.value;
         let email: string = event.target.email.value;
 
-        console.log(firstName, lastName, email);
+        let firebaseSignUp;
+        try {
+            firebaseSignUp = await createUserWithEmailAndPassword(auth, email, passwordInput);
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+            return;
+        }
+
+        console.log(firebaseSignUp);
     }
 
     return (
@@ -40,12 +62,6 @@ function SignUp() {
             <section className='formWrapper'>
                 <form className='form' onSubmit={handleSubmit}>
                     <h1 className='formHeading'>Create a new account</h1>
-
-                    <label className='inputLabel'>First name</label>
-                    <input type='text' name='firstName' required/>
-
-                    <label className='inputLabel'>Last name</label>
-                    <input type='text' name='lastName' required/>
 
                     <label className='inputLabel'>Email</label>
                     <input type='email' name='email' required/>
