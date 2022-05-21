@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, sendEmailVerification} from 'firebase/auth';
-//import { UserContext } from '../../App';
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, sendEmailVerification, signInWithPopup} from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+
 
 interface Props {
     firebaseApp: any;
@@ -12,6 +13,7 @@ function SignUp(props: Props) {
     //let {user, setUser} = useContext(UserContext);
         
     const auth = getAuth(props.firebaseApp);
+    let navigate = useNavigate();
 
     let [passwordInput, setPasswordInput] = useState('');
     let [confirmPasswordInput, setConfirmpasswordInput] = useState('');
@@ -61,6 +63,17 @@ function SignUp(props: Props) {
         }
     }
 
+    async function handleGoogleSubmit() {
+        let provider = new GoogleAuthProvider();
+        let auth = getAuth();
+
+        try {
+            await signInWithPopup(auth, provider);
+            navigate('/home');
+        } catch (error) {}
+
+    }
+
     return (
         <article className='signUpContainer'>
             <section className='formWrapper'>
@@ -106,7 +119,9 @@ function SignUp(props: Props) {
 
                     <input type='submit' className='submitButton' value='Create account'/>
                     <label className='my-1'>OR</label>
-                    <input type='submit' className='googleButton' value='Sign up with Google'/>
+                </form>
+                <form className='form' onSubmit={e => e.preventDefault()}>
+                    <input type='submit' className='googleButton' value='Sign up with Google' onClick={handleGoogleSubmit}/>
                     <p>Already have an account? <a href='/login' className='text-blue-500 underline'>Log in</a></p>
                 </form>
             </section>

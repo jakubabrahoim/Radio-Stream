@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -28,6 +28,17 @@ function Login() {
         
     }
 
+    async function handleGoogleSubmit() {
+        let provider = new GoogleAuthProvider();
+        let auth = getAuth();
+
+        try {
+            await signInWithPopup(auth, provider);
+            navigate('/home');
+        } catch (error) {}
+
+    }
+
     return (
         <article className='signUpContainer'>
             <section className='formWrapper'>
@@ -48,7 +59,9 @@ function Login() {
 
                     <input type='submit' className='submitButton' value='Log in'/>
                     <label className='my-1'>OR</label>
-                    <input type='submit' className='googleButton' value='Log in with Google'/>
+                </form>
+                <form className='form' onSubmit={e => e.preventDefault()}>
+                    <input type='submit' className='googleButton' value='Log in with Google' onClick={handleGoogleSubmit}/>
                     <p>Don't have an account yet? <a href='/signup' className='text-blue-500 underline'>Sign up</a></p>
                 </form>
             </section>
