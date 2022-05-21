@@ -5,6 +5,7 @@ import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 function Navigation() {
 
     let [user, setUser] = useState<User | null>(null);
+    let [verified, setVerified] = useState(false);
     
     useEffect(() => {
         let auth = getAuth();
@@ -12,6 +13,8 @@ function Navigation() {
             if(user) {
                 //console.log(user);
                 setUser(user);
+                if(user.emailVerified) setVerified(true);
+                else setVerified(false);
             }
         });
     }, []);
@@ -40,7 +43,9 @@ function Navigation() {
                 {
                     user !== null &&
                     <div className='navGroupRight'>
-                        <button className='text-white text-center cursor-default'>Hello {user.email}</button>
+                        <button className='text-white text-center cursor-default'>
+                            Hello {user.email} {verified ? '' : ' (not verified)'}
+                        </button>
                         <button className='navigationButton' onClick={signOut}>Sign out</button>
                     </div>
                 }

@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification} from 'firebase/auth';
 //import { UserContext } from '../../App';
@@ -13,12 +12,12 @@ function SignUp(props: Props) {
     //let {user, setUser} = useContext(UserContext);
         
     const auth = getAuth(props.firebaseApp);
-    let navigate = useNavigate();
 
     let [passwordInput, setPasswordInput] = useState('');
     let [confirmPasswordInput, setConfirmpasswordInput] = useState('');
     let [isPasswordValid, setIsPasswordValid] = useState(true);
     let [passwordMatch, setPasswordMatch] = useState(true);
+    let [registration, setRegistration] = useState('notRegistered');
 
     function handlePasswordChange(event: any) {
         setPasswordInput(event.target.value);
@@ -55,9 +54,9 @@ function SignUp(props: Props) {
             firebaseSignUp = await createUserWithEmailAndPassword(auth, email, passwordInput);
             // @ts-ignore
             await sendEmailVerification(auth.currentUser);
-            navigate('/');
+            setRegistration('registeredNotVerified');
         } catch (error) {
-            console.log(error);
+            setRegistration('emailExists');
             return;
         }
     }
@@ -90,6 +89,18 @@ function SignUp(props: Props) {
                         passwordMatch === false && 
                         <p className='w-56 mt-1 text-left text-red-400 text-xs'>
                             * Passwords must match
+                        </p>
+                    }
+                    {
+                        registration === 'emailExists' &&
+                        <p className='w-56 mt-1 text-left text-red-400 text-xs'>
+                            * Account with this email address <br/> &nbsp; already exists
+                        </p>
+                    }
+                    {
+                        registration === 'registeredNotVerified' &&
+                        <p className='w-56 mt-1 text-left text-green-400 text-xs'>
+                            * Account created. Please check your <br/> &nbsp; email to verify your account
                         </p>
                     }
 
