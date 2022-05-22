@@ -43,7 +43,7 @@ function Login() {
         <article className='signUpContainer'>
             <section className='formWrapper'>
                 <form className='form' onSubmit={handleSubmit}>
-                    <h1 className='formHeading'>Create a new account</h1>
+                    <h1 className='formHeading'>Log in</h1>
 
                     <label className='inputLabel'>Email</label>
                     <input type='email' name='email' required/>
