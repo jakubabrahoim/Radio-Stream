@@ -28,7 +28,7 @@
     /* Login and registration */
     .signUpContainer {
         @apply grid grid-cols-2 justify-items-center content-center;
-        height: calc(100vh - 48px - 135px);
+        height: calc(100vh - 48px - 80px);
     }
 
     .formWrapper {

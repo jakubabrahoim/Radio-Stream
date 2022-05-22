@@ -22,7 +22,7 @@ function AudioPlayer() {
     }
 
     return (
-        <div className='grid grid-cols-3 gap-10 justify-items-center items-center fixed bottom-0 w-screen h-20 border border-gray-800 bg-gray-100'>
+        <div className='grid grid-cols-3 gap-10 justify-items-center items-center fixed bottom-0 w-screen h-20 border-t border-gray-800 bg-gray-100'>
             <div className='flex flex-row items-center'>
                 <div className='w-14 h-14 bg-gray-300 rounded-lg mr-6 flex items-center justify-center'>
                     {
