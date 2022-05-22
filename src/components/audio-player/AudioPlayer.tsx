@@ -13,6 +13,7 @@ function AudioPlayer() {
 
     let streamUrl: string = 'http://stream.funradio.sk:8000/fun128.mp3';
     let [audio, setAudio] = useState(new Audio(streamUrl));
+    let [audioVolume, setAudioVolume] = useState(50);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [stationName, setStationName] = useState('Fun Rádio');
 
@@ -38,6 +39,13 @@ function AudioPlayer() {
     function likeStation() {
         stationLiked ? setStationLiked(false) : setStationLiked(true);
         // like/unlike station
+    }
+
+    function handleVolumeChange(event: any) {
+        let newVolume: number = event.target.value;
+        setAudioVolume(newVolume);
+        
+        audio.volume = newVolume / 100;
     }
 
     return (
@@ -78,7 +86,7 @@ function AudioPlayer() {
             <div className='flex flex-row items-center'>
                 <div className='mr-10'>
                     <label className='text-sm'>Volume</label>
-                    <input type='range' className='w-full bg-gray-700'/>
+                    <input type='range' min='0' max='100' step='1' value={audioVolume} onChange={handleVolumeChange} className='w-full accent-gray-800'/>
                 </div>
 
                 <button onClick={likeStation} className="rounded-full hover:bg-red-100 w-10 h-10 flex items-center justify-center">
