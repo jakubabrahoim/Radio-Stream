@@ -22,12 +22,16 @@ function AudioPlayer() {
             setAudio(new Audio(streamUrl));
             setAudioPlaying(false);
         } else {
+            // Set loading state here
             try {
                 await audio.play();
+                // Set loaded state here
                 setAudioPlaying(true);
             } catch (error) {
                 console.log(error);
             }
+
+            // while the state is loading, display loading animation in the button
         }
     }
 

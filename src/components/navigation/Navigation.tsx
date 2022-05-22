@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-
+import { BiRadio } from "react-icons/bi";
+import { IconContext } from 'react-icons';
 
 function Navigation() {
 
@@ -31,6 +32,13 @@ function Navigation() {
                 {
                     user === null && 
                     <div className='navGroupLeft'>
+                        <button className='navigationButton'>
+                            <a href='/home'>
+                                <IconContext.Provider value={{ className: 'text-white px-0.5 w-8 h-8' }}>
+                                    <BiRadio/>
+                                </IconContext.Provider>
+                            </a>
+                        </button>
                         <button className='navigationButton'><a href='/home'>Home</a></button>
                         <button className='navigationButton'>Countries</button>
                         <button className='navigationButton'>About</button>
@@ -39,6 +47,13 @@ function Navigation() {
                 {
                     user !== null &&
                     <div className='navGroupLeft'>
+                        <button className='navigationButton'>
+                            <a href='/home'>
+                                <IconContext.Provider value={{ className: 'text-white px-0.5 w-8 h-8' }}>
+                                    <BiRadio/>
+                                </IconContext.Provider>
+                            </a>
+                        </button>
                         <button className='navigationButton'><a href='/home'>Home</a></button>
                         <button className='navigationButton'>My stations</button>
                         <button className='navigationButton'>Countries</button>
