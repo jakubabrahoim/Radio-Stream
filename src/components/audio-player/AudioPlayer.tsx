@@ -7,13 +7,28 @@ import { IconContext } from "react-icons";
 function AudioPlayer() {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let [audio, setAudio] = useState(false);
+    let [thumbnailPresent, setThumbnailPresent] = useState(false);
     let [audioPlaying, setAudioPlaying] = useState(false);
     let [stationLiked, setStationLiked] = useState(false);
 
-    function playStream() {
-        audioPlaying ? setAudioPlaying(false) : setAudioPlaying(true);
-        // play/pause audio
+    let streamUrl: string = 'http://stream.funradio.sk:8000/fun128.mp3';
+    let [audio, setAudio] = useState(new Audio(streamUrl));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let [stationName, setStationName] = useState('Fun Rádio');
+
+    async function playStream() {
+        if(audioPlaying) {
+            audio.pause();
+            setAudio(new Audio(streamUrl));
+            setAudioPlaying(false);
+        } else {
+            try {
+                await audio.play();
+                setAudioPlaying(true);
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }
 
     function likeStation() {
@@ -26,17 +41,19 @@ function AudioPlayer() {
             <div className='flex flex-row items-center'>
                 <div className='w-14 h-14 bg-gray-300 rounded-lg mr-6 flex items-center justify-center'>
                     {
-                        audio === false &&
+                        thumbnailPresent === false &&
                         <IconContext.Provider value={{ className: 'text-gray-500 w-6 h-6' }}>
                             <BiRadio/>
                         </IconContext.Provider>
                     }
                     
                 </div>
-                <h1>Radio name</h1>
+                <h1>{stationName}</h1>
             </div>
         
             <div className=''>
+                {/* @ts-ignore */}
+                {/*<audio ref={audioRef} src={streamUrl}></audio>*/}
                 <button onClick={playStream} className='rounded-full border border-gray-800 bg-gray-700 hover:bg-gray-500 w-12 h-12 flex items-center justify-center'>
                     {
                         audioPlaying === false &&
