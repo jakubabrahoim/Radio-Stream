@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { BiRadio } from "react-icons/bi";
-import { BsPlayFill } from "react-icons/bs";
-import { AiOutlinePause, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { BsPlayFill, BsStopFill } from "react-icons/bs";
+import { AiOutlineHeart, AiFillHeart, AiOutlineLoading } from "react-icons/ai";
 import { IconContext } from "react-icons";
 
 function AudioPlayer() {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [thumbnailPresent, setThumbnailPresent] = useState(false);
-    let [audioPlaying, setAudioPlaying] = useState(false);
+    let [audioPlaying, setAudioPlaying] = useState('stopped');
     let [stationLiked, setStationLiked] = useState(false);
 
     let streamUrl: string = 'http://stream.funradio.sk:8000/fun128.mp3';
@@ -18,22 +18,25 @@ function AudioPlayer() {
     let [stationName, setStationName] = useState('Fun Rádio');
 
     async function playStream() {
-        if(audioPlaying) {
+        console.log(audioPlaying);
+        if(audioPlaying === 'playing') {
             audio.pause();
             setAudio(new Audio(streamUrl));
-            setAudioPlaying(false);
+            setAudioPlaying('stopped');
         } else {
             // Set loading state here
             try {
+                audio.volume = audioVolume / 100;
+                setAudioPlaying('loading');
                 await audio.play();
-                // Set loaded state here
-                setAudioPlaying(true);
+                setAudioPlaying('playing');
             } catch (error) {
                 console.log(error);
             }
 
             // while the state is loading, display loading animation in the button
         }
+        console.log(audioPlaying);
     }
 
     function likeStation() {
@@ -66,17 +69,23 @@ function AudioPlayer() {
             <div className=''>
                 {/* @ts-ignore */}
                 {/*<audio ref={audioRef} src={streamUrl}></audio>*/}
-                <button onClick={playStream} className='rounded-full border border-gray-800 bg-gray-700 hover:bg-gray-500 w-12 h-12 flex items-center justify-center'>
+                <button onClick={playStream} disabled={audioPlaying === 'loading'} className={`rounded-full border border-gray-800 bg-gray-700 hover:bg-gray-500 w-12 h-12 flex items-center justify-center ${audioPlaying === 'loading' ? 'cursor-progress' : ''}`}>
                     {
-                        audioPlaying === false &&
+                        audioPlaying === 'stopped' &&
                         <IconContext.Provider value={{ className: 'text-white pl-0.5 w-6 h-6' }}>
                             <BsPlayFill/>
                         </IconContext.Provider>
                     }
                     {
-                        audioPlaying === true &&
+                        audioPlaying === 'playing' &&
                         <IconContext.Provider value={{ className: 'text-white w-6 h-6' }}>
-                            <AiOutlinePause/>
+                            <BsStopFill/>
+                        </IconContext.Provider>
+                    }
+                    {
+                        audioPlaying === 'loading' &&
+                        <IconContext.Provider value={{ className: 'animate-spin text-white w-6 h-6' }}>
+                            <AiOutlineLoading/>
                         </IconContext.Provider>
                     }
                     

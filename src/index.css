@@ -78,4 +78,18 @@
         @apply font-serif text-center fixed bottom-0 w-screen;
     }
 
+    /*
+    .loadingRotate {
+        animation: spin 1s linear infinite;
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    }
+    */
 }
