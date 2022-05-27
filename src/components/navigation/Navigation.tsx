@@ -2,17 +2,18 @@ import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { BiRadio } from "react-icons/bi";
 import { IconContext } from 'react-icons';
+import Avatar from 'react-avatar';
 
 function Navigation() {
 
     let [user, setUser] = useState<User | null>(null);
     let [verified, setVerified] = useState(false);
     
-    useEffect(() => {
+    useEffect(function getUserAuth() {
         let auth = getAuth();
         onAuthStateChanged(auth, user => {
             if(user) {
-                //console.log(user);
+                console.log(user.displayName);
                 setUser(user);
                 if(user.emailVerified) setVerified(true);
                 else setVerified(false);
@@ -72,10 +73,23 @@ function Navigation() {
                 {
                     user !== null &&
                     <div className='navGroupRight'>
-                        <button className='text-white text-center cursor-default'>
-                            Hello {user.email} {verified ? '' : ' (not verified)'}
-                        </button>
-                        <button className='navigationButton' onClick={signOut}>Sign out</button>
+                        <div className='avatar'>
+                        {
+                            user.providerData[0].providerId === 'google.com' ?
+                            <Avatar name={user.displayName!} size='35' round={true}/> :
+                            <Avatar name={user.email!} size='35' round={true}/>
+                        }
+                            <div className='dropdown'>
+                                <p className='border-b border-black pb-2 mb-1'>
+                                    Hello, <br/> {user.displayName === null ? user.email!.split('@')[0] : user.displayName} {verified ? '' : ' (not verified)'}
+                                </p>
+                                
+                                <button className='text-red-400 font-semibold' onClick={signOut}>Sign out</button>
+                            </div>
+                        </div>
+
+                        
+                        
                     </div>
                 }
 

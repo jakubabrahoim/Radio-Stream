@@ -25,6 +25,16 @@
         @apply text-white ml-2 mr-2 pl-2 pr-2 h-8 rounded-lg hover:bg-gray-500;
     }
 
+    .dropdown {
+        @apply hidden absolute -inset-x-16 w-32 z-auto bg-gray-50 rounded-lg px-2 py-2 border border-gray-300
+    }
+
+    .avatar {
+        @apply relative block
+    }
+
+    .avatar:hover .dropdown {display: block;}
+
     /* Login and registration */
     .signUpContainer {
         @apply grid grid-cols-2 justify-items-center content-center;
