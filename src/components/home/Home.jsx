@@ -1,10 +1,12 @@
+interface Props {
+    country: Object
+}
 
-function Home() {
+function Home(props: Props) {
     return (
         <>
             <h1>Home page</h1>
-            <div className="bg-[url('https://svgshare.com/i/hcM.svg')] fixed bottom-20 w-screen h-56"> &nbsp;
-            </div>
+            <p>Hello, you are from {props.country.city}, {props.country.country}</p>
         </>
     )
 }

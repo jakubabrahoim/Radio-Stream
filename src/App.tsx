@@ -1,7 +1,8 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import axios from 'axios';
 
 import Home from './components/home/Home';
 import Navigation from './components/navigation/Navigation';
@@ -32,7 +33,17 @@ const analytics = getAnalytics(app);
 function App() {
 
     let queryClient = new QueryClient();
+    let [country, setCountry] = useState({});
     // let [user, setUser] = useState({});
+
+    useEffect(function getLocation() {
+        axios.get('https://geolocation-db.com/json/').then(response => {
+            console.log(response);
+            setCountry({country: response.data.country_name, city: response.data.city, countryCode: response.data.country_code});
+        }).catch(error => {
+            console.log(error);
+        });
+    }, []);
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -42,10 +53,14 @@ function App() {
             <Navigation/>
             <AudioPlayer/>
 
+            {/* Background image */}
+            <div className="bg-[url('https://svgshare.com/i/hcM.svg')] fixed bottom-20 w-screen h-56"> &nbsp;
+            </div>
+
             <Router>
                 <Routes>
                     <Route path='/' element={<Navigate to='/home' />}/>
-                    <Route path='/home' element={<Home/>}/>
+                    <Route path='/home' element={<Home country={country}/>}/>
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/signup' element={<SignUp firebaseApp={app}/>}/>
                 </Routes>

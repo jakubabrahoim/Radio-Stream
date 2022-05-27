@@ -13,7 +13,7 @@ function Navigation() {
         let auth = getAuth();
         onAuthStateChanged(auth, user => {
             if(user) {
-                console.log(user.displayName);
+                //console.log(user.displayName);
                 setUser(user);
                 if(user.emailVerified) setVerified(true);
                 else setVerified(false);
@@ -84,7 +84,7 @@ function Navigation() {
                                     Hello, <br/> {user.displayName === null ? user.email!.split('@')[0] : user.displayName} {verified ? '' : ' (not verified)'}
                                 </p>
                                 
-                                <button className='text-red-400 font-semibold' onClick={signOut}>Sign out</button>
+                                <button className='text-red-400 font-semibold hover:text-red-500 hover:font-bold' onClick={signOut}>Sign out</button>
                             </div>
                         </div>
 
