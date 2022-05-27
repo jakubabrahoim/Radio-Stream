@@ -38,10 +38,10 @@ function App() {
 
     useEffect(function getLocation() {
         axios.get('https://geolocation-db.com/json/').then(response => {
-            console.log(response);
+            //console.log(response);
             setCountry({country: response.data.country_name, city: response.data.city, countryCode: response.data.country_code});
         }).catch(error => {
-            console.log(error);
+            //console.log(error);
         });
     }, []);
 

@@ -18,7 +18,7 @@ function AudioPlayer() {
     let [stationName, setStationName] = useState('Fun Rádio');
 
     async function playStream() {
-        console.log(audioPlaying);
+        //console.log(audioPlaying);
         if(audioPlaying === 'playing') {
             audio.pause();
             setAudio(new Audio(streamUrl));
@@ -36,7 +36,7 @@ function AudioPlayer() {
 
             // while the state is loading, display loading animation in the button
         }
-        console.log(audioPlaying);
+        //console.log(audioPlaying);
     }
 
     function likeStation() {
