@@ -7,6 +7,7 @@ import { BiRadio } from "react-icons/bi";
 function Home() {
 
     let [stations, setStations] = useState([]);
+    let [geolocationEnabled, setGeolocationEnabled] = useState(true);
 
     useEffect(() => {        
         axios.get('https://geolocation-db.com/json/')
@@ -29,10 +30,9 @@ function Home() {
 
             // Take top 5 stations by click count
             let topStations = response.slice(0, 5);
-            console.log(topStations);
             setStations(topStations);
         })
-        .catch(error => console.error(error));
+        .catch(_error => setGeolocationEnabled(false));
 
     }, []);
     
@@ -51,33 +51,42 @@ function Home() {
                 </section>
                 
             </article>
-            
+
             <h1 className='text-center mb-10 text-xl'>Popular stations from your country</h1>
 
-            <article className='grid grid-flow-row grid-rows-1 justify-center align-middle'>
-                <section className='flex flex-row items-center'>
-                    {
-                        stations.map((station, index) => {
-                            return (
-                                <div className='mx-6 h-60 w-60 border rounded-lg grid grid-row-3 justify-items-center' key={index}>
-                                    <p className='w-60 text-center'>{station.name}</p>
-                                    {
-                                        station.favicon !== '' ?
-                                        <img src={station.favicon} alt='station icon' className='w-28'></img> :
-                                        <IconContext.Provider value={{ className: 'text-gray-500 w-28 h-28' }}>
-                                            <BiRadio/>
-                                        </IconContext.Provider>
+            {
+                geolocationEnabled ? 
 
-                                    }
-                                    
-                                    <button>Play</button>
-                                </div>
-                            )
-                        })
-                    }
-                </section>
-            </article>
-            
+                <article className='grid grid-flow-row grid-rows-1 justify-center align-middle'>
+                    <section className='flex flex-row items-center'>
+                        {
+                            stations.map((station, index) => {
+                                return (
+                                    <div className='mx-6 h-60 w-60 border rounded-lg grid grid-row-3 justify-items-center' key={index}>
+                                        <p className='w-60 mt-2 text-center'>{station.name}</p>
+                                        {
+                                            station.favicon !== '' ?
+                                            <img src={station.favicon} alt='station icon' className='w-28'></img> :
+                                            <IconContext.Provider value={{ className: 'text-gray-500 w-28 h-28' }}>
+                                                <BiRadio/>
+                                            </IconContext.Provider>
+
+                                        }
+                                        <button>Play</button>
+                                    </div>
+                                )
+                            })
+                        }
+                    </section>
+                </article>
+                
+                :
+
+                <article className='grid grid-flow-row grid-rows-1 justify-center align-middle'>
+                    <h1 className='text-lg text-red-400'>Disable location blockers to see top stations in your country.</h1>
+                </article>
+
+            }            
         </>
     )
 }
