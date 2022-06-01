@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiRadio } from "react-icons/bi";
 import { BsPlayFill, BsStopFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart, AiOutlineLoading } from "react-icons/ai";
 import { IconContext } from "react-icons";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { Tooltip } from '@mantine/core';
 
 function AudioPlayer() {
 
@@ -11,21 +13,33 @@ function AudioPlayer() {
     let [audioPlaying, setAudioPlaying] = useState('stopped');
     let [stationLiked, setStationLiked] = useState(false);
 
-    //let streamUrl: string = 'http://stream.funradio.sk:8000/fun128.mp3';
     let streamUrl: string = 'https://radioshamfm.grtvstream.com:8400/;';
     let [audio, setAudio] = useState(new Audio(streamUrl));
     let [audioVolume, setAudioVolume] = useState(50);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [stationName, setStationName] = useState('Sham FM');
 
+    let [user, setUser] = useState<User | null>(null);
+    let [verified, setVerified] = useState(false);
+    
+    useEffect(function getUserAuth() {
+        let auth = getAuth();
+        onAuthStateChanged(auth, user => {
+            if(user) {
+                //console.log(user.displayName);
+                setUser(user);
+                if(user.emailVerified) setVerified(true);
+                else setVerified(false);
+            }
+        });
+    }, []);
+
     async function playStream() {
-        //console.log(audioPlaying);
         if(audioPlaying === 'playing') {
             audio.pause();
             setAudio(new Audio(streamUrl));
             setAudioPlaying('stopped');
         } else {
-            // Set loading state here
             try {
                 audio.volume = audioVolume / 100;
                 setAudioPlaying('loading');
@@ -34,15 +48,15 @@ function AudioPlayer() {
             } catch (error) {
                 console.log(error);
             }
-
-            // while the state is loading, display loading animation in the button
         }
-        //console.log(audioPlaying);
     }
 
     function likeStation() {
+        if(verified === false) {
+            console.log('You must verify your email address before you can like a station.');
+            return;
+        }
         stationLiked ? setStationLiked(false) : setStationLiked(true);
-        // like/unlike station
     }
 
     function handleVolumeChange(event: any) {
@@ -98,22 +112,47 @@ function AudioPlayer() {
                     <label className='text-sm'>Volume</label>
                     <input type='range' min='0' max='100' step='1' value={audioVolume} onChange={handleVolumeChange} className='w-full accent-gray-800'/>
                 </div>
-
-                <button onClick={likeStation} className="rounded-full hover:bg-red-100 w-10 h-10 flex items-center justify-center">
-                    {
-                        stationLiked === false &&
-                        <IconContext.Provider value={{ className: 'text-red-600 w-8 h-8 pt-0.5' }}>
-                            <AiOutlineHeart/>
-                        </IconContext.Provider>
-                    }
-                    {
-                        stationLiked === true &&
-                        <IconContext.Provider value={{ className: 'text-red-600 w-8 h-8 pt-0.5' }}>
-                            <AiFillHeart/>
-                        </IconContext.Provider>
-                    }
-                </button>
                 
+                {
+                    (user !== null) && (verified === true) &&
+                    <>
+                        <button  onClick={likeStation} className="rounded-full hover:bg-red-100 w-10 h-10 flex items-center justify-center">
+                        {
+                            stationLiked === false &&
+                            <IconContext.Provider value={{ className: 'text-red-600 w-8 h-8 pt-0.5' }}>
+                                <AiOutlineHeart/>
+                            </IconContext.Provider>
+                        }
+                        {
+                            stationLiked === true &&
+                            <IconContext.Provider value={{ className: 'text-red-600 w-8 h-8 pt-0.5' }}>
+                                <AiFillHeart/>
+                            </IconContext.Provider>
+                        }
+                        </button>
+                    </>
+                }
+
+                {
+                    (user !== null) && (verified === false) &&
+                    <Tooltip wrapLines position='left' width={200} withArrow transition='fade' transitionDuration={200} label='Your account must be verified to like stations.'>
+                        <button  onClick={likeStation} className="rounded-full hover:cursor-not-allowed w-10 h-10 flex items-center justify-center">
+                        {
+                            stationLiked === false &&
+                            <IconContext.Provider value={{ className: 'text-red-600 w-8 h-8 pt-0.5' }}>
+                                <AiOutlineHeart/>
+                            </IconContext.Provider>
+                        }
+                        {
+                            stationLiked === true &&
+                            <IconContext.Provider value={{ className: 'text-red-600 w-8 h-8 pt-0.5' }}>
+                                <AiFillHeart/>
+                            </IconContext.Provider>
+                        }
+                        </button>
+                    </Tooltip>
+                }
+
             </div>
         </div>
     );

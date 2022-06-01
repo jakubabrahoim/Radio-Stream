@@ -62,17 +62,20 @@ function Home() {
                         {
                             stations.map((station, index) => {
                                 return (
-                                    <div className='mx-6 h-60 w-60 border rounded-lg grid grid-row-3 justify-items-center' key={index}>
-                                        <p className='w-60 mt-2 text-center'>{station.name}</p>
+                                    <div className='mx-6 h-60 w-60 border rounded-lg grid grid-row-3 justify-items-center items-center' key={index}>
+                                        <p className='w-60 text-center'>{station.name}</p>
                                         {
                                             station.favicon !== '' ?
-                                            <img src={station.favicon} alt='station icon' className='w-28'></img> :
+                                            <img src={station.favicon} alt='station icon' className='w-28'></img>
+                                            :
                                             <IconContext.Provider value={{ className: 'text-gray-500 w-28 h-28' }}>
                                                 <BiRadio/>
                                             </IconContext.Provider>
 
                                         }
-                                        <button>Play</button>
+                                        <button className='w-20 h-6 px-2 text-white bg-gray-600 hover:bg-gray-800 hover:cursor-pointer rounded-lg drop-shadow-md'>
+                                            Play
+                                        </button>
                                     </div>
                                 )
                             })
