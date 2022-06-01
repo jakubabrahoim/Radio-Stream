@@ -33,14 +33,6 @@ const analytics = getAnalytics(app);
 function App() {
 
     let queryClient = new QueryClient();
-    let [country, setCountry] = useState({});
-
-    useEffect(function getLocation() {
-        axios.get('https://geolocation-db.com/json/').then(response => {
-            setCountry({country: response.data.country_name, city: response.data.city, countryCode: response.data.country_code});
-            //console.log(response.data);
-        }).catch(error => { console.error(error); });
-    }, []);
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -55,7 +47,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route path='/' element={<Navigate to='/home' />}/>
-                    <Route path='/home' element={<Home country={country}/>}/>
+                    <Route path='/home' element={<Home/>}/>
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/signup' element={<SignUp firebaseApp={app}/>}/>
                 </Routes>

@@ -1,25 +1,35 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
-interface Props {
-    country: Object
-}
-
-function Home(props: Props) {
+function Home() {
 
     let [stations, setStations] = useState([]);
 
-    useEffect(() => {
-        fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/slovakia?limit=6`,
-        {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'User-Agent': 'radio-sh web app'
-            }
+    useEffect(() => {        
+        axios.get('https://geolocation-db.com/json/')
+        .then(response => {
+            let userLocation = response.data.country_name;
+
+            return fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${userLocation}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'radio-sh web app'
+                }
+            })
         })
         .then(response => response.json())
-        .then(response => {console.log(response); setStations(response)})
+        .then(response => {
+            // Sort the response by click count in descending order
+            response.sort((a, b) => b.clickcount - a.clickcount);
+
+            // Take top 5 stations by click count
+            let topStations = response.slice(0, 5);
+            setStations(topStations);
+        })
         .catch(error => console.error(error));
+
     }, []);
     
     return (
@@ -45,7 +55,7 @@ function Home(props: Props) {
                     {
                         stations.map((station, index) => {
                             return (
-                                <div className='mx-6 h-60 w-60 border rounded-lg grid grid-row-3 justify-items-center'>
+                                <div className='mx-6 h-60 w-60 border rounded-lg grid grid-row-3 justify-items-center' key={index}>
                                     <p className='w-60 text-center'>{station.name}</p>
                                     <img src={station.favicon} alt='station icon' className='w-28'></img>
                                     <button>Play</button>
