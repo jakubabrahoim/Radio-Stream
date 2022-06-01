@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import { IconContext } from "react-icons";
+import { BiRadio } from "react-icons/bi";
+
 function Home() {
 
     let [stations, setStations] = useState([]);
@@ -26,6 +29,7 @@ function Home() {
 
             // Take top 5 stations by click count
             let topStations = response.slice(0, 5);
+            console.log(topStations);
             setStations(topStations);
         })
         .catch(error => console.error(error));
@@ -57,7 +61,15 @@ function Home() {
                             return (
                                 <div className='mx-6 h-60 w-60 border rounded-lg grid grid-row-3 justify-items-center' key={index}>
                                     <p className='w-60 text-center'>{station.name}</p>
-                                    <img src={station.favicon} alt='station icon' className='w-28'></img>
+                                    {
+                                        station.favicon !== '' ?
+                                        <img src={station.favicon} alt='station icon' className='w-28'></img> :
+                                        <IconContext.Provider value={{ className: 'text-gray-500 w-28 h-28' }}>
+                                            <BiRadio/>
+                                        </IconContext.Provider>
+
+                                    }
+                                    
                                     <button>Play</button>
                                 </div>
                             )

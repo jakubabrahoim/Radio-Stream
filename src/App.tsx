@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
-import axios from 'axios';
 
 import Home from './components/home/Home';
 import Navigation from './components/navigation/Navigation';
