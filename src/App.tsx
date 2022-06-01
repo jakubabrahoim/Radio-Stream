@@ -34,22 +34,17 @@ function App() {
 
     let queryClient = new QueryClient();
     let [country, setCountry] = useState({});
-    // let [user, setUser] = useState({});
 
     useEffect(function getLocation() {
         axios.get('https://geolocation-db.com/json/').then(response => {
-            //console.log(response);
             setCountry({country: response.data.country_name, city: response.data.city, countryCode: response.data.country_code});
-        }).catch(error => {
-            //console.log(error);
-        });
+            //console.log(response.data);
+        }).catch(error => { console.error(error); });
     }, []);
 
     return (
         <QueryClientProvider client={queryClient}>
-            
-            {/* @ts-ignore*/}
-            {/*<UserContext.Provider value={{user, setUser}}>*/}
+    
             <Navigation/>
             <AudioPlayer/>
 
@@ -65,8 +60,6 @@ function App() {
                     <Route path='/signup' element={<SignUp firebaseApp={app}/>}/>
                 </Routes>
             </Router>
-            {/*</UserContext.Provider>*/}
-            
 
             <ReactQueryDevtools/>
         </QueryClientProvider>

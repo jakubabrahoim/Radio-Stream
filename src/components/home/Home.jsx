@@ -1,8 +1,27 @@
+import { useEffect, useState } from "react";
+
 interface Props {
     country: Object
 }
 
 function Home(props: Props) {
+
+    let [stations, setStations] = useState([]);
+
+    useEffect(() => {
+        fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/slovakia?limit=6`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'User-Agent': 'radio-sh web app'
+            }
+        })
+        .then(response => response.json())
+        .then(response => {console.log(response); setStations(response)})
+        .catch(error => console.error(error));
+    }, []);
+    
     return (
         <>
             <article className='grid grid-flow-row grid-rows-2 justify-items-center align-middle mb-16'>
@@ -23,18 +42,17 @@ function Home(props: Props) {
 
             <article className='grid grid-flow-row grid-rows-1 justify-center align-middle'>
                 <section className='flex flex-row items-center'>
-                    <div className='mx-6 h-60 w-60 border rounded-lg'>
-                        placeholder station
-                    </div>
-                    <div className='mx-6 h-60 w-60 border rounded-lg'>
-                        placeholder station
-                    </div>
-                    <div className='mx-6 h-60 w-60 border rounded-lg'>
-                        placeholder station
-                    </div>
-                    <div className='mx-6 h-60 w-60 border rounded-lg'>
-                        placeholder station
-                    </div>
+                    {
+                        stations.map((station, index) => {
+                            return (
+                                <div className='mx-6 h-60 w-60 border rounded-lg grid grid-row-3 justify-items-center'>
+                                    <p className='w-60 text-center'>{station.name}</p>
+                                    <img src={station.favicon} alt='station icon' className='w-28'></img>
+                                    <button>Play</button>
+                                </div>
+                            )
+                        })
+                    }
                 </section>
             </article>
             

@@ -11,11 +11,12 @@ function AudioPlayer() {
     let [audioPlaying, setAudioPlaying] = useState('stopped');
     let [stationLiked, setStationLiked] = useState(false);
 
-    let streamUrl: string = 'http://stream.funradio.sk:8000/fun128.mp3';
+    //let streamUrl: string = 'http://stream.funradio.sk:8000/fun128.mp3';
+    let streamUrl: string = 'https://radioshamfm.grtvstream.com:8400/;';
     let [audio, setAudio] = useState(new Audio(streamUrl));
     let [audioVolume, setAudioVolume] = useState(50);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let [stationName, setStationName] = useState('Fun Rádio');
+    let [stationName, setStationName] = useState('Sham FM');
 
     async function playStream() {
         //console.log(audioPlaying);
