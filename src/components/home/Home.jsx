@@ -7,33 +7,59 @@ function Home() {
     let [stations, setStations] = useState([]);
     let [geolocationEnabled, setGeolocationEnabled] = useState(true);
 
+    let [searchInput, setSearchInput] = useState('');
+
+    /* Get user location and top 5 stations from users country */
     useEffect(() => {        
         fetch('https://geolocation-db.com/json/')
         .then(response => response.json())
         .then(response => {
             let userLocation = response.country_name;
 
-            return fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${userLocation}`,
+            return fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${userLocation}?hidebroken=true`,
             {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'User-Agent': 'radio-sh web app'
+                    'User-Agent': 'radio-sh.web.app'
                 }
             })
         })
         .then(response => response.json())
         .then(response => {
-            // Sort the response by click count in descending order
+            /* Sort the response by click count in descending order */
             response.sort((a, b) => b.clickcount - a.clickcount);
 
-            // Take top 5 stations by click count
+            /* Take top 5 stations by click count */
             let topStations = response.slice(0, 5);
             setStations(topStations);
         })
         .catch(_error => setGeolocationEnabled(false));
 
     }, []);
+
+    function handleSearchInputChange(e: Event) {
+        setSearchInput(e.target.value);
+    }
+
+    /** Fetch radio station on search submit */
+    function fetchRadioStation(e: Event) {
+        e.preventDefault();
+
+        fetch(`https://at1.api.radio-browser.info/json/stations/byname/${searchInput}?hidebroken=true`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'User-Agent': 'radio-sh.web.app',
+            }
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => console.log(error));
+    }
     
     return (
         <>
@@ -43,8 +69,10 @@ function Home() {
                 </section>
                 
                 <section className='self-center'>
-                    <form className='flex flex-row' onSubmit={e => e.preventDefault()}>
-                        <input className='w-96 h-12 mr-4 px-2 border rounded-lg drop-shadow-md' type='text' placeholder='Search for radio stations...'></input>
+                    <form className='flex flex-row' onSubmit={fetchRadioStation}>
+                        <label hidden>Search</label>
+                        <input className='w-96 h-12 mr-4 px-2 border rounded-lg drop-shadow-md' type='text' value={searchInput} placeholder='Search for radio stations...' onChange={handleSearchInputChange}></input>
+                        <label hidden>Submit</label>
                         <input className='w-24 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md' type='submit' name="search" value='Search'></input>
                     </form>
                 </section>
@@ -70,7 +98,6 @@ function Home() {
                                             <IconContext.Provider value={{ className: 'text-gray-500 w-28 h-28' }}>
                                                 <BiRadio/>
                                             </IconContext.Provider>
-
                                         }
                                         <button className='w-20 h-6 px-2 text-white bg-gray-600 hover:bg-gray-800 hover:cursor-pointer rounded-lg drop-shadow-md'>
                                             Play

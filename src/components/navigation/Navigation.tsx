@@ -8,7 +8,7 @@ function Navigation() {
 
     let [user, setUser] = useState<User | null>(null);
     let [verified, setVerified] = useState(false);
-    
+
     useEffect(function getUserAuth() {
         let auth = getAuth();
         onAuthStateChanged(auth, user => {

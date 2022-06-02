@@ -26,7 +26,6 @@ function AudioPlayer() {
         let auth = getAuth();
         onAuthStateChanged(auth, user => {
             if(user) {
-                //console.log(user.displayName);
                 setUser(user);
                 if(user.emailVerified) setVerified(true);
                 else setVerified(false);
