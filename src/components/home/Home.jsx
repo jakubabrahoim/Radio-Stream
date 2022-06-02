@@ -54,7 +54,7 @@ function Home() {
         })
         .then(response => response.json())
         .then(response => {
-            console.log(response);
+            //console.log(response);
             navigate(`/search-result?station=${searchInput}`, { state: { stations: response } });
         })
         .catch(error => console.log(error));
