@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { BiRadio } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
 
@@ -9,6 +10,8 @@ function Home() {
 
     let [searchInput, setSearchInput] = useState('');
 
+    let navigate = useNavigate();
+
     /* Get user location and top 5 stations from users country */
     useEffect(() => {        
         fetch('https://geolocation-db.com/json/')
@@ -16,7 +19,7 @@ function Home() {
         .then(response => {
             let userLocation = response.country_name;
 
-            return fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${userLocation}?hidebroken=true`,
+            return fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${userLocation}?hidebroken=true&order=clickcount&limit=5&reverse=true`,
             {
                 method: 'GET',
                 headers: {
@@ -27,12 +30,7 @@ function Home() {
         })
         .then(response => response.json())
         .then(response => {
-            /* Sort the response by click count in descending order */
-            response.sort((a, b) => b.clickcount - a.clickcount);
-
-            /* Take top 5 stations by click count */
-            let topStations = response.slice(0, 5);
-            setStations(topStations);
+            setStations(response);
         })
         .catch(_error => setGeolocationEnabled(false));
 
@@ -43,10 +41,10 @@ function Home() {
     }
 
     /** Fetch radio station on search submit */
-    function fetchRadioStation(e: Event) {
+    function fetchRadioStations(e: Event) {
         e.preventDefault();
 
-        fetch(`https://at1.api.radio-browser.info/json/stations/byname/${searchInput}?hidebroken=true`,
+        fetch(`https://at1.api.radio-browser.info/json/stations/byname/${searchInput}?hidebroken=true&order=clickcount&reverse=true`,
         {
             method: 'GET',
             headers: {
@@ -57,6 +55,7 @@ function Home() {
         .then(response => response.json())
         .then(response => {
             console.log(response);
+            navigate(`/search-result?station=${searchInput}`, { state: { stations: response } });
         })
         .catch(error => console.log(error));
     }
@@ -69,7 +68,7 @@ function Home() {
                 </section>
                 
                 <section className='self-center'>
-                    <form className='flex flex-row' onSubmit={fetchRadioStation}>
+                    <form className='flex flex-row' onSubmit={fetchRadioStations}>
                         <label hidden>Search</label>
                         <input className='w-96 h-12 mr-4 px-2 border rounded-lg drop-shadow-md' type='text' value={searchInput} placeholder='Search for radio stations...' onChange={handleSearchInputChange}></input>
                         <label hidden>Submit</label>
@@ -78,6 +77,8 @@ function Home() {
                 </section>
                 
             </article>
+
+
 
             <h1 className='text-center mb-10 text-xl'>Popular stations from your country</h1>
 
