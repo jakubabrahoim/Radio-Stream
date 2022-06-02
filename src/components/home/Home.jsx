@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-
 import { IconContext } from "react-icons";
 import { BiRadio } from "react-icons/bi";
 
@@ -10,9 +8,10 @@ function Home() {
     let [geolocationEnabled, setGeolocationEnabled] = useState(true);
 
     useEffect(() => {        
-        axios.get('https://geolocation-db.com/json/')
+        fetch('https://geolocation-db.com/json/')
+        .then(response => response.json())
         .then(response => {
-            let userLocation = response.data.country_name;
+            let userLocation = response.country_name;
 
             return fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${userLocation}`,
             {
