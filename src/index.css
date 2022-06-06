@@ -58,11 +58,11 @@
     }
 
     .form input[type=text], input[type=email] {
-        @apply border border-gray-300 hover:border-2 hover:border-gray-400 rounded-md h-9 w-56 px-2 text-sm ;
+        @apply border border-gray-300 hover:border hover:border-gray-400 rounded-md h-9 w-56 px-2 text-sm outline-none focus:ring-2 focus:ring-gray-800;
     }
 
     .formPassword {
-        @apply border border-gray-300 hover:border-2 hover:border-gray-400 rounded-md h-9 w-56 px-2 ;
+        @apply border border-gray-300 hover:border hover:border-gray-400 rounded-md h-9 w-56 px-2 outline-none focus:ring-2 focus:ring-gray-800;
     }
 
     .formPasswordIncorrect {
