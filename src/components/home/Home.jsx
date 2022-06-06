@@ -62,6 +62,7 @@ function Home() {
     
     return (
         <>
+            {/* Heading + search bar */}
             <article className='grid grid-flow-row grid-rows-2 justify-items-center align-middle mb-16'>
                 <section className='self-center my-6'>
                     <h1 className='text-3xl'>Welcome to Radio-sh</h1>
@@ -78,10 +79,9 @@ function Home() {
                 
             </article>
 
-
-
             <h1 className='text-center mb-10 text-xl'>Popular stations from your country</h1>
 
+            {/* Popular radio stations from country / geo location message */}
             {
                 geolocationEnabled ? 
 
@@ -100,7 +100,7 @@ function Home() {
                                                 <BiRadio/>
                                             </IconContext.Provider>
                                         }
-                                        <button className='w-20 h-6 px-2 text-white bg-gray-600 hover:bg-gray-800 hover:cursor-pointer rounded-lg drop-shadow-md'>
+                                        <button className='w-20 h-6 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md'>
                                             Play
                                         </button>
                                     </div>
