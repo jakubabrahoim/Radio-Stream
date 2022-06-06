@@ -39,7 +39,7 @@ function SearchResult() {
                     }
                 </div>
                 :
-                <p>400 Bad Request - go through the search input and not through the url</p>
+                <p>400 Bad Request - Something went wrong</p>
             }
         </>
     )

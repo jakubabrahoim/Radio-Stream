@@ -17,8 +17,12 @@
         @apply basis-3/6 flex justify-end;
     }
     
+    .navigationLogo {
+        @apply mx-2 px-2 flex items-center;
+    }
+
     .navigationButton {
-        @apply text-white mx-2 pl-2 pr-2 h-8 rounded-lg hover:bg-gray-500;        
+        @apply text-white mx-2 px-2 h-8 rounded-lg hover:bg-gray-500 flex items-center;        
     }
 
     .themeSwitch {

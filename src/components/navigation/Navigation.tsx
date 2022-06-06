@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import Avatar from 'react-avatar';
+
 import { BiRadio } from "react-icons/bi";
 import { IconContext } from 'react-icons';
-import Avatar from 'react-avatar';
+let logo = require('../../assets/logo.png');
 
 function Navigation() {
 
@@ -13,7 +15,6 @@ function Navigation() {
         let auth = getAuth();
         onAuthStateChanged(auth, user => {
             if(user) {
-                //console.log(user.displayName);
                 setUser(user);
                 if(user.emailVerified) setVerified(true);
                 else setVerified(false);
@@ -30,46 +31,42 @@ function Navigation() {
     return (
         <nav className='bg-gray-800 h-12'>
             <div className='navWrapper'>
+                {/* Left side navigation - not logged in */}
                 {
                     user === null && 
                     <div className='navGroupLeft'>
-                        <button className='navigationButton'>
-                            <a href='/home'>
-                                <IconContext.Provider value={{ className: 'text-white px-0.5 w-8 h-8' }}>
-                                    <BiRadio/>
-                                </IconContext.Provider>
-                            </a>
-                        </button>
-                        <button className='navigationButton'><a href='/home'>Home</a></button>
-                        <button className='navigationButton'>Countries</button>
-                        <button className='navigationButton'>About</button>
+                        <div className='navigationLogo'>
+                            <img src={logo} alt='logo' className='w-5 h-5'/>
+                        </div>
+                        <a className='navigationButton' href='/home'>Home</a>
+                        <a className='navigationButton' href='/#'>Countries</a>
+                        <a className='navigationButton' href='/#'>About</a>
                     </div>
                 }
+                {/* Left side navigation - logged in */}
                 {
                     user !== null &&
                     <div className='navGroupLeft'>
-                        <button className='navigationButton'>
-                            <a href='/home'>
-                                <IconContext.Provider value={{ className: 'text-white px-0.5 w-8 h-8' }}>
-                                    <BiRadio/>
-                                </IconContext.Provider>
-                            </a>
-                        </button>
-                        <button className='navigationButton'><a href='/home'>Home</a></button>
-                        <button className='navigationButton'>My stations</button>
-                        <button className='navigationButton'>Countries</button>
-                        <button className='navigationButton'>About</button>
+                        <div className='navigationButton'>
+                            <IconContext.Provider value={{ className: 'text-white px-0.5 w-8 h-8' }}>
+                                <BiRadio/>
+                            </IconContext.Provider>
+                        </div>
+                        <a className='navigationButton' href='/home'>Home</a>
+                        <a className='navigationButton' href='/#'>My stations</a>
+                        <a className='navigationButton' href='/#'>Countries</a>
+                        <a className='navigationButton' href='/#'>About</a>
                     </div>
                 }
-                
-                
+                {/* Right side navigation - not logged in */}
                 {
                     user === null &&
                     <div className='navGroupRight'>
-                        <button className='navigationButton'><a href='/login'>Login</a></button>
-                        <button className='navigationButton'><a href='/signup'>Sign up</a></button>
+                        <a className='navigationButton' href='/login'>Login</a>
+                        <a className='navigationButton' href='/signup'>Sign up</a>
                     </div>
                 }
+                {/* Right side navigation - logged in */}
                 {
                     user !== null &&
                     <div className='navGroupRight'>
@@ -86,16 +83,11 @@ function Navigation() {
                                 
                                 <button className='text-red-400 font-semibold hover:text-red-500 hover:font-bold' onClick={signOut}>Sign out</button>
                             </div>
-                        </div>
-
-                        
-                        
+                        </div> 
                     </div>
                 }
-
             </div>
         </nav>
-
     )
 }
 
