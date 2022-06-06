@@ -78,11 +78,11 @@
     }
 
     .submitButton {
-        @apply text-black bg-gray-200 hover:bg-gray-300 border border-gray-600 rounded-lg hover:cursor-pointer px-2 py-2 mb-2 mt-4 w-44;
+        @apply text-white bg-gray-800 hover:bg-gray-700 rounded-lg hover:cursor-pointer px-2 py-2 mb-2 mt-4 w-44;
     }
 
     .googleButton {
-        @apply text-black bg-gray-200 hover:bg-gray-300 border border-gray-600 rounded-lg hover:cursor-pointer px-2 py-2 my-2 w-44;
+        @apply text-white bg-gray-800 hover:bg-gray-700 rounded-lg hover:cursor-pointer px-2 py-2 my-2 w-44;
     }
 
 
