@@ -121,7 +121,7 @@ function AudioPlayer() {
             
             {/* Radio volume + like button */}
             <div className='flex flex-row items-center'>
-                <div className='mr-10'>
+                <div className={`${user !== null ? 'mr-10' : ''}`}>
                     <div className='flex flex-row items-center'>
                         <p className='text-sm mr-14'>Volume</p>
                         <button onClick={muteAudio} className='rounded-full hover:bg-gray-200 w-8 h-8 pl-1.5'>
@@ -130,7 +130,7 @@ function AudioPlayer() {
                             </IconContext.Provider>
                         </button>
                     </div>
-                    <label className='text-sm' hidden>Volume</label>
+                    <label className='text-sm mr-14' hidden>Volume</label>
                     <input type='range' min='0' max='100' step='1' value={audioVolume} onChange={handleVolumeChange} className='w-full accent-gray-800'/>
                 </div>
                 
