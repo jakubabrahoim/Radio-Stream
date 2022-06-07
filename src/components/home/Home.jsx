@@ -55,7 +55,7 @@ function Home() {
         .then(response => response.json())
         .then(response => {
             //console.log(response);
-            navigate(`/search-result?station=${searchInput}`, { state: { stations: response } });
+            navigate(`/search-result?query=${searchInput}`, { state: { stations: response } });
         })
         .catch(error => console.log(error));
     }
@@ -71,7 +71,7 @@ function Home() {
                 <section className='self-center'>
                     <form className='flex flex-row' onSubmit={fetchRadioStations}>
                         <label hidden>Search</label>
-                        <input className='w-96 h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' type='text' value={searchInput} placeholder='Search for radio stations...' onChange={handleSearchInputChange}></input>
+                        <input className='w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' type='text' value={searchInput} placeholder='Search for radio stations...' onChange={handleSearchInputChange}></input>
                         <label hidden>Submit</label>
                         <input className='w-24 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md' type='submit' name="search" value='Search'></input>
                     </form>
@@ -85,7 +85,7 @@ function Home() {
             {
                 geolocationEnabled ? 
 
-                <article className='grid grid-flow-row grid-rows-1 justify-center align-middle'>
+                <article className='grid grid-rows-1 justify-center align-middle'>
                     <section className='flex flex-row items-center'>
                         {
                             stations.map((station, index) => {

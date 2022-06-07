@@ -31,7 +31,7 @@ function Navigation() {
     }
 
     return (
-        <nav className='bg-gray-800 h-12'>
+        <nav className='bg-gray-800 h-12 sticky top-0'>
             <div className='navWrapper'>
                 {/* Left side navigation - not logged in */}
                 {
