@@ -52,10 +52,8 @@ function Navigation() {
                 {
                     user !== null &&
                     <div className='navGroupLeft'>
-                        <div className='navigationButton'>
-                            <IconContext.Provider value={{ className: 'text-white px-0.5 w-8 h-8' }}>
-                                <BiRadio/>
-                            </IconContext.Provider>
+                        <div className='navigationLogo'>
+                            <img src={logo} alt='logo' className='w-5 h-5'/>
                         </div>
                         <a className='navigationButton' href='/home'>Home</a>
                         <a className='navigationButton' href='/#'>My stations</a>
