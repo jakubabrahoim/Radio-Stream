@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import Avatar from 'react-avatar';
-
-import { BiRadio } from "react-icons/bi";
-import { IconContext } from 'react-icons';
 let logo = require('../../assets/logo.png');
 
 function Navigation() {
