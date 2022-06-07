@@ -26,6 +26,11 @@ function Navigation() {
         let auth = getAuth();
         await auth.signOut();
         setUser(null);
+
+        let homePageLink: HTMLElement = document.createElement('a');
+        homePageLink.setAttribute('id', 'navigateHome');
+        homePageLink.setAttribute('href', '/home');
+        homePageLink.click();
     }
 
     return (
