@@ -36,7 +36,7 @@ function Home() {
 
     }, []);
 
-    function handleSearchInputChange(e: Event) {
+    function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
         setSearchInput(e.target.value);
     }
 
@@ -54,7 +54,6 @@ function Home() {
         })
         .then(response => response.json())
         .then(response => {
-            //console.log(response);
             navigate(`/search-result?query=${searchInput}`, { state: { stations: response } });
         })
         .catch(error => console.log(error));
