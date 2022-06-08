@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Pagination } from '@mantine/core';
+import { Pagination, Tooltip } from '@mantine/core';
 import ReactCountryFlag from "react-country-flag";
 import { IconContext } from "react-icons";
 import { BiRadio } from "react-icons/bi";
@@ -75,8 +75,9 @@ function SearchResult() {
                                     {
                                         station.country !== '' ?
                                         <p className='text-center'>
-                                            {station.country} &nbsp;
-                                            <ReactCountryFlag countryCode={station.countrycode}/>
+                                            <Tooltip position='bottom' withArrow transition='fade' transitionDuration={200} label={station.countrycode}>
+                                                <ReactCountryFlag countryCode={station.countrycode}/>
+                                            </Tooltip>
                                         </p>
                                         :
                                         <p className='text-center'>
@@ -106,8 +107,8 @@ function SearchResult() {
 
             {
                 searchResult.length > 14 &&
-                <article className='flex flex-row justify-center fixed bottom-[300px] w-full'>
-                    <Pagination page={page} total={Math.ceil(searchResult.length/14)} onChange={changePage} withControls/>
+                <article className='flex flex-row justify-center fixed bottom-[285px] mt-2 w-full'>
+                    <Pagination page={page} total={Math.ceil(searchResult.length/14)} initialPage={1} onChange={changePage} color='gray' radius='md' withControls/>
                 </article>
             }
         </>
