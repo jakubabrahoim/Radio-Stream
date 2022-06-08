@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Pagination } from '@mantine/core';
 import ReactCountryFlag from "react-country-flag";
 import { IconContext } from "react-icons";
 import { BiRadio } from "react-icons/bi";
@@ -11,6 +11,7 @@ function SearchResult() {
     let [searchResult, setSearchResult] = useState<any[]>([]);
     let [successfulLoad, setSuccessfulLoad] = useState(true);
     let [searchInput, setSearchInput] = useState('');
+    let [page, setPage] = useState(1);
     let navigate = useNavigate();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,6 +46,10 @@ function SearchResult() {
         .catch(error => console.log(error));
     }
 
+    function changePage(page: number) {
+        setPage(page);
+    }
+
     if(successfulLoad) return (
         <>
             {/* Heading + search bar */}
@@ -62,11 +67,11 @@ function SearchResult() {
             
             <article className='grid grid-cols-7 justify-items-center'>
                 {
-                    searchResult.map((station, id) => {
+                    searchResult.slice((page - 1) * 14, (page - 1) * 14 + 14).map((station, id) => {
                         return (
                             <section className='grid grid-rows-10 justify-items-center items-center border w-52 h-52 rounded-lg mb-2' key={id}>
                                 <div className='row-span-2'>
-                                    <p className='w-52 text-center'>{station.name}</p>
+                                    <p className='w-52 text-center truncate'>{station.name}</p>
                                     {
                                         station.country !== '' ?
                                         <p className='text-center'>
@@ -98,6 +103,13 @@ function SearchResult() {
                     })
                 }
             </article>
+
+            {
+                searchResult.length > 14 &&
+                <article className='flex flex-row justify-center fixed bottom-[300px] w-full'>
+                    <Pagination page={page} total={Math.ceil(searchResult.length/14)} onChange={changePage} withControls/>
+                </article>
+            }
         </>
     )
     

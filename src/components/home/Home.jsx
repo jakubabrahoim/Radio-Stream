@@ -33,7 +33,6 @@ function Home() {
             setStations(response);
         })
         .catch(_error => setGeolocationEnabled(false));
-
     }, []);
 
     function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -114,7 +113,6 @@ function Home() {
                 <article className='grid grid-flow-row grid-rows-1 justify-center align-middle'>
                     <h1 className='text-lg text-red-400'>Disable location blockers to see top stations in your country.</h1>
                 </article>
-
             }            
         </>
     )
