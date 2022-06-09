@@ -8,6 +8,7 @@ import Login from './components/login-signup/Login';
 import SignUp from './components/login-signup/SignUp';
 import AudioPlayer from './components/audio-player/AudioPlayer';
 import SearchResult from './components/search/SearchResult';
+import Countries from './components/countries/Countries';
 
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
@@ -47,6 +48,7 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Navigate to='/home' />}/>
                     <Route path='/home' element={<Home/>}/>
+                    <Route path='/countries' element={<Countries/>}/>
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/signup' element={<SignUp firebaseApp={app}/>}/>
                     <Route path='/search-result' element={<SearchResult/>}/>

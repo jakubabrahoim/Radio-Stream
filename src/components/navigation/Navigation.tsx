@@ -41,7 +41,7 @@ function Navigation() {
                             <img src={logo} alt='logo' className='w-5 h-5'/>
                         </div>
                         <a className='navigationButton' href='/home'>Home</a>
-                        <a className='navigationButton' href='/#'>Countries</a>
+                        <a className='navigationButton' href='/countries'>Countries</a>
                         <a className='navigationButton' href='/#'>About</a>
                     </div>
                 }
@@ -54,7 +54,7 @@ function Navigation() {
                         </div>
                         <a className='navigationButton' href='/home'>Home</a>
                         <a className='navigationButton' href='/#'>My stations</a>
-                        <a className='navigationButton' href='/#'>Countries</a>
+                        <a className='navigationButton' href='/countries'>Countries</a>
                         <a className='navigationButton' href='/#'>About</a>
                     </div>
                 }
