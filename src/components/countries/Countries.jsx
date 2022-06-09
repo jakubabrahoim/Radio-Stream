@@ -43,7 +43,7 @@ function Countries() {
     /** Fetch radio station on search submit */
     function fetchRadioStations(e: Event) {
         e.preventDefault();
-        fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/$Slovakia?hidebroken=true&order=clickcount&reverse=true`,
+        fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/Slovakia?hidebroken=true&order=clickcount&reverse=true`,
         {
             method: 'GET',
             headers: {
