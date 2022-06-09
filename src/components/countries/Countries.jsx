@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -7,6 +8,8 @@ function Countries() {
     let [countries, setCountries] = useState([]);
     let [searchInput, setSearchInput] = useState('');
     let [searchResult, setSearchResult] = useState([]);
+    let [selectedCountry, setSelectedCountry] = useState('');
+    let navigate = useNavigate();
 
     /* Get user location and top 5 stations from users country */
     useEffect(() => {        
@@ -20,7 +23,6 @@ function Countries() {
         })
         .then(response => response.json())
         .then(response => {
-            console.log(response);
             setCountries(response);
             setSearchResult(response);
         })
@@ -30,13 +32,32 @@ function Countries() {
         setSearchInput(e.target.value);
     }
 
+
     /** Fetch radio station on search submit */
     function fetchRadioCountries(e: Event) {
         e.preventDefault();
-
-        const result = countries.filter((country) => country.name.startsWith(searchInput));
-        console.log(result);
+        
+        const result = countries.filter((country) => country.name.toUpperCase().startsWith(searchInput.toUpperCase()));
         setSearchResult(result);
+    }
+
+    /** Fetch radio station on search submit */
+    function fetchRadioStations(e: Event) {
+        e.preventDefault();
+        console.log('sc',selectedCountry);
+        fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${selectedCountry}?hidebroken=true&order=clickcount&reverse=true`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'User-Agent': 'radio-sh.web.app',
+            }
+        })
+        .then(response => response.json())
+        .then(response => {
+            navigate(`/search-result?query=${selectedCountry}`, { state: { stations: response } });
+        })
+        .catch(error => console.log(error));
     }
     
     return (
@@ -58,7 +79,7 @@ function Countries() {
                 {
                     searchResult.map((country, index) => {
                         return (
-                            <div>
+                            <div onClick={fetchRadioStations}>
                                 <ReactCountryFlag countryCode={country.iso_3166_1}/>
                                 <p>{country.name} ({country.stationcount})</p>
                                 <hr></hr>
