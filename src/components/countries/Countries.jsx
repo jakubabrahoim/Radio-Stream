@@ -8,7 +8,6 @@ function Countries() {
     let [countries, setCountries] = useState([]);
     let [searchInput, setSearchInput] = useState('');
     let [searchResult, setSearchResult] = useState([]);
-    let [selectedCountry, setSelectedCountry] = useState('');
     let navigate = useNavigate();
 
     /* Get user location and top 5 stations from users country */
@@ -44,8 +43,7 @@ function Countries() {
     /** Fetch radio station on search submit */
     function fetchRadioStations(e: Event) {
         e.preventDefault();
-        console.log('sc',selectedCountry);
-        fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${selectedCountry}?hidebroken=true&order=clickcount&reverse=true`,
+        fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/$Slovakia?hidebroken=true&order=clickcount&reverse=true`,
         {
             method: 'GET',
             headers: {
@@ -55,7 +53,7 @@ function Countries() {
         })
         .then(response => response.json())
         .then(response => {
-            navigate(`/search-result?query=${selectedCountry}`, { state: { stations: response } });
+            navigate(`/search-result?query=${'Slovakia'}`, { state: { stations: response } });
         })
         .catch(error => console.log(error));
     }
