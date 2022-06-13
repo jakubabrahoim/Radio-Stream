@@ -8,21 +8,21 @@ import { BiRadio } from "react-icons/bi";
 function SearchResult() {
     
     let location: any = useLocation();
-    let [searchResult, setSearchResult] = useState<any[]>([]);
+    let [stations, setStations] = useState<any[]>([]);
+    let [filter, setFilter] = useState({alphabeticaly: false, byPopularity: true, sortOrder: 'Descending'});
     let [successfulLoad, setSuccessfulLoad] = useState(true);
     let [searchInput, setSearchInput] = useState('');
     let [page, setPage] = useState(1);
     let navigate = useNavigate();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
     useEffect(() => {
         try{
-            setSearchResult(location.state.stations);
+            setStations(location.state.stations);
             setSuccessfulLoad(true);
         } catch {
             setSuccessfulLoad(false);
         }
-    });
+    }, [stations, location.state.stations]);
 
     function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
         setSearchInput(e.target.value);
@@ -50,6 +50,36 @@ function SearchResult() {
         setPage(page);
     }
 
+    /* Applies sort -> by popularity or alphabetical and orders them (asc/desc) */
+    function applySort(clickedFilterType: string) {
+        if(clickedFilterType === 'alphabeticaly') {
+            // Turn on alphabetical filter, turn off popularity filter
+            setFilter({...filter, alphabeticaly: true, byPopularity: false});
+
+            if(filter.sortOrder === 'Descending') setStations(stations.sort((a, b) => a.name.localeCompare(b.name)));
+            else setStations(stations.sort((a, b) => b.name.localeCompare(a.name)));
+            
+        } else if(clickedFilterType === 'byPopularity') {
+            // Turning on byPopularity filter, turn off alphabetical filter
+            setFilter({...filter, alphabeticaly: false, byPopularity: true});
+            if(filter.sortOrder === 'Descending') setStations(stations.sort((a, b) => b.clickcount - a.clickcount));
+            else setStations(stations.sort((a, b) => a.clickcount - b.clickcount));
+        }
+    }
+
+    /* Changes order (asc/desc) and re-sorts stations */
+    function sortOrderChanged(e: any) {
+        setFilter({...filter, sortOrder: e.target.value});
+
+        if(filter.alphabeticaly) {
+            if(e.target.value === 'Descending') setStations(stations.sort((a, b) => a.name.localeCompare(b.name)));
+            else setStations(stations.sort((a, b) => b.name.localeCompare(a.name)));
+        } else if(filter.byPopularity) {
+            if(e.target.value === 'Descending') setStations(stations.sort((a, b) => b.clickcount - a.clickcount));
+            else setStations(stations.sort((a, b) => a.clickcount - b.clickcount));
+        }
+    }
+
     if(successfulLoad) return (
         <>
             {/* Heading + search bar */}
@@ -61,13 +91,41 @@ function SearchResult() {
                         <label hidden>Submit</label>
                         <input className='w-24 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md' type='submit' name="search" value='Search'></input>
                     </form>
-                    <p className='text-xs text-gray-500 ml-1 mt-1.5'>{searchResult.length} stations found</p>
+                    {/* Additional search info - # of results, filters */}
+                    <div className='flex flex-row mt-1.5'>
+                        <div className='flex basis-1/4 justify-start items-center'>
+                            <p className='text-xs text-gray-500 ml-1'>{stations.length} stations found</p>
+                        </div>
+                        <div className='flex basis-3/4 justify-end items-center'>
+                            <h3 className='text-xs text-gray-500 mr-2'>Sort:</h3>
+                            <button 
+                                className={filter.alphabeticaly === false ? 
+                                    'text-xs bg-gray-100 text-gray-500 mr-2 px-1 py-0.5 border border-gray-400 rounded-full' :
+                                    'text-xs bg-blue-50 text-blue-500 mr-2 px-1 py-0.5 border border-blue-400 rounded-full'} 
+                                onClick={() => applySort('alphabeticaly')}
+                            >
+                                Alphabeticaly
+                            </button>
+                            <button 
+                                className={filter.byPopularity === false ? 
+                                    'text-xs bg-gray-100 text-gray-500 mr-2 px-1 py-0.5 border border-gray-400 rounded-full' :
+                                    'text-xs bg-blue-50 text-blue-500 mr-2 px-1 py-0.5 border border-blue-400 rounded-full'} 
+                                onClick={() => applySort('byPopularity')}
+                            >
+                                By popularity
+                            </button>
+                            <select className='text-xs focus:outline-none' onChange={sortOrderChanged} value={filter.sortOrder}>
+                                <option>Descending</option>
+                                <option>Ascending</option>
+                            </select>
+                        </div>
+                    </div>
                 </section>
             </article>
             
             <article className='grid grid-cols-7 justify-items-center'>
                 {
-                    searchResult.slice((page - 1) * 14, (page - 1) * 14 + 14).map((station, id) => {
+                    stations.slice((page - 1) * 14, (page - 1) * 14 + 14).map((station, id) => {
                         return (
                             <section className='grid grid-rows-10 justify-items-center items-center border w-52 h-52 rounded-lg mb-2' key={id}>
                                 <div className='row-span-2'>
@@ -106,9 +164,9 @@ function SearchResult() {
             </article>
 
             {
-                searchResult.length > 14 &&
+                stations.length > 14 &&
                 <article className='flex flex-row justify-center fixed bottom-[285px] mt-2 w-full'>
-                    <Pagination page={page} total={Math.ceil(searchResult.length/14)} initialPage={1} onChange={changePage} color='gray' radius='md' withControls/>
+                    <Pagination page={page} total={Math.ceil(stations.length/14)} initialPage={1} onChange={changePage} color='gray' radius='md' withControls/>
                 </article>
             }
         </>

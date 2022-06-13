@@ -111,7 +111,10 @@ function Home() {
                 :
 
                 <article className='grid grid-flow-row grid-rows-1 justify-center align-middle'>
-                    <h1 className='text-lg text-red-400'>Disable location blockers to see top stations in your country.</h1>
+                    <p className='text-lg text-red-400 text-center'>
+                        Disable location blockers to see top stations in your country. <br/>
+                        Your location is not stored or passed to anyone, we use it strictly to display popular stations from your country.
+                    </p>
                 </article>
             }            
         </>
