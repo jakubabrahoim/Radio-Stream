@@ -30,6 +30,7 @@ function SearchResult() {
 
     function fetchRadioStations(e: any) {
         e.preventDefault();
+        setFilter({alphabeticaly: false, byPopularity: true, sortOrder: 'Descending'});
 
         fetch(`https://at1.api.radio-browser.info/json/stations/byname/${searchInput}?hidebroken=true&order=clickcount&reverse=true`,
         {
@@ -72,8 +73,8 @@ function SearchResult() {
         setFilter({...filter, sortOrder: e.target.value});
 
         if(filter.alphabeticaly) {
-            if(e.target.value === 'Descending') setStations(stations.sort((a, b) => a.name.localeCompare(b.name)));
-            else setStations(stations.sort((a, b) => b.name.localeCompare(a.name)));
+            if(e.target.value === 'Descending') setStations(stations.sort((a, b) => b.name.localeCompare(a.name)));
+            else setStations(stations.sort((a, b) => a.name.localeCompare(b.name)));
         } else if(filter.byPopularity) {
             if(e.target.value === 'Descending') setStations(stations.sort((a, b) => b.clickcount - a.clickcount));
             else setStations(stations.sort((a, b) => a.clickcount - b.clickcount));
@@ -87,12 +88,23 @@ function SearchResult() {
                 <section className='self-center'>
                     <form className='flex flex-row w-full justify-center' onSubmit={fetchRadioStations}>
                         <label hidden>Search</label>
-                        <input className='w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' type='text' value={searchInput} placeholder='Search for radio stations...' onChange={handleSearchInputChange}></input>
+                        <input 
+                            className='w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
+                            type='text' 
+                            value={searchInput} 
+                            placeholder='Search for radio stations...' 
+                            onChange={handleSearchInputChange}
+                        ></input>
                         <label hidden>Submit</label>
-                        <input className='w-24 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md' type='submit' name="search" value='Search'></input>
+                        <input 
+                            className='w-24 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md' 
+                            type='submit'
+                            value='Search' 
+                            name="search" 
+                        ></input>
                     </form>
                     {/* Additional search info - # of results, filters */}
-                    <div className='flex flex-row mt-1.5'>
+                    <div className='flex flex-row mt-2'>
                         <div className='flex basis-1/4 justify-start items-center'>
                             <p className='text-xs text-gray-500 ml-1'>{stations.length} stations found</p>
                         </div>
