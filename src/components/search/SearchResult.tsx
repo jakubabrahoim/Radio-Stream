@@ -4,6 +4,7 @@ import { Pagination, Tooltip } from '@mantine/core';
 import ReactCountryFlag from "react-country-flag";
 import { IconContext } from "react-icons";
 import { BiRadio } from "react-icons/bi";
+import BadRequest from "../error-pages/BadRequest";
 
 function SearchResult() {
     
@@ -15,14 +16,17 @@ function SearchResult() {
     let [page, setPage] = useState(1);
     let navigate = useNavigate();
     
+    // Didn't add dependency because location.state.stations might be null/undefined when user changes the url
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         try{
             setStations(location.state.stations);
             setSuccessfulLoad(true);
         } catch {
             setSuccessfulLoad(false);
+            navigate('/400');
         }
-    }, [stations, location.state.stations]);
+    });
 
     function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
         setSearchInput(e.target.value);
@@ -185,7 +189,7 @@ function SearchResult() {
     )
     
     return (
-        <p>400 Bad Request - Something went wrong</p>
+        <BadRequest/>
     )
 }
 

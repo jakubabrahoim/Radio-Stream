@@ -10,6 +10,7 @@ import AudioPlayer from './components/audio-player/AudioPlayer';
 import SearchResult from './components/search/SearchResult';
 import Countries from './components/countries/Countries';
 import CountrySearch from './components/search/CountrySearch';
+import BadRequest from './components/error-pages/BadRequest';
 
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
@@ -54,6 +55,7 @@ function App() {
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/signup' element={<SignUp firebaseApp={app}/>}/>
                     <Route path='/search-result' element={<SearchResult/>}/>
+                    <Route path='/400' element={<BadRequest/>}/>
                 </Routes>
             </Router>
 
