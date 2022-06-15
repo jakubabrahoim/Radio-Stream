@@ -78,7 +78,7 @@ function Countries() {
                 </section>
             </article>    
 
-            <article className={'grid justify-center align-middle' + `${searchResult.length > 7 ? 'h-[475]': 'h-[' + `${56 * searchResult.length}` + ']'}` + 'overflow-y-auto'}>
+            <article className={'grid justify-center align-middle ' + `${searchResult.length > 7 ? 'h-[475px]' : 'h-[' + `${56 * searchResult.length}` + 'px]'}` + ' overflow-y-auto'}>
                 {
                     searchResult.map((country, index) => {
                         return (    

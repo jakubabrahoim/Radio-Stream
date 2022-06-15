@@ -50,7 +50,6 @@ function CountrySearch() {
         if(clickedFilterType === 'alphabeticaly') {
             // Turn on alphabetical filter, turn off popularity filter
             setFilter({...filter, alphabeticaly: true, byPopularity: false});
-
             if(filter.sortOrder === 'Descending') setFilteredStations(filteredStations.sort((a, b) => a.name.localeCompare(b.name)));
             else setFilteredStations(filteredStations.sort((a, b) => b.name.localeCompare(a.name)));
             
@@ -67,11 +66,11 @@ function CountrySearch() {
         setFilter({...filter, sortOrder: e.target.value});
 
         if(filter.alphabeticaly) {
-            if(e.target.value === 'Descending') setStations(stations.sort((a, b) => b.name.localeCompare(a.name)));
-            else setStations(stations.sort((a, b) => a.name.localeCompare(b.name)));
+            if(e.target.value === 'Descending') setFilteredStations(filteredStations.sort((a, b) => b.name.localeCompare(a.name)));
+            else setFilteredStations(filteredStations.sort((a, b) => a.name.localeCompare(b.name)));
         } else if(filter.byPopularity) {
-            if(e.target.value === 'Descending') setStations(stations.sort((a, b) => b.clickcount - a.clickcount));
-            else setStations(stations.sort((a, b) => a.clickcount - b.clickcount));
+            if(e.target.value === 'Descending') setFilteredStations(filteredStations.sort((a, b) => b.clickcount - a.clickcount));
+            else setFilteredStations(filteredStations.sort((a, b) => a.clickcount - b.clickcount));
         }
     }
 
