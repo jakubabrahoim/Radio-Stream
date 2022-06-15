@@ -11,6 +11,7 @@ import SearchResult from './components/search/SearchResult';
 import Countries from './components/countries/Countries';
 import CountrySearch from './components/search/CountrySearch';
 import BadRequest from './components/error-pages/BadRequest';
+import NotFound from './components/error-pages/NotFound';
 
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
@@ -56,6 +57,7 @@ function App() {
                     <Route path='/signup' element={<SignUp firebaseApp={app}/>}/>
                     <Route path='/search-result' element={<SearchResult/>}/>
                     <Route path='/400' element={<BadRequest/>}/>
+                    <Route path='*' element={<NotFound/>}/>
                 </Routes>
             </Router>
 
