@@ -61,8 +61,8 @@ function SearchResult() {
             // Turn on alphabetical filter, turn off popularity filter
             setFilter({...filter, alphabeticaly: true, byPopularity: false});
 
-            if(filter.sortOrder === 'Descending') setStations(stations.sort((a, b) => a.name.localeCompare(b.name)));
-            else setStations(stations.sort((a, b) => b.name.localeCompare(a.name)));
+            if(filter.sortOrder === 'Descending') setStations(stations.sort((a, b) => b.name.localeCompare(a.name)));
+            else setStations(stations.sort((a, b) => a.name.localeCompare(b.name)));
             
         } else if(clickedFilterType === 'byPopularity') {
             // Turning on byPopularity filter, turn off alphabetical filter

@@ -50,8 +50,8 @@ function CountrySearch() {
         if(clickedFilterType === 'alphabeticaly') {
             // Turn on alphabetical filter, turn off popularity filter
             setFilter({...filter, alphabeticaly: true, byPopularity: false});
-            if(filter.sortOrder === 'Descending') setFilteredStations(filteredStations.sort((a, b) => a.name.localeCompare(b.name)));
-            else setFilteredStations(filteredStations.sort((a, b) => b.name.localeCompare(a.name)));
+            if(filter.sortOrder === 'Descending') setFilteredStations(filteredStations.sort((a, b) => b.name.localeCompare(a.name)));
+            else setFilteredStations(filteredStations.sort((a, b) => a.name.localeCompare(b.name)));
             
         } else if(clickedFilterType === 'byPopularity') {
             // Turning on byPopularity filter, turn off alphabetical filter
