@@ -1,3 +1,4 @@
+/*eslint-disable no-useless-concat */
 import { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { useNavigate } from "react-router-dom";
@@ -29,11 +30,11 @@ function Countries() {
     /* Search for country -> filters all countries array */
     function countrySearch(e: Event): void {
         e.preventDefault();
-        setSearchResult(countries.filter((country) => country.name.toUpperCase().startsWith(searchInput.toUpperCase())));
+        setSearchResult(countries.filter((country) => country.name.toUpperCase().includes(searchInput.toUpperCase())));
     }
 
     function fetchRadioStationsForCountry(countryName: string): void {
-        fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/Slovakia?hidebroken=true&order=clickcount&reverse=true`,
+        fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${countryName}?hidebroken=true&order=clickcount&reverse=true`,
         {
             method: 'GET',
             headers: {
@@ -77,7 +78,7 @@ function Countries() {
                 </section>
             </article>    
 
-            <article className='grid justify-center align-middle h-[475px] overflow-y-auto'>
+            <article className={'grid justify-center align-middle' + `${searchResult.length > 7 ? 'h-[475]': 'h-[' + `${56 * searchResult.length}` + ']'}` + 'overflow-y-auto'}>
                 {
                     searchResult.map((country, index) => {
                         return (    
