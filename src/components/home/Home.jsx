@@ -63,7 +63,7 @@ function Home() {
             {/* Heading + search bar */}
             <article className='grid grid-flow-row grid-rows-2 justify-items-center align-middle mb-16'>
                 <section className='self-center my-6'>
-                    <h1 className='text-3xl'>Welcome to Radio-sh</h1>
+                    <h1 className='text-3xl'>Welcome to Radio-Stream</h1>
                 </section>
                 
                 <section className='self-center'>
