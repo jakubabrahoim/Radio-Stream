@@ -28,12 +28,12 @@ function SearchResult() {
         }
     });
 
-    function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
-        setSearchInput(e.target.value);
+    function handleSearchInputChange(event: ChangeEvent<HTMLInputElement>): void {
+        setSearchInput(event.target.value);
     }
 
-    function fetchRadioStations(e: any) {
-        e.preventDefault();
+    function fetchRadioStations(event: any): void {
+        event.preventDefault();
         setFilter({alphabeticaly: false, byPopularity: true, sortOrder: 'Descending'});
 
         fetch(`https://at1.api.radio-browser.info/json/stations/byname/${searchInput}?hidebroken=true&order=clickcount&reverse=true`,
@@ -51,12 +51,12 @@ function SearchResult() {
         .catch(error => console.log(error));
     }
 
-    function changePage(page: number) {
+    function changePage(page: number): void {
         setPage(page);
     }
 
     /* Applies sort -> by popularity or alphabetical and orders them (asc/desc) */
-    function applySort(clickedFilterType: string) {
+    function applySort(clickedFilterType: string): void {
         if(clickedFilterType === 'alphabeticaly') {
             // Turn on alphabetical filter, turn off popularity filter
             setFilter({...filter, alphabeticaly: true, byPopularity: false});
@@ -73,14 +73,14 @@ function SearchResult() {
     }
 
     /* Changes order (asc/desc) and re-sorts stations */
-    function sortOrderChanged(e: any) {
-        setFilter({...filter, sortOrder: e.target.value});
+    function sortOrderChanged(event: any): void {
+        setFilter({...filter, sortOrder: event.target.value});
 
         if(filter.alphabeticaly) {
-            if(e.target.value === 'Descending') setStations(stations.sort((a, b) => b.name.localeCompare(a.name)));
+            if(event.target.value === 'Descending') setStations(stations.sort((a, b) => b.name.localeCompare(a.name)));
             else setStations(stations.sort((a, b) => a.name.localeCompare(b.name)));
         } else if(filter.byPopularity) {
-            if(e.target.value === 'Descending') setStations(stations.sort((a, b) => b.clickcount - a.clickcount));
+            if(event.target.value === 'Descending') setStations(stations.sort((a, b) => b.clickcount - a.clickcount));
             else setStations(stations.sort((a, b) => a.clickcount - b.clickcount));
         }
     }
@@ -182,7 +182,15 @@ function SearchResult() {
             {
                 stations.length > 14 &&
                 <article className='flex flex-row justify-center fixed bottom-[285px] mt-2 w-full'>
-                    <Pagination page={page} total={Math.ceil(stations.length/14)} initialPage={1} onChange={changePage} color='gray' radius='md' withControls/>
+                    <Pagination 
+                        page={page} 
+                        total={Math.ceil(stations.length/14)} 
+                        initialPage={1} 
+                        onChange={changePage} 
+                        color='gray' 
+                        radius='md' 
+                        withControls
+                    />
                 </article>
             }
         </>

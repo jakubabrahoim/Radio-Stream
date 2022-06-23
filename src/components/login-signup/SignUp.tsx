@@ -8,9 +8,6 @@ interface Props {
 }
 
 function SignUp(props: Props) {
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    //let {user, setUser} = useContext(UserContext);
         
     const auth = getAuth(props.firebaseApp);
     let navigate = useNavigate();
@@ -21,15 +18,15 @@ function SignUp(props: Props) {
     let [passwordMatch, setPasswordMatch] = useState(true);
     let [registration, setRegistration] = useState('notRegistered');
 
-    function handlePasswordChange(event: any) {
+    function handlePasswordChange(event: any): void {
         setPasswordInput(event.target.value);
     }
 
-    function handleConfirmPasswordChange(event: any) {
+    function handleConfirmPasswordChange(event: any): void {
         setConfirmpasswordInput(event.target.value);
     }
 
-    async function handleSubmit(event: any) {
+    async function handleSubmit(event: any): Promise<void> {
         event.preventDefault();
 
         // Validate entered password - one uppercase, one lowercase, one number
@@ -63,7 +60,7 @@ function SignUp(props: Props) {
         }
     }
 
-    async function handleGoogleSubmit() {
+    async function handleGoogleSubmit(): Promise<void> {
         let provider = new GoogleAuthProvider();
         let auth = getAuth();
 
@@ -71,7 +68,6 @@ function SignUp(props: Props) {
             await signInWithPopup(auth, provider);
             navigate('/home');
         } catch (error) {}
-
     }
 
     return (
@@ -84,7 +80,14 @@ function SignUp(props: Props) {
                     <input type='email' name='email' required/>
 
                     <label className='inputLabel'>Password</label>
-                    <input className={isPasswordValid && passwordMatch ? 'formPassword' : 'formPasswordIncorrect'} type='password' name='password' value={passwordInput} onChange={handlePasswordChange} required></input>
+                    <input 
+                        className={isPasswordValid && passwordMatch ? 'formPassword' : 'formPasswordIncorrect'} 
+                        type='password' 
+                        name='password' 
+                        value={passwordInput} 
+                        onChange={handlePasswordChange} 
+                        required
+                    />
                     {
                         isPasswordValid === false && 
                         <p className='w-56 mt-1 text-left text-red-400 text-xs'>
@@ -97,7 +100,14 @@ function SignUp(props: Props) {
                     }
 
                     <label className='inputLabel'>Confirm password</label>
-                    <input className={passwordMatch ? 'formPassword' : 'formPasswordIncorrect'} type='password' name='confirmPassword' value={confirmPasswordInput} onChange={handleConfirmPasswordChange} required></input>
+                    <input 
+                        className={passwordMatch ? 'formPassword' : 'formPasswordIncorrect'} 
+                        type='password' 
+                        name='confirmPassword' 
+                        value={confirmPasswordInput} 
+                        onChange={handleConfirmPasswordChange} 
+                        required
+                    />
                     {
                         passwordMatch === false && 
                         <p className='w-56 mt-1 text-left text-red-400 text-xs'>

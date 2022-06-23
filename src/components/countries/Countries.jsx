@@ -28,11 +28,12 @@ function Countries() {
     }, []);
 
     /* Search for country -> filters all countries array */
-    function countrySearch(e: Event): void {
-        e.preventDefault();
+    function countrySearch(event: Event): void {
+        event.preventDefault();
         setSearchResult(countries.filter((country) => country.name.toUpperCase().includes(searchInput.toUpperCase())));
     }
 
+    /* Fetch stations for selected country and navigate to new page with these stations */
     function fetchRadioStationsForCountry(countryName: string): void {
         fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${countryName}?hidebroken=true&order=clickcount&reverse=true`,
         {
@@ -49,8 +50,8 @@ function Countries() {
         .catch(error => console.log(error));
     }
 
-    function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>): void {
-        setSearchInput(e.target.value);
+    function handleSearchInputChange(event: ChangeEvent<HTMLInputElement>): void {
+        setSearchInput(event.target.value);
     }
     
     return (

@@ -32,21 +32,21 @@ function CountrySearch() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
-        setSearchInput(e.target.value);
+    function handleSearchInputChange(event: ChangeEvent<HTMLInputElement>): void {
+        setSearchInput(event.target.value);
     }
 
-    function filterRadioStations(e: any) {
-        e.preventDefault();
+    function filterRadioStations(event: any): void {
+        event.preventDefault();
         setFilteredStations(stations.filter(station => station.name.toLowerCase().includes(searchInput.toLowerCase())));
     }
 
-    function changePage(page: number) {
+    function changePage(page: number): void {
         setPage(page);
     }
 
     /* Applies sort -> by popularity or alphabetical and orders them (asc/desc) */
-    function applySort(clickedFilterType: string) {
+    function applySort(clickedFilterType: string): void {
         if(clickedFilterType === 'alphabeticaly') {
             // Turn on alphabetical filter, turn off popularity filter
             setFilter({...filter, alphabeticaly: true, byPopularity: false});
@@ -62,14 +62,14 @@ function CountrySearch() {
     }
 
     /* Changes order (asc/desc) and re-sorts stations */
-    function sortOrderChanged(e: any) {
-        setFilter({...filter, sortOrder: e.target.value});
+    function sortOrderChanged(event: any): void {
+        setFilter({...filter, sortOrder: event.target.value});
 
         if(filter.alphabeticaly) {
-            if(e.target.value === 'Descending') setFilteredStations(filteredStations.sort((a, b) => b.name.localeCompare(a.name)));
+            if(event.target.value === 'Descending') setFilteredStations(filteredStations.sort((a, b) => b.name.localeCompare(a.name)));
             else setFilteredStations(filteredStations.sort((a, b) => a.name.localeCompare(b.name)));
         } else if(filter.byPopularity) {
-            if(e.target.value === 'Descending') setFilteredStations(filteredStations.sort((a, b) => b.clickcount - a.clickcount));
+            if(event.target.value === 'Descending') setFilteredStations(filteredStations.sort((a, b) => b.clickcount - a.clickcount));
             else setFilteredStations(filteredStations.sort((a, b) => a.clickcount - b.clickcount));
         }
     }
@@ -171,7 +171,15 @@ function CountrySearch() {
             {
                 stations.length > 14 &&
                 <article className='flex flex-row justify-center fixed bottom-[285px] mt-2 w-full'>
-                    <Pagination page={page} total={Math.ceil(stations.length/14)} initialPage={1} onChange={changePage} color='gray' radius='md' withControls/>
+                    <Pagination 
+                        page={page} 
+                        total={Math.ceil(stations.length/14)} 
+                        initialPage={1} 
+                        onChange={changePage} 
+                        color='gray' 
+                        radius='md'
+                        withControls
+                    />
                 </article>
             }
         </>

@@ -8,6 +8,7 @@ function Navigation() {
     let [user, setUser] = useState<User | null>(null);
     let [verified, setVerified] = useState(false);
 
+    /* Check if user is logged in -> if yes we show avatar */
     useEffect(function getUserAuth() {
         let auth = getAuth();
         onAuthStateChanged(auth, user => {
@@ -19,7 +20,7 @@ function Navigation() {
         });
     }, []);
 
-    async function signOut() {
+    async function signOut(): Promise<void> {
         let auth = getAuth();
         await auth.signOut();
         setUser(null);

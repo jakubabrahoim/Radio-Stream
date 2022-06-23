@@ -25,6 +25,7 @@ function AudioPlayer() {
     let [user, setUser] = useState<User | null>(null);
     let [verified, setVerified] = useState(false);
     
+    /* Check if user is logged in -> used to show/hide like button */
     useEffect(function getUserAuth() {
         let auth = getAuth();
         onAuthStateChanged(auth, user => {
@@ -36,13 +37,14 @@ function AudioPlayer() {
         });
     }, []);
 
-    async function playStream() {
+    async function playStream(): Promise<void> {
         if(audioPlaying === 'playing') {
             audio.pause();
             setAudio(new Audio(streamUrl));
             setAudioPlaying('stopped');
         } else {
             try {
+                // if muted.muted -> set volume to 0
                 audio.volume = audioVolume / 100;
                 setAudioPlaying('loading');
                 await audio.play();
@@ -53,7 +55,7 @@ function AudioPlayer() {
         }
     }
 
-    function likeStation() {
+    function likeStation(): void {
         if(verified === false) {
             console.log('You must verify your email address before you can like a station.');
             return;
@@ -61,14 +63,14 @@ function AudioPlayer() {
         stationLiked ? setStationLiked(false) : setStationLiked(true);
     }
 
-    function handleVolumeChange(event: any) {
+    function handleVolumeChange(event: any): void {
         let newVolume: number = event.target.value;
         setAudioVolume(newVolume);
         
         audio.volume = newVolume / 100;
     }
 
-    function muteAudio() {
+    function muteAudio(): void {
         if(muted.muted === true) {
             audio.volume = muted.volumeBeforeMute / 100;
             setMuted({muted: false, volumeBeforeMute: audioVolume});
@@ -89,14 +91,17 @@ function AudioPlayer() {
                             <BiRadio/>
                         </IconContext.Provider>
                     }
-                    
                 </div>
                 <h1>{stationName}</h1>
             </div>
             
             {/* Radio play button */}
             <div>
-                <button onClick={playStream} disabled={audioPlaying === 'loading'} className={`rounded-full border border-gray-800 bg-gray-800 hover:bg-gray-700 w-12 h-12 flex items-center justify-center ${audioPlaying === 'loading' ? 'cursor-progress' : ''}`}>
+                <button 
+                    onClick={playStream} 
+                    disabled={audioPlaying === 'loading'} 
+                    className={`rounded-full border border-gray-800 bg-gray-800 hover:bg-gray-700 w-12 h-12 flex items-center justify-center ${audioPlaying === 'loading' ? 'cursor-progress' : ''}`}
+                >
                     {
                         audioPlaying === 'stopped' &&
                         <IconContext.Provider value={{ className: 'text-white pl-0.5 w-6 h-6' }}>
@@ -131,7 +136,13 @@ function AudioPlayer() {
                         </button>
                     </div>
                     <label className='text-sm mr-14' hidden>Volume</label>
-                    <input type='range' min='0' max='100' step='1' value={audioVolume} onChange={handleVolumeChange} className='w-full accent-gray-800'/>
+                    <input 
+                        type='range' 
+                        min='0' max='100' step='1' 
+                        value={audioVolume} 
+                        onChange={handleVolumeChange} 
+                        className='w-full accent-gray-800'
+                    />
                 </div>
                 
                 {/* Logged in, verified user -> can like stations */}
@@ -158,7 +169,15 @@ function AudioPlayer() {
                 {/* Logged in, unverified user -> can't like stations -> show tooltip */}
                 {
                     (user !== null) && (verified === false) &&
-                    <Tooltip wrapLines position='left' width={200} withArrow transition='fade' transitionDuration={200} label='Your account must be verified to like stations.'>
+                    <Tooltip 
+                        wrapLines 
+                        position='left' 
+                        width={200} 
+                        withArrow 
+                        transition='fade' 
+                        transitionDuration={200} 
+                        label='Your account must be verified to like stations.'
+                    >
                         <button  onClick={likeStation} className="rounded-full hover:cursor-not-allowed w-10 h-10 flex items-center justify-center">
                         {
                             stationLiked === false &&

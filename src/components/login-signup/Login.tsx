@@ -8,11 +8,11 @@ function Login() {
     let [passwordInput, setPasswordInput] = useState('');
     let [logInResult, setLogInResult] = useState(true);
 
-    function handlePasswordChange(event: any) {
+    function handlePasswordChange(event: any): void {
         setPasswordInput(event.target.value);
     }
 
-    async function handleSubmit(event: any) {
+    async function handleSubmit(event: any): Promise<void> {
         event.preventDefault();
 
         let email: string = event.target.email.value;
@@ -24,11 +24,10 @@ function Login() {
             navigate('/home');
         } catch (_error) {
             setLogInResult(false);
-        }
-        
+        }   
     }
 
-    async function handleGoogleSubmit() {
+    async function handleGoogleSubmit(): Promise<void> {
         let provider = new GoogleAuthProvider();
         let auth = getAuth();
 
@@ -36,7 +35,6 @@ function Login() {
             await signInWithPopup(auth, provider);
             navigate('/home');
         } catch (error) {}
-
     }
 
     return (
@@ -49,7 +47,14 @@ function Login() {
                     <input type='email' name='email' required/>
 
                     <label className='inputLabel'>Password</label>
-                    <input className='formPassword' type='password' name='password' value={passwordInput} onChange={handlePasswordChange} required></input>
+                    <input 
+                        className='formPassword' 
+                        type='password' 
+                        name='password' 
+                        value={passwordInput} 
+                        onChange={handlePasswordChange} 
+                        required
+                    />
                     {
                         logInResult === false &&
                         <p className='w-56 mt-1 text-left text-red-400 text-xs'>
@@ -61,7 +66,7 @@ function Login() {
                     <label className='my-1'>OR</label>
                 </form>
                 <form className='form' onSubmit={e => e.preventDefault()}>
-                    <input type='submit' className='googleButton' value='Log in with Google' onClick={handleGoogleSubmit}/>
+                    <input className='googleButton' type='submit' value='Log in with Google' onClick={handleGoogleSubmit}/>
                     <p>Don't have an account yet? <a href='/signup' className='text-blue-500 underline'>Sign up</a></p>
                 </form>
             </section>

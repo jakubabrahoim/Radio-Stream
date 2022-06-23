@@ -35,13 +35,13 @@ function Home() {
         .catch(_error => setGeolocationEnabled(false));
     }, []);
 
-    function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
-        setSearchInput(e.target.value);
+    function handleSearchInputChange(event: ChangeEvent<HTMLInputElement>): void {
+        setSearchInput(event.target.value);
     }
 
     /** Fetch radio station on search submit */
-    function fetchRadioStations(e: Event) {
-        e.preventDefault();
+    function fetchRadioStations(event: Event): void {
+        event.preventDefault();
 
         fetch(`https://at1.api.radio-browser.info/json/stations/byname/${searchInput}?hidebroken=true&order=clickcount&reverse=true`,
         {
@@ -69,9 +69,20 @@ function Home() {
                 <section className='self-center'>
                     <form className='flex flex-row' onSubmit={fetchRadioStations}>
                         <label hidden>Search</label>
-                        <input className='w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' type='text' value={searchInput} placeholder='Search for radio stations...' onChange={handleSearchInputChange}></input>
+                        <input 
+                            className='w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
+                            type='text' 
+                            value={searchInput} 
+                            placeholder='Search for radio stations...' 
+                            onChange={handleSearchInputChange}
+                        />
                         <label hidden>Submit</label>
-                        <input className='w-24 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md' type='submit' name="search" value='Search'></input>
+                        <input 
+                            className='w-24 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md' 
+                            type='submit' 
+                            value='Search'
+                            name="search" 
+                        />
                     </form>
                 </section>
                 
