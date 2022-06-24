@@ -176,7 +176,7 @@ function AudioPlayer() {
                         min='0' max='100' step='1' 
                         value={audioVolume} 
                         onChange={handleVolumeChange} 
-                        className={`w-full accent-gray-800 ${currentRadioStation.streamUrl === '' && 'cursor-not-allowed'}`}
+                        className={`w-full hover:cursor-grab accent-gray-800 ${currentRadioStation.streamUrl === '' && 'cursor-not-allowed'}`}
                         disabled={currentRadioStation.streamUrl === ''}
                     />
                 </div>
