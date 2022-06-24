@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CurrentRadioContext } from "../../App";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 
 import { BiRadio } from "react-icons/bi";
@@ -10,20 +11,23 @@ import { Tooltip } from '@mantine/core';
 
 function AudioPlayer() {
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let [thumbnailPresent, setThumbnailPresent] = useState(false);
-    let [audioPlaying, setAudioPlaying] = useState('stopped');
-    let [stationLiked, setStationLiked] = useState(false);
-
-    let streamUrl: string = 'https://radioshamfm.grtvstream.com:8400/;';
-    let [audio, setAudio] = useState(new Audio(streamUrl));
-    let [audioVolume, setAudioVolume] = useState(50);
-    let [muted, setMuted] = useState({muted: false, volumeBeforeMute: 50})
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let [stationName, setStationName] = useState('Sham FM');
-
+    //let streamUrl: string = 'https://radioshamfm.grtvstream.com:8400/;';
+    
+    // Variables for user authentication
     let [user, setUser] = useState<User | null>(null);
     let [verified, setVerified] = useState(false);
+
+    // Global radio station context
+    let { currentRadioStation } = useContext<any>(CurrentRadioContext);
+
+    // Local state variables for the audio player
+    let [stationName, setStationName] = useState('Sham FM');
+    let [thumbnailPresent, setThumbnailPresent] = useState(false);
+    let [audio, setAudio] = useState(new Audio(''));
+    let [audioPlaying, setAudioPlaying] = useState('stopped');
+    let [audioVolume, setAudioVolume] = useState(50);
+    let [muted, setMuted] = useState({muted: false, volumeBeforeMute: 50})
+    let [stationLiked, setStationLiked] = useState(false);
     
     /* Check if user is logged in -> used to show/hide like button */
     useEffect(function getUserAuth() {
@@ -37,10 +41,20 @@ function AudioPlayer() {
         });
     }, []);
 
+    /* Extract global radio station information and set local states */
+    useEffect(function getRadioStationContext() {
+        setStationName(currentRadioStation.stationName);
+
+        if(currentRadioStation.stationThumbnail !== '') setThumbnailPresent(true);
+        else setThumbnailPresent(false); 
+
+        setAudio(new Audio(currentRadioStation.streamUrl));        
+    }, [currentRadioStation]);
+
     async function playStream(): Promise<void> {
         if(audioPlaying === 'playing') {
             audio.pause();
-            setAudio(new Audio(streamUrl));
+            setAudio(new Audio(currentRadioStation.streamUrl));
             setAudioPlaying('stopped');
         } else {
             try {

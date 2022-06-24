@@ -1,6 +1,5 @@
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import { createContext, useState } from 'react';
 
 import Home from './components/home/Home';
 import Navigation from './components/navigation/Navigation';
@@ -31,38 +30,48 @@ const app = initializeApp(firebaseConfig);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const analytics = getAnalytics(app);
 
-// export let UserContext = React.createContext(null);
+export interface Station {
+    stationName: string;
+    streamUrl: string;
+    stationThumbnail: string;
+}
+
+export let CurrentRadioContext = createContext({currentRadioStation: {}, setCurrentRadioStation: () => {}});
 
 function App() {
 
-    let queryClient = new QueryClient();
+    let [currentRadioStation, setCurrentRadioStation] = useState<Station>({
+        stationName: 'No station', 
+        streamUrl: '', 
+        stationThumbnail: ''
+    });
 
     return (
-        <QueryClientProvider client={queryClient}>
-    
+        <>
             <Navigation/>
-            <AudioPlayer/>
 
-            {/* Background image */}
-            <div className="bg-[url('https://svgshare.com/i/hcM.svg')] fixed bottom-20 w-screen h-56"> &nbsp;
-            </div>
+            {/* @ts-ignore */}
+            <CurrentRadioContext.Provider value={{currentRadioStation, setCurrentRadioStation}}>
+                <AudioPlayer/>
 
-            <Router>
-                <Routes>
-                    <Route path='/' element={<Navigate to='/home' />}/>
-                    <Route path='/home' element={<Home/>}/>
-                    <Route path='/countries' element={<Countries/>}/>
-                    <Route path='/countries/:country' element={<CountrySearch/>}/>
-                    <Route path='/login' element={<Login/>}/>
-                    <Route path='/signup' element={<SignUp firebaseApp={app}/>}/>
-                    <Route path='/search-result' element={<SearchResult/>}/>
-                    <Route path='/400' element={<BadRequest/>}/>
-                    <Route path='*' element={<NotFound/>}/>
-                </Routes>
-            </Router>
+                {/* Background image */}
+                <div className="bg-[url('https://svgshare.com/i/hcM.svg')] fixed bottom-20 w-screen h-56"> &nbsp;  </div>
 
-            <ReactQueryDevtools/>
-        </QueryClientProvider>
+                <Router>
+                    <Routes>
+                        <Route path='/' element={<Navigate to='/home' />}/>
+                        <Route path='/home' element={<Home/>}/>
+                        <Route path='/countries' element={<Countries/>}/>
+                        <Route path='/countries/:country' element={<CountrySearch/>}/>
+                        <Route path='/login' element={<Login/>}/>
+                        <Route path='/signup' element={<SignUp firebaseApp={app}/>}/>
+                        <Route path='/search-result' element={<SearchResult/>}/>
+                        <Route path='/400' element={<BadRequest/>}/>
+                        <Route path='*' element={<NotFound/>}/>
+                    </Routes>
+                </Router>
+            </CurrentRadioContext.Provider>
+        </>
     );
 }
 
