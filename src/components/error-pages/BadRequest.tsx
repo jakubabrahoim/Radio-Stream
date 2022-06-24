@@ -13,7 +13,7 @@ function BadRequest() {
             <h1 className='font-black text-9xl text-gray-300'>400</h1>
             <h2 className='font-black text-3xl mt-4'>Bad request</h2>
             <p className='font-medium text-lg mt-2'>Something went wrong.</p>
-            <button className='bg-gray-800 text-white rounded-lg px-2 py-1 mt-4' onClick={navigateHome}>Take me back home</button>
+            <button className='bg-gray-800 hover:bg-gray-700 text-white rounded-lg px-2 py-1 mt-4' onClick={navigateHome}>Take me back home</button>
         </article>
     )
 }
