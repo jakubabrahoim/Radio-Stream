@@ -113,8 +113,12 @@ function AudioPlayer() {
             <div>
                 <button 
                     onClick={playStream} 
-                    disabled={audioPlaying === 'loading'} 
-                    className={`rounded-full border border-gray-800 bg-gray-800 hover:bg-gray-700 w-12 h-12 flex items-center justify-center ${audioPlaying === 'loading' ? 'cursor-progress' : ''}`}
+                    disabled={audioPlaying === 'loading' || currentRadioStation.streamUrl === ''} 
+                    className={
+                        `rounded-full border border-gray-800 bg-gray-800 hover:bg-gray-700 w-12 h-12 flex items-center justify-center 
+                        ${audioPlaying === 'loading' && 'cursor-progress'}
+                        ${currentRadioStation.streamUrl === '' && 'cursor-not-allowed'}`
+                    }
                 >
                     {
                         audioPlaying === 'stopped' &&
@@ -143,7 +147,14 @@ function AudioPlayer() {
                 <div className={`${user !== null ? 'mr-10' : ''}`}>
                     <div className='flex flex-row items-center'>
                         <p className='text-sm mr-14'>Volume</p>
-                        <button onClick={muteAudio} className='rounded-full hover:bg-gray-200 w-8 h-8 pl-1.5'>
+                        <button 
+                            onClick={muteAudio} 
+                            className={
+                                `rounded-full hover:bg-gray-200 w-8 h-8 pl-1.5 first-letter
+                                ${currentRadioStation.streamUrl === '' && 'cursor-not-allowed'}`
+                            }
+                            disabled={currentRadioStation.streamUrl === ''}
+                        >
                             <IconContext.Provider value={{className: 'h-5 w-5'}}>
                                 { muted.muted === false ? <BsFillVolumeUpFill/> : <BsVolumeMuteFill/> }
                             </IconContext.Provider>
@@ -155,7 +166,8 @@ function AudioPlayer() {
                         min='0' max='100' step='1' 
                         value={audioVolume} 
                         onChange={handleVolumeChange} 
-                        className='w-full accent-gray-800'
+                        className={`w-full accent-gray-800 ${currentRadioStation.streamUrl === '' && 'cursor-not-allowed'}`}
+                        disabled={currentRadioStation.streamUrl === ''}
                     />
                 </div>
                 

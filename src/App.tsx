@@ -41,7 +41,7 @@ export let CurrentRadioContext = createContext({currentRadioStation: {}, setCurr
 function App() {
 
     let [currentRadioStation, setCurrentRadioStation] = useState<Station>({
-        stationName: 'No station', 
+        stationName: 'No station selected', 
         streamUrl: '', 
         stationThumbnail: ''
     });
