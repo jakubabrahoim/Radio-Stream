@@ -84,26 +84,4 @@
     .googleButton {
         @apply text-white bg-gray-800 hover:bg-gray-700 rounded-lg hover:cursor-pointer px-2 py-2 my-2 w-44;
     }
-
-
-    /* Audio player */
-
-    .audioPlayer {
-        @apply font-serif text-center fixed bottom-0 w-screen;
-    }
-
-    /*
-    .loadingRotate {
-        animation: spin 1s linear infinite;
-
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-    }
-    */
 }

@@ -43,12 +43,22 @@ function AudioPlayer() {
 
     /* Extract global radio station information and set local states */
     useEffect(function getRadioStationContext() {
+        // Stop current audio stream
+        audio.pause();
+        setAudioPlaying('stopped');
+        
         setStationName(currentRadioStation.stationName);
-
+        setAudio(new Audio(currentRadioStation.streamUrl));
         if(currentRadioStation.stationThumbnail !== '') setThumbnailPresent(true);
         else setThumbnailPresent(false); 
+        
+        if(currentRadioStation.streamUrl !== '') {
+            playStream();
+        }
 
-        setAudio(new Audio(currentRadioStation.streamUrl));        
+        console.log(currentRadioStation);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentRadioStation]);
 
     async function playStream(): Promise<void> {

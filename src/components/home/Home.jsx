@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { CurrentRadioContext } from "../../App";
 import { IconContext } from "react-icons";
 import { BiRadio } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
 
+    let { setCurrentRadioStation } = useContext(CurrentRadioContext);
+    
     let [stations, setStations] = useState([]);
     let [geolocationEnabled, setGeolocationEnabled] = useState(true);
-
     let [searchInput, setSearchInput] = useState('');
 
     let navigate = useNavigate();
@@ -56,6 +58,10 @@ function Home() {
             navigate(`/search-result?query=${searchInput}`, { state: { stations: response } });
         })
         .catch(error => console.log(error));
+    }
+
+    function playRadioStation(stationName: string, streamUrl: string, stationThumbnail: string): void {
+        setCurrentRadioStation({stationName: stationName, streamUrl: streamUrl, stationThumbnail: stationThumbnail});
     }
     
     return (
@@ -109,7 +115,10 @@ function Home() {
                                                 <BiRadio/>
                                             </IconContext.Provider>
                                         }
-                                        <button className='w-20 h-6 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md'>
+                                        <button 
+                                            onClick={() => playRadioStation(station.name, station.url, station.favicon)}
+                                            className='w-20 h-6 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md'
+                                        >
                                             Play
                                         </button>
                                     </div>
