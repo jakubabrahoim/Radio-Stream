@@ -53,6 +53,7 @@ function AudioPlayer() {
         else setThumbnailPresent(false); 
         
         if(currentRadioStation.streamUrl !== '') {
+            // this function call messed up the local states
             playStream();
         }
 
