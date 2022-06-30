@@ -10,8 +10,6 @@ import { IconContext } from "react-icons";
 import { Tooltip } from '@mantine/core';
 
 function AudioPlayer() {
-
-    //let streamUrl: string = 'https://radioshamfm.grtvstream.com:8400/;';
     
     // Variables for user authentication
     let [user, setUser] = useState<User | null>(null);
@@ -21,13 +19,14 @@ function AudioPlayer() {
     let { currentRadioStation } = useContext<any>(CurrentRadioContext);
 
     // Local state variables for the audio player
-    let [stationName, setStationName] = useState('Sham FM');
+    let [stationName, setStationName] = useState('No station selected');
     let [thumbnailPresent, setThumbnailPresent] = useState(false);
     let [audio, setAudio] = useState(new Audio(''));
-    let [audioPlaying, setAudioPlaying] = useState('stopped');
     let [audioVolume, setAudioVolume] = useState(50);
+    let [audioPlaying, setAudioPlaying] = useState('stopped');
     let [muted, setMuted] = useState({muted: false, volumeBeforeMute: 50})
     let [stationLiked, setStationLiked] = useState(false);
+
     
     /* Check if user is logged in -> used to show/hide like button */
     useEffect(function getUserAuth() {
@@ -43,21 +42,36 @@ function AudioPlayer() {
 
     /* Extract global radio station information and set local states */
     useEffect(function getRadioStationContext() {
-        // Stop current audio stream
-        audio.pause();
+        // Reset previous audio stream
+        audio.load();
+        audio.src = '';
         setAudioPlaying('stopped');
         
         setStationName(currentRadioStation.stationName);
-        setAudio(new Audio(currentRadioStation.streamUrl));
+        
         if(currentRadioStation.stationThumbnail !== '') setThumbnailPresent(true);
         else setThumbnailPresent(false); 
-        
-        if(currentRadioStation.streamUrl !== '') {
-            // this function call messed up the local states
-            playStream();
+
+        let initialPlayStream = async () => {
+            try {
+                audio.load();
+                audio.src = '';
+                setAudio(new Audio(currentRadioStation.streamUrl));
+                await audio.play();
+                audio.volume = audioVolume / 100;
+                setAudioPlaying('playing');
+            } catch (error) {
+                console.log(error);
+            }
         }
 
-        console.log(currentRadioStation);
+        if(currentRadioStation.streamUrl !== '') {
+            initialPlayStream();
+            let button = document.getElementById('play-button');
+            setTimeout(() => {
+                button?.click();
+            }, 500);
+        }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentRadioStation]);
@@ -65,6 +79,9 @@ function AudioPlayer() {
     async function playStream(): Promise<void> {
         if(audioPlaying === 'playing') {
             audio.pause();
+            audio.load();
+            audio.src = '';
+            
             setAudio(new Audio(currentRadioStation.streamUrl));
             setAudioPlaying('stopped');
         } else {
@@ -91,7 +108,6 @@ function AudioPlayer() {
     function handleVolumeChange(event: any): void {
         let newVolume: number = event.target.value;
         setAudioVolume(newVolume);
-        
         audio.volume = newVolume / 100;
     }
 
@@ -111,7 +127,9 @@ function AudioPlayer() {
             <div className='flex flex-row items-center'>
                 <div className='w-14 h-14 bg-gray-300 rounded-lg mr-6 flex items-center justify-center'>
                     {
-                        thumbnailPresent === false &&
+                        thumbnailPresent ?
+                        <img src={currentRadioStation.stationThumbnail} alt='radio thumbnail' className='w-6 h-6' />
+                        :
                         <IconContext.Provider value={{ className: 'text-gray-500 w-6 h-6' }}>
                             <BiRadio/>
                         </IconContext.Provider>
@@ -122,7 +140,8 @@ function AudioPlayer() {
             
             {/* Radio play button */}
             <div>
-                <button 
+                <button
+                    id="play-button" 
                     onClick={playStream} 
                     disabled={audioPlaying === 'loading' || currentRadioStation.streamUrl === ''} 
                     className={
