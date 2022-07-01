@@ -1,5 +1,5 @@
 /*eslint-disable no-useless-concat */
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { useNavigate } from "react-router-dom";
 
@@ -28,9 +28,9 @@ function Countries() {
     }, []);
 
     /* Search for country -> filters all countries array */
-    function countrySearch(event: Event): void {
+    function countrySearch(event: any): void {
         event.preventDefault();
-        setSearchResult(countries.filter((country) => country.name.toUpperCase().includes(searchInput.toUpperCase())));
+        setSearchResult(countries.filter((country: {name: string}) => country.name.toUpperCase().includes(searchInput.toUpperCase())));
     }
 
     /* Fetch stations for selected country and navigate to new page with these stations */
@@ -75,13 +75,21 @@ function Countries() {
                             value='Search'
                             name="search" 
                         ></input>
+
+                        {/*
+                        <datalist id='countriesDataList' className='h-11 overflow-hidden'>
+                            {countries.map((country) => (
+                                <option key={country.name} value={country.name}>{country.name}</option>
+                            ))}
+                        </datalist>
+                        */}
                     </form>
                 </section>
             </article>    
 
             <article className={'grid justify-center align-middle ' + `${searchResult.length > 7 ? 'h-[475px]' : 'h-[' + `${56 * searchResult.length}` + 'px]'}` + ' overflow-y-auto'}>
                 {
-                    searchResult.map((country, index) => {
+                    searchResult.map((country: {name: string, stationcount: number, iso_3166_1: string}, index) => {
                         return (    
                             <section className='flex flex-row items-center border rounded-lg mb-2 px-4 h-14 w-[580px]' key={index}>
                                 <div className='flex basis-2/3 items-center justify-start'>

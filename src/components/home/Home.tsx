@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, ChangeEvent } from "react";
 import { CurrentRadioContext } from "../../App";
 import { IconContext } from "react-icons";
 import { BiRadio } from "react-icons/bi";
@@ -42,7 +42,7 @@ function Home() {
     }
 
     /** Fetch radio station on search submit */
-    function fetchRadioStations(event: Event): void {
+    function fetchRadioStations(event: any): void {
         event.preventDefault();
 
         fetch(`https://at1.api.radio-browser.info/json/stations/byname/${searchInput}?hidebroken=true&order=clickcount&reverse=true`,
@@ -61,6 +61,7 @@ function Home() {
     }
 
     function playRadioStation(stationName: string, streamUrl: string, stationThumbnail: string): void {
+        // @ts-ignore
         setCurrentRadioStation({stationName: stationName, streamUrl: streamUrl, stationThumbnail: stationThumbnail});
     }
     
@@ -103,7 +104,7 @@ function Home() {
                 <article className='grid grid-rows-1 justify-center align-middle'>
                     <section className='flex flex-row items-center overflow-x-auto mx-1'>
                         {
-                            stations.map((station, index) => {
+                            stations.map((station: {name: string, favicon: string, url: string}, index) => {
                                 return (
                                     <div className='mx-6 h-60 w-60 border rounded-lg grid grid-row-3 justify-items-center items-center' key={index}>
                                         <p className='w-60 text-center'>{station.name}</p>
