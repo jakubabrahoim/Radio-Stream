@@ -84,4 +84,8 @@
     .googleButton {
         @apply text-white bg-gray-800 hover:bg-gray-700 rounded-lg hover:cursor-pointer px-2 py-2 my-2 w-44;
     }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }

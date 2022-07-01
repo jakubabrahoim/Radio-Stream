@@ -26,7 +26,6 @@ function AudioPlayer() {
     let [audioPlaying, setAudioPlaying] = useState('stopped');
     let [muted, setMuted] = useState({muted: false, volumeBeforeMute: 50})
     let [stationLiked, setStationLiked] = useState(false);
-
     
     /* Check if user is logged in -> used to show/hide like button */
     useEffect(function getUserAuth() {
@@ -66,7 +65,7 @@ function AudioPlayer() {
         }
 
         if(currentRadioStation.streamUrl !== '') {
-            initialPlayStream();
+            initialPlayStream();            
             let button = document.getElementById('play-button');
             setTimeout(() => {
                 button?.click();

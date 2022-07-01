@@ -21,7 +21,7 @@ function Home() {
         .then(response => {
             let userLocation = response.country_name;
 
-            return fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${userLocation}?hidebroken=true&order=clickcount&limit=5&reverse=true`,
+            return fetch(`https://at1.api.radio-browser.info/json/stations/bycountry/${userLocation}?hidebroken=true&order=clickcount&limit=10&reverse=true`,
             {
                 method: 'GET',
                 headers: {
@@ -101,7 +101,7 @@ function Home() {
                 geolocationEnabled ? 
 
                 <article className='grid grid-rows-1 justify-center align-middle'>
-                    <section className='flex flex-row items-center'>
+                    <section className='flex flex-row items-center overflow-x-auto mx-1'>
                         {
                             stations.map((station, index) => {
                                 return (
