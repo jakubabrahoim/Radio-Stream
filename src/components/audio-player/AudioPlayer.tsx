@@ -107,8 +107,14 @@ function AudioPlayer() {
 
     function handleVolumeChange(event: any): void {
         let newVolume: number = event.target.value;
-        setAudioVolume(newVolume);
-        audio.volume = newVolume / 100;
+
+        if(Math.abs(newVolume - 50) <= 3) {
+            setAudioVolume(50);
+            audio.volume = 0.5;
+        } else {
+            setAudioVolume(newVolume);
+            audio.volume = newVolume / 100;
+        }
     }
 
     function muteAudio(): void {
@@ -198,7 +204,11 @@ function AudioPlayer() {
                         onChange={handleVolumeChange} 
                         className={`w-full hover:cursor-grab accent-gray-800 ${currentRadioStation.streamUrl === '' && 'cursor-not-allowed'}`}
                         disabled={currentRadioStation.streamUrl === ''}
+                        list='volumeDataList'
                     />
+                    <datalist id='volumeDataList'>
+                        <option value='50'/>
+                    </datalist>
                 </div>
                 
                 {/* Logged in, verified user -> can like stations */}
