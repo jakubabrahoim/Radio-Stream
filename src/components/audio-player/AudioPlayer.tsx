@@ -79,15 +79,15 @@ function AudioPlayer() {
     async function playStream(): Promise<void> {
         if(audioPlaying === 'playing') {
             audio.pause();
-            audio.load();
-            audio.src = '';
-            
-            setAudio(new Audio(currentRadioStation.streamUrl));
+            //audio.load();
+            //audio.src = '';
+            //setAudio(new Audio(currentRadioStation.streamUrl));
             setAudioPlaying('stopped');
         } else {
             try {
                 // if muted.muted -> set volume to 0
                 audio.volume = audioVolume / 100;
+                audio.load();
                 setAudioPlaying('loading');
                 await audio.play();
                 setAudioPlaying('playing');
