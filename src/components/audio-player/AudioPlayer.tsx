@@ -218,7 +218,12 @@ function AudioPlayer() {
                 {
                     (user !== null) && (verified === true) &&
                     <>
-                        <button  onClick={likeStation} className="rounded-full hover:bg-red-100 w-10 h-10 flex items-center justify-center">
+                        <button  
+                            onClick={likeStation} 
+                            className={`rounded-full hover:bg-red-100 w-10 h-10 flex items-center justify-center ${currentRadioStation.streamUrl === '' && 'hover:cursor-not-allowed'}`}
+                            disabled={currentRadioStation.streamUrl === ''}
+                            aria-labelledby='likeLabel'
+                        >
                         {
                             stationLiked === false &&
                             <IconContext.Provider value={{ className: 'text-red-600 w-8 h-8 pt-0.5' }}>
@@ -231,6 +236,7 @@ function AudioPlayer() {
                                 <AiFillHeart/>
                             </IconContext.Provider>
                         }
+                            <span id='likeButtonLabel' hidden>Like button</span>
                         </button>
                     </>
                 }
