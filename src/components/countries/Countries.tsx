@@ -22,8 +22,9 @@ function Countries() {
         })
         .then(response => response.json())
         .then(response => {
-            setCountries(response);
-            setSearchResult(response);
+            let sortedCountries = response.sort((a: any, b: any) => a.name.localeCompare(b.name));
+            setCountries(sortedCountries);
+            setSearchResult(sortedCountries);
         })
     }, []);
 
