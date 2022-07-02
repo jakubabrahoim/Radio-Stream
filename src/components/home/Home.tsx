@@ -27,7 +27,7 @@ function Home() {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'User-Agent': 'radio-sh.web.app'
+                    'User-Agent': 'radio-stream.live'
                 }
             })
         })
@@ -51,7 +51,7 @@ function Home() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'User-Agent': 'radio-sh.web.app',
+                'User-Agent': 'radio-stream.live',
             }
         })
         .then(response => response.json())

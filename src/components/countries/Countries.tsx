@@ -17,7 +17,7 @@ function Countries() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'User-Agent': 'radio-sh.web.app',
+                'User-Agent': 'radio-stream.live',
             }
         })
         .then(response => response.json())
@@ -41,7 +41,7 @@ function Countries() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'User-Agent': 'radio-sh.web.app',
+                'User-Agent': 'radio-stream.live',
             }
         })
         .then(response => response.json())
