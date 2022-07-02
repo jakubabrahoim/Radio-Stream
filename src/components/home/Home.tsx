@@ -86,20 +86,22 @@ function Home() {
                 
                 <section className='self-center'>
                     <form className='flex flex-row' onSubmit={fetchRadioStations}>
-                        <label hidden>Search</label>
+                        <span id='homeSearchLabel' hidden>Search</span>
                         <input 
                             className='w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
                             type='text' 
                             value={searchInput} 
                             placeholder='Search for radio stations...' 
                             onChange={handleSearchInputChange}
+                            aria-labelledby='homeSearchLabel'
                         />
-                        <label hidden>Submit</label>
+                        <span id='homeSubmitLabel' hidden>Search</span>
                         <input 
                             className='w-24 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md' 
                             type='submit' 
                             value='Search'
                             name="search" 
+                            aria-labelledby='homeSubmitLabel'
                         />
                     </form>
                 </section>
@@ -114,10 +116,11 @@ function Home() {
 
                 <article className='grid grid-cols-12 justify-center'>
                     <section className='col-span-1 flex flex-row items-center justify-center'>
-                        <button onClick={() => horizontalScroll('left')}>
-                            <IconContext.Provider value={{ className: 'w-6 h-6' }}>
+                        <button onClick={() => horizontalScroll('left')} aria-labelledby='leftArrow'>
+                            <IconContext.Provider value={{ className: 'w-6 h-6 text-gray-800 hover:text-gray-500' }}>
                                 <AiOutlineLeft />
                             </IconContext.Provider>
+                            <span id='leftArrow' hidden>Scroll left</span>
                         </button>
                     </section>
                     <section id='popularStations' className='col-span-10 flex flex-row items-center overflow-x-auto mx-1'>
@@ -146,10 +149,11 @@ function Home() {
                         }
                     </section>
                     <section className='col-span-1 flex flex-row items-center justify-center'>
-                        <button onClick={() => horizontalScroll('right')}>
-                            <IconContext.Provider value={{ className: 'w-6 h-6' }}>
+                        <button onClick={() => horizontalScroll('right')} aria-labelledby='rightArrow'>
+                            <IconContext.Provider value={{ className: 'w-6 h-6 text-gray-800 hover:text-gray-500' }}>
                                 <AiOutlineRight />
                             </IconContext.Provider>
+                            <span id='rightArrow' hidden>Scroll right</span>
                         </button>
                     </section>
                 </article>
