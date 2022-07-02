@@ -66,7 +66,7 @@ function AudioPlayer() {
 
         if(currentRadioStation.streamUrl !== '') {
             initialPlayStream();            
-            let button = document.getElementById('play-button');
+            let button = document.getElementById('playButton');
             setTimeout(() => {
                 button?.click();
             }, 500);
@@ -146,7 +146,7 @@ function AudioPlayer() {
             {/* Radio play button */}
             <div>
                 <button
-                    id="play-button" 
+                    id="playButton" 
                     onClick={playStream} 
                     disabled={audioPlaying === 'loading' || currentRadioStation.streamUrl === ''} 
                     className={
@@ -154,6 +154,7 @@ function AudioPlayer() {
                         ${audioPlaying === 'loading' && 'cursor-progress'}
                         ${currentRadioStation.streamUrl === '' && 'cursor-not-allowed'}`
                     }
+                    aria-labelledby='playButtonLabel'
                 >
                     {
                         audioPlaying === 'stopped' &&
@@ -173,7 +174,7 @@ function AudioPlayer() {
                             <AiOutlineLoading/>
                         </IconContext.Provider>
                     }
-                    
+                    <span id='playButtonLabel' hidden>Play/Stop</span>
                 </button>
             </div>
             
@@ -189,13 +190,15 @@ function AudioPlayer() {
                                 ${currentRadioStation.streamUrl === '' && 'cursor-not-allowed'}`
                             }
                             disabled={currentRadioStation.streamUrl === ''}
+                            aria-labelledby='muteLabel'
                         >
                             <IconContext.Provider value={{className: 'h-5 w-5'}}>
                                 { muted.muted === false ? <BsFillVolumeUpFill/> : <BsVolumeMuteFill/> }
                             </IconContext.Provider>
+                            <span id='muteLabel' hidden>Mute</span>
                         </button>
                     </div>
-                    <label className='text-sm mr-14' hidden>Volume</label>
+                    <span id='volumeLabel' hidden>Volume</span>
                     <input 
                         type='range' 
                         min='0' max='100' step='1' 
@@ -204,6 +207,7 @@ function AudioPlayer() {
                         className={`w-full hover:cursor-grab accent-gray-800 ${currentRadioStation.streamUrl === '' && 'cursor-not-allowed'}`}
                         disabled={currentRadioStation.streamUrl === ''}
                         list='volumeDataList'
+                        aria-labelledby='volumeLabel'
                     />
                     <datalist id='volumeDataList'>
                         <option value='50'/>
