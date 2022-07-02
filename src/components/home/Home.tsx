@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext, ChangeEvent } from "react";
 import { CurrentRadioContext } from "../../App";
 import { IconContext } from "react-icons";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { BiRadio } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
@@ -64,6 +65,16 @@ function Home() {
         // @ts-ignore
         setCurrentRadioStation({stationName: stationName, streamUrl: streamUrl, stationThumbnail: stationThumbnail});
     }
+
+    function horizontalScroll(direction: string): void {
+        let stationsSection = document.getElementById('popularStations');
+
+        if (direction === 'left') {
+            stationsSection?.scrollBy({ left: -250, top: 0, behavior: 'smooth' });
+        } else if (direction === 'right') {
+            stationsSection?.scrollBy({ left: 250, top: 0, behavior: 'smooth' });
+        }
+    }
     
     return (
         <>
@@ -101,8 +112,15 @@ function Home() {
             {
                 geolocationEnabled ? 
 
-                <article className='grid grid-rows-1 justify-center align-middle'>
-                    <section className='flex flex-row items-center overflow-x-auto mx-1'>
+                <article className='grid grid-cols-12 justify-center'>
+                    <section className='col-span-1 flex flex-row items-center justify-center'>
+                        <button onClick={() => horizontalScroll('left')}>
+                            <IconContext.Provider value={{ className: 'w-6 h-6' }}>
+                                <AiOutlineLeft />
+                            </IconContext.Provider>
+                        </button>
+                    </section>
+                    <section id='popularStations' className='col-span-10 flex flex-row items-center overflow-x-auto mx-1'>
                         {
                             stations.map((station: {name: string, favicon: string, url: string}, index) => {
                                 return (
@@ -126,6 +144,13 @@ function Home() {
                                 )
                             })
                         }
+                    </section>
+                    <section className='col-span-1 flex flex-row items-center justify-center'>
+                        <button onClick={() => horizontalScroll('right')}>
+                            <IconContext.Provider value={{ className: 'w-6 h-6' }}>
+                                <AiOutlineRight />
+                            </IconContext.Provider>
+                        </button>
                     </section>
                 </article>
                 
