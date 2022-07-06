@@ -20,7 +20,6 @@ function CountrySearch() {
     // Didn't add dependency because location.state.stations might be null/undefined when user changes the url
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
-        console.log('meh')
         try{
             setStations(location.state.stations);
             setFilteredStations(location.state.stations);

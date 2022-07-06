@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import Avatar from 'react-avatar';
 let logo = require('../../assets/logo.png');
@@ -41,9 +42,9 @@ function Navigation() {
                         <div className='navigationLogo'>
                             <img src={logo} alt='logo' className='w-5 h-5'/>
                         </div>
-                        <a className='navigationButton' href='/home'>Home</a>
-                        <a className='navigationButton' href='/countries'>Countries</a>
-                        <a className='navigationButton' href='/#'>About</a>
+                        <Link className='navigationButton' to='/home'>Home</Link>
+                        <Link className='navigationButton' to='/countries'>Countries</Link>
+                        <Link className='navigationButton' to='/#'>About</Link>
                     </div>
                 }
                 {/* Left side navigation - logged in */}
@@ -53,18 +54,18 @@ function Navigation() {
                         <div className='navigationLogo'>
                             <img src={logo} alt='logo' className='w-5 h-5'/>
                         </div>
-                        <a className='navigationButton' href='/home'>Home</a>
-                        <a className='navigationButton' href='/#'>My stations</a>
-                        <a className='navigationButton' href='/countries'>Countries</a>
-                        <a className='navigationButton' href='/#'>About</a>
+                        <Link className='navigationButton' to='/home'>Home</Link>
+                        <Link className='navigationButton' to='/#'>My stations</Link>
+                        <Link className='navigationButton' to='/countries'>Countries</Link>
+                        <Link className='navigationButton' to='/#'>About</Link>
                     </div>
                 }
                 {/* Right side navigation - not logged in */}
                 {
                     user === null &&
                     <div className='navGroupRight'>
-                        <a className='navigationButton' href='/login'>Login</a>
-                        <a className='navigationButton' href='/signup'>Sign up</a>
+                        <Link className='navigationButton' to='/login'>Login</Link>
+                        <Link className='navigationButton' to='/signup'>Sign up</Link>
                     </div>
                 }
                 {/* Right side navigation - logged in */}

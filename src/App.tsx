@@ -48,8 +48,6 @@ function App() {
 
     return (
         <>
-            <Navigation/>
-
             {/* @ts-ignore */}
             <CurrentRadioContext.Provider value={{currentRadioStation, setCurrentRadioStation}}>
                 <AudioPlayer/>
@@ -58,6 +56,7 @@ function App() {
                 <div className="bg-[url('https://svgshare.com/i/hcM.svg')] fixed bottom-20 w-screen h-56"> &nbsp;  </div>
                 
                 <Router>
+                    <Navigation/>
                     <Routes>
                         <Route path='/' element={<Navigate to='/home' />}/>
                         <Route path='/home' element={<Home/>}/>
