@@ -42,7 +42,6 @@ function AudioPlayer() {
     /* Extract global radio station information and set local states */
     useEffect(function getRadioStationContext() {
         // Reset previous audio stream
-        audio.load();
         audio.src = '';
         setAudioPlaying('stopped');
         
@@ -53,7 +52,6 @@ function AudioPlayer() {
 
         let initialPlayStream = async () => {
             try {
-                audio.load();
                 audio.src = '';
                 setAudio(new Audio(currentRadioStation.streamUrl));
                 await audio.play();
@@ -64,23 +62,20 @@ function AudioPlayer() {
             }
         }
 
-        if(currentRadioStation.streamUrl !== '') {
+        if(currentRadioStation.streamUrl !== '' && currentRadioStation.autoPlay !== false) {
             initialPlayStream();            
             let button = document.getElementById('playButton');
             setTimeout(() => {
                 button?.click();
             }, 500);
         }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentRadioStation]);
 
+    /* This function is called on play button press and plays the audio stream */
     async function playStream(): Promise<void> {
         if(audioPlaying === 'playing') {
             audio.pause();
-            //audio.load();
-            //audio.src = '';
-            //setAudio(new Audio(currentRadioStation.streamUrl));
             setAudioPlaying('stopped');
         } else {
             try {
@@ -94,6 +89,33 @@ function AudioPlayer() {
                 console.log(error);
             }
         }
+    }
+
+    /* 
+        This function is called on first play button press after loading the page.
+        Audio stream from previous session is loaded and it requires different initial
+        play button behavior. 
+    */
+    async function playLoadedStream(): Promise<void> {
+        currentRadioStation.autoPlay = true;
+
+        try {
+            audio.src = '';
+            setAudio(new Audio(currentRadioStation.streamUrl));
+            await audio.play();
+            audio.volume = audioVolume / 100;
+            setAudioPlaying('playing');
+        } catch (error) {
+            console.log(error);
+        }
+
+        let button = document.getElementById('playButton');
+        setTimeout(() => {
+            button?.click();
+        }, 500);
+
+        console.log(currentRadioStation);
+
     }
 
     function likeStation(): void {
@@ -147,7 +169,7 @@ function AudioPlayer() {
             <div>
                 <button
                     id="playButton" 
-                    onClick={playStream} 
+                    onClick={currentRadioStation.autoPlay === true ? playStream : playLoadedStream} 
                     disabled={audioPlaying === 'loading' || currentRadioStation.streamUrl === ''} 
                     className={
                         `rounded-full border border-gray-800 bg-gray-800 hover:bg-gray-700 w-12 h-12 flex items-center justify-center 

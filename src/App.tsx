@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 import Home from './components/home/Home';
 import Navigation from './components/navigation/Navigation';
@@ -14,6 +14,8 @@ import NotFound from './components/error-pages/NotFound';
 
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
+
+import { loadLastStation } from './helpers/localStorage';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAkSTkF9OnUVDjWZEOuhABQXan1aqZMTks",
@@ -34,6 +36,7 @@ export interface Station {
     stationName: string;
     streamUrl: string;
     stationThumbnail: string;
+    autoPlay: boolean
 }
 
 export let CurrentRadioContext = createContext({currentRadioStation: {}, setCurrentRadioStation: () => {}});
@@ -43,8 +46,14 @@ function App() {
     let [currentRadioStation, setCurrentRadioStation] = useState<Station>({
         stationName: 'No station selected', 
         streamUrl: '', 
-        stationThumbnail: ''
+        stationThumbnail: '',
+        autoPlay: true
     });
+
+    useEffect(() => {
+        let lastStation: Station = loadLastStation();
+        setCurrentRadioStation(lastStation);
+    }, [])
 
     return (
         <>

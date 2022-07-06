@@ -1,9 +1,12 @@
 import { useEffect, useState, useContext, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { CurrentRadioContext } from "../../App";
+
 import { IconContext } from "react-icons";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { BiRadio } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
+
+import { saveLastStation } from "../../helpers/localStorage";
 
 function Home() {
 
@@ -61,9 +64,10 @@ function Home() {
         .catch(error => console.log(error));
     }
 
-    function playRadioStation(stationName: string, streamUrl: string, stationThumbnail: string): void {
+    function playRadioStation(stationName: string, streamUrl: string, stationThumbnail: string, autoPlay: boolean): void {
         // @ts-ignore
-        setCurrentRadioStation({stationName: stationName, streamUrl: streamUrl, stationThumbnail: stationThumbnail});
+        setCurrentRadioStation({stationName: stationName, streamUrl: streamUrl, stationThumbnail: stationThumbnail, autoPlay: autoPlay});
+        saveLastStation({stationName: stationName, streamUrl: streamUrl, stationThumbnail: stationThumbnail, autoPlay: autoPlay});
     }
 
     function horizontalScroll(direction: string): void {
@@ -138,7 +142,7 @@ function Home() {
                                             </IconContext.Provider>
                                         }
                                         <button 
-                                            onClick={() => playRadioStation(station.name, station.url, station.favicon)}
+                                            onClick={() => playRadioStation(station.name, station.url, station.favicon, true)}
                                             className='w-20 h-6 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md'
                                         >
                                             Play
