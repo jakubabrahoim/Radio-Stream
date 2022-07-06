@@ -113,9 +113,6 @@ function AudioPlayer() {
         setTimeout(() => {
             button?.click();
         }, 500);
-
-        console.log(currentRadioStation);
-
     }
 
     function likeStation(): void {
