@@ -5,13 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 function Countries() {
 
+    let [userLocation, setUserLocation] = useState<null | string>(null);
     let [countries, setCountries] = useState([]);
     let [searchResult, setSearchResult] = useState([]);
     let [searchInput, setSearchInput] = useState('');
     let navigate = useNavigate();
 
-    /* Fetch all countries */
+    /* Fetch all countries and users location */
     useEffect(() => {        
+        // Countries
         fetch(`https://at1.api.radio-browser.info/json/countries`,
         {
             method: 'GET',
@@ -22,9 +24,37 @@ function Countries() {
         })
         .then(response => response.json())
         .then(response => {
-            let sortedCountries = response.sort((a: any, b: any) => a.name.localeCompare(b.name));
-            setCountries(sortedCountries);
-            setSearchResult(sortedCountries);
+            // Get user location
+            fetch('https://geolocation-db.com/json/')
+            .then(countryResponse => countryResponse.json())
+            .then(countryResponse => {
+                // Get country name form response
+                let userCountryName = countryResponse.country_name;
+                // Alphabetically sort countries
+                let sortedCountries = response.sort((a: any, b: any) => a.name.localeCompare(b.name));
+                // Check if users country is in the list
+                let userCountry = sortedCountries.find((country: any) => country.name.toLowerCase() === userCountryName.toLowerCase());
+                
+                if(userCountry === null || userCountry === undefined) {
+                    setUserLocation(null);
+                } 
+                else {
+                    // Filter out users country from array
+                    sortedCountries = sortedCountries.filter((country: any) => country.name.toLowerCase() !== userCountryName.toLowerCase());
+                    // Set users country to the top of the list
+                    sortedCountries.unshift(userCountry);
+                    setUserLocation(userCountryName);
+                    setCountries(sortedCountries);
+                    setSearchResult(sortedCountries);
+                }
+            })
+            .catch(_error => {
+                setUserLocation(null);
+
+                let sortedCountries = response.sort((a: any, b: any) => a.name.localeCompare(b.name));
+                setCountries(sortedCountries);
+                setSearchResult(sortedCountries);
+            });            
         })
     }, []);
 
@@ -92,18 +122,21 @@ function Countries() {
                 {
                     searchResult.map((country: {name: string, stationcount: number, iso_3166_1: string}, index) => {
                         return (    
-                            <section className='flex flex-row items-center border rounded-lg mb-2 px-4 h-14 w-[580px]' key={index}>
-                                <div className='flex basis-2/3 items-center justify-start'>
-                                    <div>
-                                        <span className='font-semibold mr-1 hover:cursor-pointer' onClick={() => fetchRadioStationsForCountry(country.name)}>{country.name}</span>
-                                        <span className='mr-2'><ReactCountryFlag countryCode={country.iso_3166_1}/></span>
-                                        <span className='text-sm'>({country.stationcount} {country.stationcount === 1 ? 'station' : 'stations'})</span>
+                            <div key={index}>
+                                <section className='flex flex-row items-center border rounded-lg mb-2 px-4 h-14 w-[580px]'>
+                                    <div className='flex basis-2/3 items-center justify-start'>
+                                        <div>
+                                            <span className='font-semibold mr-1 hover:cursor-pointer' onClick={() => fetchRadioStationsForCountry(country.name)}>{country.name}</span>
+                                            <span className='mr-2'><ReactCountryFlag countryCode={country.iso_3166_1}/></span>
+                                            <span className='text-sm'>({country.stationcount} {country.stationcount === 1 ? 'station' : 'stations'})</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className='flex basis-1/3 justify-end'>
-                                    <button className='text-sm text-gray-400' onClick={() => fetchRadioStationsForCountry(country.name)}>Browse stations</button>
-                                </div>
-                            </section>
+                                    <div className='flex basis-1/3 justify-end'>
+                                        <button className='text-sm text-gray-400' onClick={() => fetchRadioStationsForCountry(country.name)}>Browse stations</button>
+                                    </div>
+                                </section>
+                                {userLocation !== null && index === 0 && <hr className='border-1 mb-2'></hr>}
+                            </div>
                         )
                     })
                 }
