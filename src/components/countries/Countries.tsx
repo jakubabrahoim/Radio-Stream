@@ -95,7 +95,7 @@ function Countries() {
                             <section className='flex flex-row items-center border rounded-lg mb-2 px-4 h-14 w-[580px]' key={index}>
                                 <div className='flex basis-2/3 items-center justify-start'>
                                     <div>
-                                        <span className='font-semibold mr-1'>{country.name}</span>
+                                        <span className='font-semibold mr-1 hover:cursor-pointer' onClick={() => fetchRadioStationsForCountry(country.name)}>{country.name}</span>
                                         <span className='mr-2'><ReactCountryFlag countryCode={country.iso_3166_1}/></span>
                                         <span className='text-sm'>({country.stationcount} {country.stationcount === 1 ? 'station' : 'stations'})</span>
                                     </div>
