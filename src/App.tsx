@@ -9,6 +9,7 @@ import AudioPlayer from './components/audio-player/AudioPlayer';
 import SearchResult from './components/search/SearchResult';
 import Countries from './components/countries/Countries';
 import CountrySearch from './components/search/CountrySearch';
+import LikedStations from './components/user/LikedStations';
 import BadRequest from './components/error-pages/BadRequest';
 import NotFound from './components/error-pages/NotFound';
 
@@ -76,6 +77,7 @@ function App() {
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/signup' element={<SignUp firebaseApp={app}/>}/>
                         <Route path='/search-result' element={<SearchResult/>}/>
+                        <Route path='/my-stations' element={<LikedStations database={db}/>}/>
                         <Route path='/400' element={<BadRequest/>}/>
                         <Route path='*' element={<NotFound/>}/>
                     </Routes>

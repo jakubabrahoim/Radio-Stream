@@ -27,18 +27,6 @@ function AudioPlayer(database: any) {
     let [audioPlaying, setAudioPlaying] = useState('stopped');
     let [muted, setMuted] = useState({muted: false, volumeBeforeMute: 50})
     let [stationLiked, setStationLiked] = useState(false);
-    
-    /* Check if user is logged in -> used to show/hide like button */
-    useEffect(function getUserAuth() {
-        let auth = getAuth();
-        onAuthStateChanged(auth, user => {
-            if(user) {
-                setUser(user);
-                if(user.emailVerified) setVerified(true);
-                else setVerified(false);
-            }
-        });
-    }, []);
 
     /* Extract global radio station information and set local states */
     useEffect(function getRadioStationContext() {
@@ -63,6 +51,7 @@ function AudioPlayer(database: any) {
             }
         }
 
+        // Play the radio station if user clicked play
         if(currentRadioStation.streamUrl !== '' && currentRadioStation.autoPlay !== false) {
             initialPlayStream();            
             let button = document.getElementById('playButton');
@@ -72,8 +61,8 @@ function AudioPlayer(database: any) {
         }
 
         // Check if user has liked this station
-        let getFirestoreDoc = async () => {
-            let documentId: string = `${user?.uid}-${currentRadioStation.stationName}`;
+        let getFirestoreDoc = async (uid: string) => {
+            let documentId: string = `${uid}-${currentRadioStation.stationName}`;
             let document = await getDoc(doc(database.database, 'liked-stations', documentId));
             if(document.exists()) {
                 setStationLiked(true);
@@ -81,8 +70,20 @@ function AudioPlayer(database: any) {
                 setStationLiked(false);
             }
         }
+
+        // Get user authentication info, set appropriate state variables
+        let auth = getAuth();
+        onAuthStateChanged(auth, user => {
+            if(user) {
+                setUser(user);
+                if(user.emailVerified) {
+                    setVerified(true);
+                    getFirestoreDoc(user.uid);
+                }
+                else setVerified(false);
+            }
+        });
         
-        if(verified) getFirestoreDoc();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentRadioStation]);
 

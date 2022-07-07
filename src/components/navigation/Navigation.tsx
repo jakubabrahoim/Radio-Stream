@@ -55,7 +55,7 @@ function Navigation() {
                             <img src={logo} alt='logo' className='w-5 h-5'/>
                         </div>
                         <Link className='navigationButton' to='/home'>Home</Link>
-                        <Link className='navigationButton' to='/#'>My stations</Link>
+                        <Link className='navigationButton' to='/my-stations'>My stations</Link>
                         <Link className='navigationButton' to='/countries'>Countries</Link>
                         <Link className='navigationButton' to='/#'>About</Link>
                     </div>
