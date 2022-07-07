@@ -1,12 +1,18 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { CurrentRadioContext } from "../../App";
+import BadRequest from "../error-pages/BadRequest";
+
 import { Pagination, Tooltip } from '@mantine/core';
 import ReactCountryFlag from "react-country-flag";
 import { IconContext } from "react-icons";
 import { BiRadio } from "react-icons/bi";
-import BadRequest from "../error-pages/BadRequest";
+
+import { saveLastStation } from "../../helpers/localStorage";
 
 function CountrySearch() {
+    
+    let { setCurrentRadioStation } = useContext(CurrentRadioContext);
     
     let location: any = useLocation();
     let [stations, setStations] = useState<any[]>([]);
@@ -38,6 +44,12 @@ function CountrySearch() {
     function filterRadioStations(event: any): void {
         event.preventDefault();
         setFilteredStations(stations.filter(station => station.name.toLowerCase().includes(searchInput.toLowerCase())));
+    }
+
+    function playRadioStation(stationName: string, streamUrl: string, stationThumbnail: string, autoPlay: boolean): void {
+        // @ts-ignore
+        setCurrentRadioStation({stationName: stationName, streamUrl: streamUrl, stationThumbnail: stationThumbnail, autoPlay: autoPlay});
+        saveLastStation({stationName: stationName, streamUrl: streamUrl, stationThumbnail: stationThumbnail, autoPlay: autoPlay});
     }
 
     function changePage(page: number): void {
@@ -157,7 +169,10 @@ function CountrySearch() {
                                         </IconContext.Provider>
                                     }
                                 </div>
-                                <button className='w-20 h-6 px-2 mb-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md'>
+                                <button 
+                                    className='w-20 h-6 px-2 mb-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md'
+                                    onClick={() => playRadioStation(station.name, station.url, station.favicon, true)}
+                                >
                                     Play
                                 </button>
                                 
