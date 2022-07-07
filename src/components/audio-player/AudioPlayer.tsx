@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { CurrentRadioContext } from "../../App";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { setDoc, deleteDoc, doc, Timestamp, getDoc } from "firebase/firestore";
 
 import { BiRadio } from "react-icons/bi";
 import { BsPlayFill, BsStopFill } from "react-icons/bs";
@@ -9,7 +10,7 @@ import { BsVolumeMuteFill, BsFillVolumeUpFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import { Tooltip } from '@mantine/core';
 
-function AudioPlayer() {
+function AudioPlayer(database: any) {
     
     // Variables for user authentication
     let [user, setUser] = useState<User | null>(null);
@@ -69,6 +70,19 @@ function AudioPlayer() {
                 button?.click();
             }, 500);
         }
+
+        // Check if user has liked this station
+        let getFirestoreDoc = async () => {
+            let documentId: string = `${user?.uid}-${currentRadioStation.stationName}`;
+            let document = await getDoc(doc(database.database, 'liked-stations', documentId));
+            if(document.exists()) {
+                setStationLiked(true);
+            } else {
+                setStationLiked(false);
+            }
+        }
+        
+        if(verified) getFirestoreDoc();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentRadioStation]);
 
@@ -115,12 +129,37 @@ function AudioPlayer() {
         }, 500);
     }
 
-    function likeStation(): void {
+    async function likeStation(): Promise<void> {
         if(verified === false) {
             console.log('You must verify your email address before you can like a station.');
             return;
         }
-        stationLiked ? setStationLiked(false) : setStationLiked(true);
+
+        if(stationLiked === false) {
+            try {
+                let documentId: string = `${user?.uid}-${currentRadioStation.stationName}`;
+                await setDoc(doc(database.database, 'liked-stations', documentId), {
+                    uid: user?.uid,
+                    stationName: currentRadioStation.stationName,
+                    stationUrl: currentRadioStation.streamUrl,
+                    stationThumbnail: currentRadioStation.stationThumbnail,
+                    createdAt: Timestamp.fromDate(new Date())
+                });
+                setStationLiked(true);
+            } catch (error) {
+                console.log(error);
+                setStationLiked(false);
+            }
+        } else {
+            try {
+                let documentId: string = `${user?.uid}-${currentRadioStation.stationName}`;
+                await deleteDoc(doc(database.database, 'liked-stations', documentId));
+            } catch (error) {
+                console.log(error);
+                setStationLiked(true);
+            }
+            setStationLiked(false);
+        }
     }
 
     function handleVolumeChange(event: any): void {

@@ -14,6 +14,7 @@ import NotFound from './components/error-pages/NotFound';
 
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
+import { getFirestore } from 'firebase/firestore';
 
 import { loadLastStation } from './helpers/localStorage';
 
@@ -31,6 +32,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const analytics = getAnalytics(app);
+let db = getFirestore(app);
 
 export interface Station {
     stationName: string;
@@ -59,7 +61,7 @@ function App() {
         <>
             {/* @ts-ignore */}
             <CurrentRadioContext.Provider value={{currentRadioStation, setCurrentRadioStation}}>
-                <AudioPlayer/>
+                <AudioPlayer database={db}/>
 
                 {/* Background image */}
                 <div className="bg-[url('https://svgshare.com/i/hcM.svg')] fixed bottom-20 w-screen h-56"> &nbsp;  </div>
