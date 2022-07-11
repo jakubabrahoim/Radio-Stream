@@ -110,7 +110,7 @@ function CountrySearch() {
                     {/* Additional search info - # of results, filters */}
                     <div className='flex flex-row mt-2'>
                         <div className='flex basis-1/4 justify-start items-center'>
-                            <p className='text-xs text-gray-500 ml-1'>{stations.length} stations found</p>
+                            <p className='text-xs text-gray-500 ml-1'>{filteredStations.length} stations found</p>
                         </div>
                         <div className='flex basis-3/4 justify-end items-center'>
                             <h3 className='text-xs text-gray-500 mr-2'>Sort:</h3>
