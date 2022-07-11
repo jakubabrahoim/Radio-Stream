@@ -141,6 +141,13 @@ function Countries() {
                     })
                 }
             </article>
+
+            {
+                searchResult.length === 0 && 
+                <article className='flex flex-row items-center justify-center'>
+                    <span className='text-gray-800 text-xl font-bold'>No countries found</span>
+                </article>
+            }
         </>
     )
 }
