@@ -186,9 +186,9 @@ function AudioPlayer(database: any) {
     }
 
     return (
-        <div className='grid grid-cols-3 gap-10 justify-items-center items-center fixed bottom-0 w-screen h-20 border-t border-gray-800 bg-gray-100'>
+        <div className='grid grid-cols-6 sm:gap-10 justify-items-center items-center fixed bottom-0 w-screen h-20 bg-gray-100'>
             {/* Radio name + radio thumbnail */}
-            <div className='flex flex-row items-center'>
+            <div className='col-span-3 sm:col-span-2 flex flex-row items-center w-auto'>
                 <div className='w-14 h-14 bg-gray-300 rounded-lg mr-6 flex items-center justify-center'>
                     {
                         thumbnailPresent ?
@@ -203,7 +203,7 @@ function AudioPlayer(database: any) {
             </div>
             
             {/* Radio play button */}
-            <div>
+            <div className='col-span-3 sm:col-span-2 justify-self-end mr-12 sm:mr-0 sm:justify-self-auto'>
                 <button
                     id="playButton" 
                     onClick={currentRadioStation.autoPlay === true ? playStream : playLoadedStream} 
@@ -238,15 +238,16 @@ function AudioPlayer(database: any) {
             </div>
             
             {/* Radio volume + like button */}
-            <div className='flex flex-row items-center'>
+            <div className='hidden sm:col-span-2 sm:flex flex-row items-center'>
                 <div className={`${user !== null ? 'mr-10' : ''}`}>
                     <div className='flex flex-row items-center'>
-                        <p className='text-sm mr-14'>Volume</p>
+                        <p className='text-sm mr-14 invisible sm:visible'>Volume</p>
                         <button 
                             onClick={muteAudio} 
                             className={
                                 `rounded-full hover:bg-gray-200 w-8 h-8 pl-1.5 first-letter
-                                ${currentRadioStation.streamUrl === '' && 'cursor-not-allowed'}`
+                                ${currentRadioStation.streamUrl === '' && 'cursor-not-allowed'}
+                                invisible sm:visible`
                             }
                             disabled={currentRadioStation.streamUrl === ''}
                             aria-labelledby='muteLabel'
@@ -263,7 +264,10 @@ function AudioPlayer(database: any) {
                         min='0' max='100' step='1' 
                         value={audioVolume} 
                         onChange={handleVolumeChange} 
-                        className={`w-full hover:cursor-grab accent-gray-800 ${currentRadioStation.streamUrl === '' && 'hover:cursor-not-allowed'}`}
+                        className={
+                            `w-full hover:cursor-grab accent-gray-800 ${currentRadioStation.streamUrl === '' && 'hover:cursor-not-allowed'}
+                            invisible sm:visible`
+                        }
                         disabled={currentRadioStation.streamUrl === ''}
                         list='volumeDataList'
                         aria-labelledby='volumeLabel'

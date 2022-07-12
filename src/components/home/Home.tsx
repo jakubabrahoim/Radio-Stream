@@ -118,7 +118,7 @@ function Home() {
             {
                 geolocationEnabled ? 
 
-                <article className='grid grid-cols-12 justify-center'>
+                <article className='grid grid-cols-12 h-[300px] sm:h-auto justify-center'>
                     <section className='col-span-1 flex flex-row items-center justify-center'>
                         <button onClick={() => horizontalScroll('left')} aria-labelledby='leftArrow'>
                             <IconContext.Provider value={{ className: 'w-6 h-6 text-gray-800 hover:text-gray-500' }}>
