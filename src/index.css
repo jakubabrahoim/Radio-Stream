@@ -72,7 +72,7 @@
         display: none;
     }
 
-    body {
+    .disableScroll {
         -ms-overflow-style: none;
         scrollbar-width: none;
     }

@@ -42,7 +42,7 @@ function Navigation() {
     }
 
     return (
-        <nav className={`bg-gray-800 ${mobileNavVisibility === 'visible' ? 'h-56' : 'h-12'}  sm:h-12 sticky top-0}`}>
+        <nav className={`bg-gray-800 ${mobileNavVisibility === 'visible' ? 'h-52' : 'h-12'}  sm:h-12 sticky top-0}`}>
             <div className='mx-auto px-2 sm:px-6 lg:px-8 h-12 flex flex-col sm:flex-row items-center'>
                 {/* Hamburger menu icon */}
                 <button 
@@ -67,7 +67,7 @@ function Navigation() {
                         </div>
                         <Link className='navigationButton' to='/home'>Home</Link>
                         <Link className='navigationButton' to='/countries'>Countries</Link>
-                        <Link className='navigationButton' to='/#'>About</Link>
+                        {/*<Link className='navigationButton' to='/#'>About</Link>*/}
                     </div>
                 }
                 {/* Left side navigation - logged in */}
@@ -83,7 +83,7 @@ function Navigation() {
                         <Link className='navigationButton' to='/home'>Home</Link>
                         <Link className='navigationButton' to='/my-stations'>My stations</Link>
                         <Link className='navigationButton' to='/countries'>Countries</Link>
-                        <Link className='navigationButton' to='/#'>About</Link>
+                        {/*<Link className='navigationButton' to='/#'>About</Link>*/}
                     </div>
                 }
                 {/* Right side navigation - not logged in */}

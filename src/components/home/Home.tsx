@@ -127,7 +127,7 @@ function Home() {
                             <span id='leftArrow' hidden>Scroll left</span>
                         </button>
                     </section>
-                    <section id='popularStations' className='col-span-10 flex flex-row items-center overflow-x-auto snap-x mx-1'>
+                    <section id='popularStations' className='col-span-10 flex flex-row items-center overflow-x-auto snap-x mx-1 disableScroll'>
                         {
                             stations.map((station: {name: string, favicon: string, url: string}, index) => {
                                 return (
