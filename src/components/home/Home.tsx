@@ -74,9 +74,9 @@ function Home() {
         let stationsSection = document.getElementById('popularStations');
 
         if (direction === 'left') {
-            stationsSection?.scrollBy({ left: -250, top: 0, behavior: 'smooth' });
+            stationsSection?.scrollBy({ left: -300, top: 0, behavior: 'smooth' });
         } else if (direction === 'right') {
-            stationsSection?.scrollBy({ left: 250, top: 0, behavior: 'smooth' });
+            stationsSection?.scrollBy({ left: 300, top: 0, behavior: 'smooth' });
         }
     }
     
@@ -85,14 +85,14 @@ function Home() {
             {/* Heading + search bar */}
             <article className='grid grid-flow-row grid-rows-2 justify-items-center align-middle mb-16'>
                 <section className='self-center my-6'>
-                    <h1 className='text-3xl'>Welcome to Radio-Stream</h1>
+                    <h1 className='text-center text-2xl font-bold sm:text-3xl'>Welcome to Radio-Stream</h1>
                 </section>
                 
                 <section className='self-center'>
                     <form className='flex flex-row' onSubmit={fetchRadioStations}>
                         <span id='homeSearchLabel' hidden>Search</span>
                         <input 
-                            className='w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
+                            className='w-[250px] sm:w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
                             type='text' 
                             value={searchInput} 
                             placeholder='Search for radio stations...' 
@@ -127,11 +127,11 @@ function Home() {
                             <span id='leftArrow' hidden>Scroll left</span>
                         </button>
                     </section>
-                    <section id='popularStations' className='col-span-10 flex flex-row items-center overflow-x-auto mx-1'>
+                    <section id='popularStations' className='col-span-10 flex flex-row items-center overflow-x-auto snap-x mx-1'>
                         {
                             stations.map((station: {name: string, favicon: string, url: string}, index) => {
                                 return (
-                                    <div className='mx-6 h-60 w-60 border rounded-lg grid grid-row-3 justify-items-center items-center' key={index}>
+                                    <div className='mx-6 h-60 w-60 border rounded-lg grid grid-row-3 justify-items-center items-center snap-center' key={index}>
                                         <p className='w-60 text-center'>{station.name}</p>
                                         {
                                             station.favicon !== '' ?

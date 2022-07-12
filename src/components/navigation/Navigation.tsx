@@ -44,13 +44,16 @@ function Navigation() {
     return (
         <nav className={`bg-gray-800 ${mobileNavVisibility === 'visible' ? 'h-56' : 'h-12'}  sm:h-12 sticky top-0}`}>
             <div className='mx-auto px-2 sm:px-6 lg:px-8 h-12 flex flex-col sm:flex-row items-center'>
+                {/* Hamburger menu icon */}
                 <button 
                     className='self-start visible sm:hidden rounded-md px-2 text-white mt-3 mr-4' 
                     onClick={() => toggleMobileNav()}
+                    aria-labelledby='menuLabel'
                 >
                     <IconContext.Provider value={{ className: 'h-6 w-6' }}>
                         <AiOutlineMenu />
                     </IconContext.Provider>
+                    <span id='menuLabel' hidden>Menu</span>
                 </button>
                 {/* Left side navigation - not logged in */}
                 {
