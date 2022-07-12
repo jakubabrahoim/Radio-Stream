@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import Avatar from 'react-avatar';
+
+import { AiOutlineMenu } from 'react-icons/ai';
+import { IconContext } from 'react-icons';
 let logo = require('../../assets/logo.png');
 
 function Navigation() {
 
     let [user, setUser] = useState<User | null>(null);
     let [verified, setVerified] = useState(false);
+
+    let [mobileNavVisibility, setMobileNavVisibility] = useState<string>('hidden');
 
     /* Check if user is logged in -> if yes we show avatar */
     useEffect(function getUserAuth() {
@@ -32,14 +37,29 @@ function Navigation() {
         homePageLink.click();
     }
 
+    function toggleMobileNav(): void {
+        setMobileNavVisibility(mobileNavVisibility === 'hidden' ? 'visible' : 'hidden');
+    }
+
     return (
-        <nav className='bg-gray-800 h-12 sticky top-0'>
-            <div className='navWrapper'>
+        <nav className={`bg-gray-800 ${mobileNavVisibility === 'visible' ? 'h-56' : 'h-12'}  sm:h-12 sticky top-0}`}>
+            <div className='mx-auto px-2 sm:px-6 lg:px-8 h-12 flex flex-col sm:flex-row items-center'>
+                <button 
+                    className='self-start visible sm:hidden rounded-md px-2 text-white mt-3 mr-4' 
+                    onClick={() => toggleMobileNav()}
+                >
+                    <IconContext.Provider value={{ className: 'h-6 w-6' }}>
+                        <AiOutlineMenu />
+                    </IconContext.Provider>
+                </button>
                 {/* Left side navigation - not logged in */}
                 {
                     user === null && 
-                    <div className='navGroupLeft'>
-                        <div className='navigationLogo'>
+                    <div className={
+                        `basis-3/6 flex flex-col sm:flex-row justify-start items-center
+                        ${mobileNavVisibility === 'visible' ? 'visible': 'invisible'} sm:visible`
+                    }>
+                        <div className='mx-2 px-2 flex items-center'>
                             <img src={logo} alt='logo' className='w-5 h-5'/>
                         </div>
                         <Link className='navigationButton' to='/home'>Home</Link>
@@ -50,8 +70,11 @@ function Navigation() {
                 {/* Left side navigation - logged in */}
                 {
                     user !== null &&
-                    <div className='navGroupLeft'>
-                        <div className='navigationLogo'>
+                    <div className={
+                        `basis-3/6 flex flex-col sm:flex-row justify-start items-center
+                        ${mobileNavVisibility === 'visible' ? 'visible': 'invisible'} sm:visible`
+                    }>
+                        <div className='mx-2 px-2 flex items-center'>
                             <img src={logo} alt='logo' className='w-5 h-5'/>
                         </div>
                         <Link className='navigationButton' to='/home'>Home</Link>
@@ -63,7 +86,10 @@ function Navigation() {
                 {/* Right side navigation - not logged in */}
                 {
                     user === null &&
-                    <div className='navGroupRight'>
+                    <div className={
+                        `basis-3/6 flex flex-col sm:flex-row justify-end items-center
+                        ${mobileNavVisibility === 'visible' ? 'visible': 'invisible'} sm:visible`
+                    }>
                         <Link className='navigationButton' to='/login'>Login</Link>
                         <Link className='navigationButton' to='/signup'>Sign up</Link>
                     </div>
@@ -71,7 +97,10 @@ function Navigation() {
                 {/* Right side navigation - logged in */}
                 {
                     user !== null &&
-                    <div className='navGroupRight'>
+                    <div className={
+                        `basis-3/6 flex flex-col sm:flex-row justify-end items-center
+                        ${mobileNavVisibility === 'visible' ? 'visible': 'invisible'} sm:visible`
+                    }>
                         <div className='avatar'>
                         {
                             user.providerData[0].providerId === 'google.com' ?
