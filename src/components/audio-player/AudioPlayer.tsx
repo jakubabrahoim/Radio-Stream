@@ -188,7 +188,7 @@ function AudioPlayer(database: any) {
     return (
         <div className='grid grid-cols-6 sm:gap-10 justify-items-center items-center fixed bottom-0 w-screen h-20 bg-gray-100'>
             {/* Radio name + radio thumbnail */}
-            <div className='col-span-3 sm:col-span-2 flex flex-row items-center w-auto'>
+            <div className='col-span-4 sm:col-span-2 flex flex-row items-center w-auto'>
                 <div className='w-14 h-14 bg-gray-300 rounded-lg mr-6 flex items-center justify-center'>
                     {
                         thumbnailPresent ?
@@ -203,7 +203,7 @@ function AudioPlayer(database: any) {
             </div>
             
             {/* Radio play button */}
-            <div className='col-span-3 sm:col-span-2 justify-self-end mr-12 sm:mr-0 sm:justify-self-auto'>
+            <div className='col-span-2 justify-self-end mr-8 sm:mr-0 sm:justify-self-auto'>
                 <button
                     id="playButton" 
                     onClick={currentRadioStation.autoPlay === true ? playStream : playLoadedStream} 
