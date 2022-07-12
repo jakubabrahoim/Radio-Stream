@@ -65,7 +65,7 @@ function App() {
                 <AudioPlayer database={db}/>
 
                 {/* Background image */}
-                <div className="bg-[url('https://svgshare.com/i/hcM.svg')] fixed bottom-20 w-screen h-56"> &nbsp;  </div>
+                <div className="bg-[url('https://svgshare.com/i/hcM.svg')] fixed bottom-20 w-screen h-24 sm:h-44 md:h-56"> &nbsp;  </div>
                 
                 <Router>
                     <Navigation/>
