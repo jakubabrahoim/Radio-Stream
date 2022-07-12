@@ -135,7 +135,7 @@ function Countries() {
                                         <button className='text-sm text-gray-400' onClick={() => fetchRadioStationsForCountry(country.name)}>Browse stations</button>
                                     </div>
                                 </section>
-                                {userLocation !== null && index === 0 && <hr className='border-1 mb-2'></hr>}
+                                {userLocation !== null && index === 0 && searchResult.length === countries.length && <hr className='border-1 mb-2'></hr>}
                             </div>
                         )
                     })
