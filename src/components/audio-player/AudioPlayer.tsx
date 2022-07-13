@@ -186,7 +186,7 @@ function AudioPlayer(database: any) {
     }
 
     return (
-        <div className='grid grid-cols-6 sm:gap-10 justify-items-center items-center fixed bottom-0 w-screen h-20 bg-gray-100'>
+        <div className='grid grid-cols-6 sm:gap-10 justify-items-center items-center fixed bottom-0 w-screen h-20 bg-gray-100 z-50'>
             {/* Radio name + radio thumbnail */}
             <div className='col-span-4 sm:col-span-2 flex flex-row items-center w-auto'>
                 <div className='w-14 h-14 bg-gray-300 rounded-lg mr-6 flex items-center justify-center'>
