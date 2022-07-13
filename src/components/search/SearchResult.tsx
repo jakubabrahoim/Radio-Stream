@@ -100,12 +100,12 @@ function SearchResult() {
     if(successfulLoad) return (
         <>
             {/* Heading + search bar */}
-            <article className='grid grid-flow-row justify-items-center align-middle sticky top-14 mb-10 mt-8'>
+            <article className='grid grid-flow-row justify-items-center align-middle top-14 mb-10 mt-8'>
                 <section className='self-center'>
                     <form className='flex flex-row w-full justify-center' onSubmit={fetchRadioStations}>
                         <label hidden>Search</label>
                         <input 
-                            className='w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
+                            className='w-[250px] sm:w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
                             type='text' 
                             value={searchInput} 
                             placeholder='Search for radio stations...' 
@@ -120,8 +120,8 @@ function SearchResult() {
                         ></input>
                     </form>
                     {/* Additional search info - # of results, filters */}
-                    <div className='flex flex-row mt-2'>
-                        <div className='flex basis-1/4 justify-start items-center'>
+                    <div className='flex flex-col sm:flex-row mt-2 mx-4 sm:mx-0'>
+                        <div className='flex basis-1/4 justify-start items-center mb-2 sm:mb-0'>
                             <p className='text-xs text-gray-500 ml-1'>{stations.length} stations found</p>
                         </div>
                         <div className='flex basis-3/4 justify-end items-center'>
@@ -151,11 +151,11 @@ function SearchResult() {
                 </section>
             </article>
             
-            <article className='grid grid-cols-7 justify-items-center'>
+            <article className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 justify-items-center h-[350px] sm:h-[430px] overflow-y-auto mt-2 mb-4 lg:mb-0'>
                 {
                     stations.slice((page - 1) * 14, (page - 1) * 14 + 14).map((station, id) => {
                         return (
-                            <section className='grid grid-rows-10 justify-items-center items-center border w-52 h-52 rounded-lg mb-2' key={id}>
+                            <section className='grid grid-rows-10 justify-items-center items-center border w-52 h-52 rounded-lg mb-4 sm:mb-2' key={id}>
                                 <div className='row-span-2'>
                                     <p className='w-52 text-center truncate'>{station.name}</p>
                                     {
@@ -196,7 +196,7 @@ function SearchResult() {
 
             {
                 stations.length > 14 &&
-                <article className='flex flex-row justify-center fixed bottom-[285px] mt-2 w-full'>
+                <article className='flex flex-row justify-center mb-24 sm:mb-72 xl:mb-0 xl:fixed sm:bottom-[285px] mt-2 w-full'>
                     <Pagination 
                         page={page} 
                         total={Math.ceil(stations.length/14)} 
