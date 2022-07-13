@@ -98,12 +98,12 @@ function LikedStations(database: any) {
     return (
         <>
             {/* Heading + search bar */}
-            <article className='grid grid-flow-row grid-rows-1 justify-items-center align-middle sticky top-14 mt-8 mb-10'>
+            <article className='grid grid-flow-row grid-rows-1 justify-items-center align-middle top-14 mt-8 mb-10'>
                 <section className='self-center'>
                     <form className='flex flex-row' onSubmit={searchStations}>
                         <label hidden>Search</label>
                         <input 
-                            className='w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
+                            className='w-[250px] sm:w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
                             type='text' 
                             value={searchInput} 
                             placeholder='Search for radio stations...' 
@@ -121,11 +121,11 @@ function LikedStations(database: any) {
             </article>    
 
             {/* Liked stations */}
-            <article className='grid grid-cols-7 justify-items-center mt-2'>
+            <article className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 justify-items-center h-[400px] sm:h-[450px] overflow-y-auto mt-2 mb-6 lg:mb-0'>
                 {
                     likedStations.slice((page - 1) * 14, (page - 1) * 14 + 14).map((station, id) => {
                         return (
-                            <section className='grid grid-rows-10 justify-items-center items-center border w-52 h-52 rounded-lg mb-2' key={id}>
+                            <section className='grid grid-rows-10 justify-items-center items-center border w-52 h-52 rounded-lg mb-4 sm:mb-2' key={id}>
                                 <div className='row-span-2'>
                                     <p className='w-52 text-center truncate'>{station.stationName}</p>
                                 </div>
@@ -173,7 +173,7 @@ function LikedStations(database: any) {
 
             {
                 likedStations.length > 14 &&
-                <article className='flex flex-row justify-center fixed bottom-[285px] mt-2 w-full'>
+                <article className='flex flex-row justify-center mb-32 sm:mb-72 xl:mb-0 xl:fixed sm:bottom-[285px] mt-2 w-full'>
                     <Pagination 
                         page={page} 
                         total={Math.ceil(likedStations.length/14)} 
