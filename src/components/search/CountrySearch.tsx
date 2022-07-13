@@ -88,12 +88,12 @@ function CountrySearch() {
     if(successfulLoad) return (
         <>
             {/* Heading + search bar */}
-            <article className='grid grid-flow-row justify-items-center align-middle sticky top-14 mb-10 mt-8'>
+            <article className='grid grid-flow-row justify-items-center align-middle top-14 mb-10 mt-8'>
                 <section className='self-center'>
                     <form className='flex flex-row w-full justify-center' onSubmit={filterRadioStations}>
                         <label hidden>Search</label>
                         <input 
-                            className='w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
+                            className='w-[250px] sm:w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
                             type='text' 
                             value={searchInput} 
                             placeholder='Search for radio stations...' 
@@ -108,7 +108,7 @@ function CountrySearch() {
                         ></input>
                     </form>
                     {/* Additional search info - # of results, filters */}
-                    <div className='flex flex-row mt-2'>
+                    <div className='flex flex-col sm:flex-row mt-2 mx-4 sm:mx-0'>
                         <div className='flex basis-1/4 justify-start items-center'>
                             <p className='text-xs text-gray-500 ml-1'>{filteredStations.length} stations found</p>
                         </div>
@@ -139,7 +139,7 @@ function CountrySearch() {
                 </section>
             </article>
             
-            <article className='grid grid-cols-7 justify-items-center'>
+            <article className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 justify-items-center h-[350px] sm:h-[430px] overflow-y-auto mt-2 mb-4 lg:mb-0'>
                 {
                     filteredStations.slice((page - 1) * 14, (page - 1) * 14 + 14).map((station, id) => {
                         return (
@@ -184,7 +184,7 @@ function CountrySearch() {
 
             {
                 stations.length > 14 &&
-                <article className='flex flex-row justify-center fixed bottom-[285px] mt-2 w-full'>
+                <article className='flex flex-row justify-center mb-24 sm:mb-72 xl:mb-0 xl:fixed sm:bottom-[285px] mt-2 w-full'>
                     <Pagination 
                         page={page} 
                         total={Math.ceil(stations.length/14)} 
