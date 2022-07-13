@@ -93,7 +93,7 @@ function Countries() {
                     <form className='flex flex-row' onSubmit={countrySearch}>
                         <label hidden>Search</label>
                         <input 
-                            className='w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
+                            className='w-[250px] sm:w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
                             type='text' 
                             value={searchInput} 
                             placeholder='Search for radio stations...' 
@@ -118,12 +118,12 @@ function Countries() {
                 </section>
             </article>    
 
-            <article className={'grid justify-center align-middle ' + `${searchResult.length > 7 ? 'h-[475px]' : 'h-[' + `${56 * searchResult.length}` + 'px]'}` + ' overflow-y-auto'}>
+            <article className={'grid justify-center align-middle ' + `${searchResult.length > 7 ? 'h-[475px]' : 'h-[' + `${56 * searchResult.length}` + 'px]'}` + ' overflow-y-auto pb-12 sm:pb-0'}>
                 {
                     searchResult.map((country: {name: string, stationcount: number, iso_3166_1: string}, index) => {
                         return (    
                             <div key={index}>
-                                <section className='flex flex-row items-center border rounded-lg mb-2 px-4 h-14 w-[580px]'>
+                                <section className='flex flex-row items-center border rounded-lg mb-2 px-4 h-20 sm:h-14 w-[370px] sm:w-[580px]'>
                                     <div className='flex basis-2/3 items-center justify-start'>
                                         <div>
                                             <span className='font-semibold mr-1 hover:cursor-pointer' onClick={() => fetchRadioStationsForCountry(country.name)}>{country.name}</span>
