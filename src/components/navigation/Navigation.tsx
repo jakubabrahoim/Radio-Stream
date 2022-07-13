@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import Avatar from 'react-avatar';
 
@@ -55,6 +55,7 @@ function Navigation() {
                     </IconContext.Provider>
                     <span id='menuLabel' hidden>Menu</span>
                 </button>
+
                 {/* Left side navigation - not logged in */}
                 {
                     user === null && 
@@ -65,11 +66,24 @@ function Navigation() {
                         <div className='mx-2 px-2 flex items-center'>
                             <img src={logo} alt='logo' className='w-5 h-5'/>
                         </div>
-                        <Link className='navigationButton' to='/home'>Home</Link>
-                        <Link className='navigationButton' to='/countries'>Countries</Link>
+                        <NavLink className='navigationButton' to='/home'>
+                            {
+                                ({isActive}) => (
+                                    <span className={`${isActive && 'text-cyan-200'}`}>Home</span>
+                                )
+                            }
+                        </NavLink>
+                        <NavLink className='navigationButton' to='/countries'>
+                            {
+                                ({isActive}) => (
+                                    <span className={`${isActive && 'text-cyan-200'}`}>Countries</span>
+                                )
+                            }
+                        </NavLink>
                         {/*<Link className='navigationButton' to='/#'>About</Link>*/}
                     </div>
                 }
+
                 {/* Left side navigation - logged in */}
                 {
                     user !== null &&
@@ -80,12 +94,31 @@ function Navigation() {
                         <div className='mx-2 px-2 flex items-center'>
                             <img src={logo} alt='logo' className='w-5 h-5'/>
                         </div>
-                        <Link className='navigationButton' to='/home'>Home</Link>
-                        <Link className='navigationButton' to='/my-stations'>My stations</Link>
-                        <Link className='navigationButton' to='/countries'>Countries</Link>
+                        <NavLink className='navigationButton' to='/home'>
+                            {
+                                ({isActive}) => (
+                                    <span className={`${isActive && 'text-cyan-200'}`}>Home</span>
+                                )
+                            }
+                        </NavLink>
+                        <NavLink className='navigationButton' to='/my-stations'>
+                            {
+                                ({isActive}) => (
+                                    <span className={`${isActive && 'text-cyan-200'}`}>My Stations</span>
+                                )
+                            }
+                        </NavLink>
+                        <NavLink className='navigationButton' to='/countries'>
+                            {
+                                ({isActive}) => (
+                                    <span className={`${isActive && 'text-cyan-200'}`}>Countries</span>
+                                )
+                            }
+                        </NavLink>
                         {/*<Link className='navigationButton' to='/#'>About</Link>*/}
                     </div>
                 }
+
                 {/* Right side navigation - not logged in */}
                 {
                     user === null &&
@@ -93,10 +126,23 @@ function Navigation() {
                         `basis-3/6 flex flex-col sm:flex-row justify-end items-center
                         ${mobileNavVisibility === 'visible' ? 'visible': 'invisible'} sm:visible`
                     }>
-                        <Link className='navigationButton' to='/login'>Login</Link>
-                        <Link className='navigationButton' to='/signup'>Sign up</Link>
+                        <NavLink className='navigationButton' to='/login'>
+                            {
+                                ({isActive}) => (
+                                    <span className={`${isActive && 'text-cyan-200'}`}>Login</span>
+                                )
+                            }
+                        </NavLink>
+                        <NavLink className='navigationButton' to='/signup'>
+                            { 
+                                ({isActive}) => (
+                                    <span className={`${isActive && 'text-cyan-200'}`}>Sign up</span>
+                                )
+                            }
+                        </NavLink>
                     </div>
                 }
+
                 {/* Right side navigation - logged in */}
                 {
                     user !== null &&

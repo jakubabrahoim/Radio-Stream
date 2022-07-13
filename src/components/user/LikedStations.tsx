@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import { getAuth, onAuthStateChanged} from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -10,6 +10,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 function LikedStations(database: any) {
     
     let [likedStations, setLikedStations] = useState<any[]>([]);
+    let [searchInput, setSearchInput] = useState('');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [page, setPage] = useState(1);
 
@@ -48,9 +49,39 @@ function LikedStations(database: any) {
 
     }
 
+    function handleSearchInputChange(event: ChangeEvent<HTMLInputElement>): void {
+        setSearchInput(event.target.value);
+    }
+
 
     return (
         <>
+            {/* Heading + search bar */}
+            <article className='grid grid-flow-row grid-rows-2 justify-items-center align-middle mb-8 sm:mb-16'>
+                <section className='self-center'>
+                    <form className='flex flex-row'>
+                        <span id='homeSearchLabel' hidden>Search</span>
+                        <input 
+                            className='w-[250px] sm:w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
+                            type='text' 
+                            value={searchInput} 
+                            placeholder='Search for radio stations...' 
+                            onChange={handleSearchInputChange}
+                            aria-labelledby='homeSearchLabel'
+                        />
+                        <span id='homeSubmitLabel' hidden>Search</span>
+                        <input 
+                            className='w-24 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md' 
+                            type='submit' 
+                            value='Search'
+                            name="search" 
+                            aria-labelledby='homeSubmitLabel'
+                        />
+                    </form>
+                </section>
+            </article>
+
+            {/* Liked stations */}
             <article className='grid grid-cols-7 justify-items-center mt-2'>
                 {
                     likedStations.slice((page - 1) * 14, (page - 1) * 14 + 14).map((station, id) => {

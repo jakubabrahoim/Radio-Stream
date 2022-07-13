@@ -109,7 +109,6 @@ function Home() {
                         />
                     </form>
                 </section>
-                
             </article>
 
             <h1 className='text-center mb-10 text-xl'>Popular stations from your country</h1>
