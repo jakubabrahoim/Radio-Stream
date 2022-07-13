@@ -29,7 +29,7 @@ function AudioPlayer(database: any) {
     let [stationLiked, setStationLiked] = useState(false);
 
     /* Extract global radio station information and set local states */
-    useEffect(function getRadioStationContext() {
+    useEffect(() => {
         // Reset previous audio stream
         audio.src = '';
         setAudioPlaying('stopped');
