@@ -7,7 +7,7 @@ interface Station {
 
 /** 
  * Save the last played station to local storage and set autoPlay to false. 
- * Set it to false to the audio player doesn't try to play it on page load.
+ * Set it to false so the audio player doesn't try to play it on page load.
 */
 export function saveLastStation(currentStation: Station): void {
     currentStation.autoPlay = false;

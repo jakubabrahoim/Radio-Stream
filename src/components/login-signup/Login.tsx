@@ -66,7 +66,7 @@ function Login() {
                     <label className='my-1'>OR</label>
                 </form>
                 <form className='form' onSubmit={e => e.preventDefault()}>
-                    <input className='googleButton' type='submit' value='Log in with Google' onClick={() => handleGoogleSubmit}/>
+                    <input className='googleButton' type='submit' value='Log in with Google' onClick={handleGoogleSubmit}/>
                     <p>Don't have an account yet? <a href='/signup' className='text-blue-500 underline'>Sign up</a></p>
                 </form>
             </section>
