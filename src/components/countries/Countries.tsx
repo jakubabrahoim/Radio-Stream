@@ -96,7 +96,7 @@ function Countries() {
                             className='w-[250px] sm:w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md' 
                             type='text' 
                             value={searchInput} 
-                            placeholder='Search for radio stations...' 
+                            placeholder='Search for countries...' 
                             onChange={handleSearchInputChange}
                         ></input>
                         <label hidden>Submit</label>
