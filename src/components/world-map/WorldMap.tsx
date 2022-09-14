@@ -1,4 +1,3 @@
-import { FloatingTooltip } from "@mantine/core";
 import { scaleLinear } from "d3-scale";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,8 +5,9 @@ import {
   ComposableMap,
   Geographies,
   Geography,
-  ZoomableGroup
+  ZoomableGroup,
 } from "react-simple-maps";
+import ReactTooltip from "react-tooltip";
 import world from "./world.json";
 
 interface Country {
@@ -65,8 +65,9 @@ export function WorldMap() {
     .range(["#3B4F68", "#1f2937"]);
 
   return (
-    <FloatingTooltip disabled={tooltipContent === ""} label={tooltipContent}>
+    <>
       <ComposableMap
+        data-tip=""
         projection="geoMercator"
         projectionConfig={{
           scale: 60,
@@ -76,17 +77,18 @@ export function WorldMap() {
         height={270}
       >
         <ZoomableGroup
-        translateExtent={[
-          [0, 0],
-          [800, 270]
-        ]}>
+          translateExtent={[
+            [0, 0],
+            [800, 270],
+          ]}
+        >
           <Geographies geography={world}>
             {({ geographies }) =>
               geographies.map((geo) => {
                 const country = countries.find(
                   (c) => c.iso_3166_1 === geo.properties["Alpha-2"]
                 );
-                
+
                 const stations = country?.stationcount ?? 0;
 
                 return (
@@ -97,7 +99,12 @@ export function WorldMap() {
                     key={geo.rsmKey}
                     geography={geo}
                     style={{
-                      hover: { fill: stations > 0 ? "#ef4444" : undefined },
+                      default: { outline: "none" },
+                      pressed: { outline: "none" },
+                      hover: {
+                        fill: stations > 0 ? "#ef4444" : undefined,
+                        outline: "none",
+                      },
                     }}
                     onMouseEnter={() => {
                       setTooltipContent(
@@ -106,7 +113,9 @@ export function WorldMap() {
                         } `
                       );
                     }}
-                    onMouseLeave={() => setTooltipContent("")}
+                    onMouseLeave={() => {
+                      setTooltipContent("");
+                    }}
                     onClick={() => {
                       if (country) {
                         fetchRadioStationsForCountry(country.name);
@@ -120,6 +129,7 @@ export function WorldMap() {
           </Geographies>
         </ZoomableGroup>
       </ComposableMap>
-    </FloatingTooltip>
+      <ReactTooltip>{tooltipContent}</ReactTooltip>
+    </>
   );
 }
