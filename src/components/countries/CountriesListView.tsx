@@ -86,7 +86,7 @@ function CountriesListView() {
     }
     
     return (
-        <>
+        <div>
             {/* Heading + search bar */}
             <article className='grid grid-flow-row grid-rows-1 justify-items-center align-middle sticky top-14 mt-8 mb-10'>
                 <section className='self-center'>
@@ -148,7 +148,7 @@ function CountriesListView() {
                     <span className='text-gray-800 text-xl font-bold'>No countries found</span>
                 </article>
             }
-        </>
+        </div>
     )
 }
 
