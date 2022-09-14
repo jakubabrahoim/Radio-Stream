@@ -10,8 +10,8 @@ function ViewButton({ viewType, currentView, caption, setView, customClass }: Pr
     return (
         <button 
             className={
-                `${currentView === viewType && 'bg-gray-800 text-white hover:bg-gray-800'}
-                 w-36 h-full p-2 hover:bg-gray-600 hover:text-white transition duration-200
+                `${currentView === viewType ? 'bg-gray-800 text-white hover:bg-gray-800' : 'hover:bg-gray-600'}
+                 w-36 h-full p-2 hover:text-white transition duration-200
                  ${customClass}`
             }
             onClick={() => setView(viewType)}

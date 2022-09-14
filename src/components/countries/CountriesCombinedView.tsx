@@ -3,13 +3,13 @@ import CountriesListView from "./CountriesListView";
 
 function CountriesCombinedView() {
     return (
-        <div className='flex items-center'>
+        <div className='flex items-center gap-4'>
             <div className='justify-self-start'>
                 <CountriesListView />
             </div>
-            <div className='justify-self-end'>
-                <WorldMap height={500} scale={100} />
-            </div>
+            
+                <WorldMap height={350} scale={80} />
+            
         </div>
     )
 }

@@ -39,7 +39,7 @@ function Countries() {
             <div className='hidden sm:block'>
                 {currentView === 'list' && <CountriesListView />}
                 {currentView === 'combined' && <CountriesCombinedView />}
-                {currentView === 'map' && <WorldMap height={350} scale={80} />}
+                {currentView === 'map' && <WorldMap height={260} scale={60} />}
             </div>
 
             <div className='sm:hidden'>
