@@ -2,42 +2,50 @@
 import { useState } from 'react';
 import { WorldMap } from '../world-map/WorldMap';
 import CountriesListView from './CountriesListView';
+import CountriesCombinedView from './CountriesCombinedView';
+import ViewButton from './ViewButton';
 
 function Countries() {
 
-    let [currentView, setCurrentView] = useState<'list' | 'map'>('list');
+    let [currentView, setCurrentView] = useState<'list' | 'map' | 'combined'>('list');
 
     return (
         <div>
-            <div className='hidden sm:flex w-screen items-center gap-4 justify-center'>
-                <button 
-                    className={`${currentView === 'list' && 'underline'}`}
-                    onClick={() => setCurrentView('list')}
-                >
-                    List View
-                </button>
-                <button 
-                    className={`${currentView === 'map' && 'underline'}`}
-                    onClick={() => setCurrentView('map')}
-                >
-                    Map View
-                </button>
+            <div className='w-screen flex justify-center'>
+                <div className='my-2 rounded-lg hidden sm:flex items-center justify-center border w-fit'>
+                    <ViewButton 
+                        caption='List view' 
+                        currentView={currentView} 
+                        setView={setCurrentView} 
+                        viewType='list'
+                        customClass='rounded-l-lg border-r' 
+                    />
+                    <ViewButton 
+                        caption='Combined view' 
+                        currentView={currentView} 
+                        setView={setCurrentView} 
+                        viewType='combined' 
+                    />
+                    <ViewButton 
+                        caption='Map view' 
+                        currentView={currentView} 
+                        setView={setCurrentView} 
+                        viewType='map'
+                        customClass='rounded-r-lg border-l' 
+                    />
+                </div>
             </div>
 
             <div className='hidden sm:block'>
                 {currentView === 'list' && <CountriesListView />}
-                {currentView === 'map' && <WorldMap />}
+                {currentView === 'combined' && <CountriesCombinedView />}
+                {currentView === 'map' && <WorldMap height={350} scale={80} />}
             </div>
 
             <div className='sm:hidden'>
                 <CountriesListView />
             </div>
-
-    
         </div>
-
-        
-        
     )
 }
 

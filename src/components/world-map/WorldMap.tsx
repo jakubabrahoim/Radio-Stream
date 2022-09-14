@@ -16,7 +16,12 @@ interface Country {
   stationcount: number;
 }
 
-export function WorldMap() {
+interface Props {
+  height: number;
+  scale: number;
+}
+
+export function WorldMap({ height, scale }: Props) {
   const [tooltipContent, setTooltipContent] = useState<string>("");
 
   const navigate = useNavigate();
@@ -70,16 +75,16 @@ export function WorldMap() {
         data-tip=""
         projection="geoMercator"
         projectionConfig={{
-          scale: 60,
+          scale: scale,
           rotate: [-10, 0, 0],
           center: [0, 40],
         }}
-        height={270}
+        height={height}
       >
         <ZoomableGroup
           translateExtent={[
             [0, 0],
-            [800, 270],
+            [800, height],
           ]}
         >
           <Geographies geography={world}>
