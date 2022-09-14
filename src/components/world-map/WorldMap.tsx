@@ -73,7 +73,7 @@ export function WorldMap() {
           rotate: [-10, 0, 0],
           center: [0, 40],
         }}
-        height={270}
+        height={350}
       >
         <ZoomableGroup
         translateExtent={[
