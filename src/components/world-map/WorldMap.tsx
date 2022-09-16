@@ -19,9 +19,10 @@ interface Country {
 interface Props {
     height: number;
     scale: number;
+    hoveredCountry?: string;
 }
 
-export function WorldMap({ height, scale }: Props) {
+export function WorldMap({ height, scale, hoveredCountry }: Props) {
     const [tooltipContent, setTooltipContent] = useState<string>('');
 
     const navigate = useNavigate();
@@ -98,8 +99,10 @@ export function WorldMap({ height, scale }: Props) {
 
                                 return (
                                     <Geography
-                                        className={`${stations > 0 ? 'hover:cursor-pointer' : undefined
-                                            }`}
+                                        className={
+                                            `${stations > 0 ? 'hover:cursor-pointer' : undefined}
+                                            ${hoveredCountry === country && 'bg-red-500'} bg-red-500`
+                                        }
                                         key={geo.rsmKey}
                                         geography={geo}
                                         style={{
@@ -124,7 +127,7 @@ export function WorldMap({ height, scale }: Props) {
                                                 fetchRadioStationsForCountry(country.name);
                                             }
                                         }}
-                                        fill={country ? colorsScale(stations) : '#CDCDCD'}
+                                        fill={ country ? (hoveredCountry === country.iso_3166_1 ? '#ef4444' : colorsScale(stations)) : '#CDCDCD' }
                                     />
                                 );
                             })

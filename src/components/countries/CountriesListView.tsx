@@ -3,7 +3,11 @@ import { ChangeEvent, useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { useNavigate } from "react-router-dom";
 
-function CountriesListView() {
+interface Props {
+    setHoveredCountry?: Function;
+}
+
+function CountriesListView({ setHoveredCountry}: Props) {
 
     let [userLocation, setUserLocation] = useState<null | string>(null);
     let [countries, setCountries] = useState([]);
@@ -106,14 +110,6 @@ function CountriesListView() {
                             value='Search'
                             name="search" 
                         ></input>
-
-                        {/*
-                        <datalist id='countriesDataList' className='h-11 overflow-hidden'>
-                            {countries.map((country) => (
-                                <option key={country.name} value={country.name}>{country.name}</option>
-                            ))}
-                        </datalist>
-                        */}
                     </form>
                 </section>
             </article>    
@@ -123,16 +119,18 @@ function CountriesListView() {
                     searchResult.map((country: {name: string, stationcount: number, iso_3166_1: string}, index) => {
                         return (    
                             <div key={index}>
-                                <section className='flex flex-row items-center border rounded-lg mb-2 px-4 h-20 sm:h-14 w-[370px] sm:w-[580px]'>
-                                    <div className='flex basis-2/3 items-center justify-start'>
+                                <section 
+                                    className='flex flex-row items-center mb-2 px-4 h-20 sm:h-14 w-[370px] sm:w-[580px] hover:cursor-pointer'
+                                    onClick={() => fetchRadioStationsForCountry(country.name)}
+                                    onMouseEnter={() => setHoveredCountry?.(country.iso_3166_1)}
+                                    onMouseLeave={() => setHoveredCountry?.('')}
+                                >
+                                    <div className='flex items-center justify-start w-full'>
                                         <div>
                                             <span className='font-semibold mr-1 hover:cursor-pointer' onClick={() => fetchRadioStationsForCountry(country.name)}>{country.name}</span>
                                             <span className='mr-2'><ReactCountryFlag countryCode={country.iso_3166_1}/></span>
                                             <span className='text-sm'>({country.stationcount} {country.stationcount === 1 ? 'station' : 'stations'})</span>
                                         </div>
-                                    </div>
-                                    <div className='flex basis-1/3 justify-end'>
-                                        <button className='text-sm text-gray-400' onClick={() => fetchRadioStationsForCountry(country.name)}>Browse stations</button>
                                     </div>
                                 </section>
                                 {userLocation !== null && index === 0 && searchResult.length === countries.length && <hr className='border-1 mb-2'></hr>}
