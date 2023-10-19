@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.39.0",
     "@types/d3-scale": "^4.0.3",
     "@types/howler": "^2.2.7",
     "@types/react-simple-maps": "^1.0.8",
