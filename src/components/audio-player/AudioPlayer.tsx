@@ -277,6 +277,7 @@ function AudioPlayer(database: any) {
                             Volume
                         </p>
                         <button
+                            data-e2e='audio-player-mute-button'
                             onClick={muteAudio}
                             className={`rounded-full hover:bg-gray-200 w-8 h-8 pl-1.5 first-letter
                                 ${
@@ -291,9 +292,9 @@ function AudioPlayer(database: any) {
                                 value={{ className: 'h-5 w-5' }}
                             >
                                 {muted.muted === false ? (
-                                    <BsFillVolumeUpFill />
+                                    <BsFillVolumeUpFill data-e2e='audio-player-unmuted-icon' />
                                 ) : (
-                                    <BsVolumeMuteFill />
+                                    <BsVolumeMuteFill data-e2e='audio-player-muted-icon' />
                                 )}
                             </IconContext.Provider>
                             <span id='muteLabel' hidden>
@@ -305,6 +306,7 @@ function AudioPlayer(database: any) {
                         Volume
                     </span>
                     <input
+                        data-e2e='audio-player-volume-slider'
                         type='range'
                         min='0'
                         max='100'
