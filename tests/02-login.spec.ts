@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 import { getSelectorString } from './getSelectorString';
 
 test.beforeEach(async ({ page }) => {
@@ -39,6 +39,18 @@ test('Login - incorrect email', async ({ page }) => {
 });
 
 test('Login - success', async ({ page }) => {
+    await successfulLogin(page);
+});
+
+test('Logout', async ({ page }) => {
+    await successfulLogin(page);
+
+    await page.locator(getSelectorString('navigation-user-avatar')).hover();
+
+    await page.locator(getSelectorString('navigation-logout-button')).click();
+});
+
+const successfulLogin = async (page: Page) => {
     const email = 'jakub.abrahoim.3@gmail.com';
     const password = 'KPAISTest123';
 
@@ -53,4 +65,4 @@ test('Login - success', async ({ page }) => {
     await page.waitForLoadState('networkidle');
 
     await expect(page).toHaveURL('http://localhost:3000/home');
-});
+}

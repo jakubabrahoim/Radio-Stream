@@ -230,7 +230,10 @@ function Navigation() {
                                 : 'invisible'
                         } sm:visible`}
                     >
-                        <div className='avatar'>
+                        <div
+                            data-e2e='navigation-user-avatar'
+                            className='avatar'
+                        >
                             {user.providerData[0].providerId ===
                             'google.com' ? (
                                 <Avatar
@@ -255,6 +258,7 @@ function Navigation() {
                                 </p>
 
                                 <button
+                                    data-e2e='navigation-logout-button'
                                     className='text-red-400 font-semibold hover:text-red-500 hover:font-bold'
                                     onClick={signOut}
                                 >
