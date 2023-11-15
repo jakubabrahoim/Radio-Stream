@@ -2,52 +2,59 @@
 import { test, expect, Page } from '@playwright/test';
 import { getSelectorString } from './getSelectorString';
 
-test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/');
-    await expect(page).toHaveTitle('Radio-Stream');
-    await page.locator(getSelectorString('navigation-link-login')).click();
-});
 
-test('Login - incorrect password', async ({ page }) => {
-    const email = 'jakub.abrahoim.3@gmail.com';
-    const password = 'KPAISTest123' + 'diff';
+test.describe('Login and logout', () => {
+    let page: Page;
 
-    await page.locator(getSelectorString('login-email-input')).click();
-    await page.locator(getSelectorString('login-email-input')).fill(email);
+    test.beforeEach(async ({ browser }) => {
+        page = await browser.newPage();
 
-    await page.locator(getSelectorString('login-password-input')).click();
-    await page.locator(getSelectorString('login-password-input')).fill(password);
+        await page.goto('https://radio-sh.web.app/');
+        await expect(page).toHaveTitle('Radio-Stream');
+        await page.locator(getSelectorString('navigation-link-login')).click();
+    });
 
-    await page.locator(getSelectorString('login-submit-button')).click();
+    test('Login - incorrect password', async () => {
+        const email = 'jakub.abrahoim.3@gmail.com';
+        const password = 'KPAISTest123' + 'diff';
 
-    (await page.locator(getSelectorString('incorrect-username-or-password-message')).innerHTML()).startsWith('* Incorrect username or password');
-});
+        await page.locator(getSelectorString('login-email-input')).click();
+        await page.locator(getSelectorString('login-email-input')).fill(email);
 
-test('Login - incorrect email', async ({ page }) => {
-    const email = 'jakub.abrahoim.3diff@gmail.com';
-    const password = 'KPAISTest123';
+        await page.locator(getSelectorString('login-password-input')).click();
+        await page.locator(getSelectorString('login-password-input')).fill(password);
 
-    await page.locator(getSelectorString('login-email-input')).click();
-    await page.locator(getSelectorString('login-email-input')).fill(email);
+        await page.locator(getSelectorString('login-submit-button')).click();
 
-    await page.locator(getSelectorString('login-password-input')).click();
-    await page.locator(getSelectorString('login-password-input')).fill(password);
+        (await page.locator(getSelectorString('incorrect-username-or-password-message')).innerHTML()).startsWith('* Incorrect username or password');
+    });
 
-    await page.locator(getSelectorString('login-submit-button')).click();
+    test('Login - incorrect email', async () => {
+        const email = 'jakub.abrahoim.3diff@gmail.com';
+        const password = 'KPAISTest123';
 
-    (await page.locator(getSelectorString('incorrect-username-or-password-message')).innerHTML()).startsWith('* Incorrect username or password');
-});
+        await page.locator(getSelectorString('login-email-input')).click();
+        await page.locator(getSelectorString('login-email-input')).fill(email);
 
-test('Login - success', async ({ page }) => {
-    await successfulLogin(page);
-});
+        await page.locator(getSelectorString('login-password-input')).click();
+        await page.locator(getSelectorString('login-password-input')).fill(password);
 
-test('Logout', async ({ page }) => {
-    await successfulLogin(page);
+        await page.locator(getSelectorString('login-submit-button')).click();
 
-    await page.locator(getSelectorString('navigation-user-avatar')).hover();
+        (await page.locator(getSelectorString('incorrect-username-or-password-message')).innerHTML()).startsWith('* Incorrect username or password');
+    });
 
-    await page.locator(getSelectorString('navigation-logout-button')).click();
+    test('Login - success', async () => {
+        await successfulLogin(page);
+    });
+
+    test('Logout', async () => {
+        await successfulLogin(page);
+
+        // Logout
+        await page.locator(getSelectorString('navigation-user-avatar')).hover();
+        await page.locator(getSelectorString('navigation-logout-button')).click();
+    });
 });
 
 const successfulLogin = async (page: Page) => {
@@ -62,7 +69,7 @@ const successfulLogin = async (page: Page) => {
 
     await page.locator(getSelectorString('login-submit-button')).click();
 
-    await page.waitForLoadState('networkidle');
-
-    await expect(page).toHaveURL('http://localhost:3000/home');
+    await expect(page).toHaveURL('https://radio-sh.web.app/home');
 }
+
+

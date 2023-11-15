@@ -1,83 +1,89 @@
 /* eslint-disable */
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 import { getSelectorString } from './getSelectorString';
 
-test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/');
-    await expect(page).toHaveTitle('Radio-Stream');
-    await page.locator(getSelectorString('navigation-link-signup')).click();
-});
+test.describe('Registration', () => {
+    let page: Page;
 
-test('Registration - wrong password format', async ({ page }) => {
-    const email = getRandomEmail();
-    const password = '123456';
+    test.beforeEach(async ({ browser }) => {
+        page = await browser.newPage();
 
-    await page.locator(getSelectorString('signup-email-input')).click();
-    await page.locator(getSelectorString('signup-email-input')).fill(email);
+        await page.goto('https://radio-sh.web.app/');
+        await expect(page).toHaveTitle('Radio-Stream');
+        await page.locator(getSelectorString('navigation-link-signup')).click();
+    });
 
-    await page.locator(getSelectorString('signup-password-input')).click();
-    await page.locator(getSelectorString('signup-password-input')).fill(password);
+    test('Registration - wrong password format', async () => {
+        const email = getRandomEmail();
+        const password = '123456';
 
-    await page.locator(getSelectorString('signup-confirm-password-input')).click();
-    await page.locator(getSelectorString('signup-confirm-password-input')).fill(password);
+        await page.locator(getSelectorString('signup-email-input')).click();
+        await page.locator(getSelectorString('signup-email-input')).fill(email);
 
-    await page.locator(getSelectorString('signup-submit-button')).click();
+        await page.locator(getSelectorString('signup-password-input')).click();
+        await page.locator(getSelectorString('signup-password-input')).fill(password);
 
-    (await page.locator(getSelectorString('signup-required-password-format-message')).innerHTML()).startsWith('* Password must have:');
-});
+        await page.locator(getSelectorString('signup-confirm-password-input')).click();
+        await page.locator(getSelectorString('signup-confirm-password-input')).fill(password);
 
-test('Registration - already used email', async ({ page }) => {
-    const email = 'jakub.abrahoim@gmail.com';
-    const password = 'VeryGoodPassword123@';
+        await page.locator(getSelectorString('signup-submit-button')).click();
 
-    await page.locator(getSelectorString('signup-email-input')).click();
-    await page.locator(getSelectorString('signup-email-input')).fill(email);
+        (await page.locator(getSelectorString('signup-required-password-format-message')).innerHTML()).startsWith('* Password must have:');
+    });
 
-    await page.locator(getSelectorString('signup-password-input')).click();
-    await page.locator(getSelectorString('signup-password-input')).fill(password);
+    test('Registration - already used email', async () => {
+        const email = 'jakub.abrahoim@gmail.com';
+        const password = 'VeryGoodPassword123@';
 
-    await page.locator(getSelectorString('signup-confirm-password-input')).click();
-    await page.locator(getSelectorString('signup-confirm-password-input')).fill(password);
+        await page.locator(getSelectorString('signup-email-input')).click();
+        await page.locator(getSelectorString('signup-email-input')).fill(email);
 
-    await page.locator(getSelectorString('signup-submit-button')).click();
+        await page.locator(getSelectorString('signup-password-input')).click();
+        await page.locator(getSelectorString('signup-password-input')).fill(password);
 
-    (await page.locator(getSelectorString('signup-email-already-exists-message')).innerHTML()).startsWith('* Account with this email address already exists');
-});
+        await page.locator(getSelectorString('signup-confirm-password-input')).click();
+        await page.locator(getSelectorString('signup-confirm-password-input')).fill(password);
 
-test('Registration - passwords don\'t match', async ({ page }) => {
-    const email = 'jakub.abrahoim@gmail.com';
-    const password = 'VeryGoodPassword123@';
+        await page.locator(getSelectorString('signup-submit-button')).click();
 
-    await page.locator(getSelectorString('signup-email-input')).click();
-    await page.locator(getSelectorString('signup-email-input')).fill(email);
+        (await page.locator(getSelectorString('signup-email-already-exists-message')).innerHTML()).startsWith('* Account with this email address already exists');
+    });
 
-    await page.locator(getSelectorString('signup-password-input')).click();
-    await page.locator(getSelectorString('signup-password-input')).fill(password);
+    test('Registration - passwords don\'t match', async () => {
+        const email = 'jakub.abrahoim@gmail.com';
+        const password = 'VeryGoodPassword123@';
 
-    await page.locator(getSelectorString('signup-confirm-password-input')).click();
-    await page.locator(getSelectorString('signup-confirm-password-input')).fill(password + 'diff');
+        await page.locator(getSelectorString('signup-email-input')).click();
+        await page.locator(getSelectorString('signup-email-input')).fill(email);
 
-    await page.locator(getSelectorString('signup-submit-button')).click();
+        await page.locator(getSelectorString('signup-password-input')).click();
+        await page.locator(getSelectorString('signup-password-input')).fill(password);
 
-    (await page.locator(getSelectorString('signup-passwords-must-match-message')).innerHTML()).startsWith('* Passwords must match');
-});
+        await page.locator(getSelectorString('signup-confirm-password-input')).click();
+        await page.locator(getSelectorString('signup-confirm-password-input')).fill(password + 'diff');
 
-test('Registration - successful registration', async ({ page }) => {
-    const email = getRandomEmail();
-    const password = 'VeryGoodPassword123@';
+        await page.locator(getSelectorString('signup-submit-button')).click();
 
-    await page.locator(getSelectorString('signup-email-input')).click();
-    await page.locator(getSelectorString('signup-email-input')).fill(email);
+        (await page.locator(getSelectorString('signup-passwords-must-match-message')).innerHTML()).startsWith('* Passwords must match');
+    });
 
-    await page.locator(getSelectorString('signup-password-input')).click();
-    await page.locator(getSelectorString('signup-password-input')).fill(password);
+    test('Registration - successful registration', async () => {
+        const email = getRandomEmail();
+        const password = 'VeryGoodPassword123@';
 
-    await page.locator(getSelectorString('signup-confirm-password-input')).click();
-    await page.locator(getSelectorString('signup-confirm-password-input')).fill(password);
+        await page.locator(getSelectorString('signup-email-input')).click();
+        await page.locator(getSelectorString('signup-email-input')).fill(email);
 
-    await page.locator(getSelectorString('signup-submit-button')).click();
+        await page.locator(getSelectorString('signup-password-input')).click();
+        await page.locator(getSelectorString('signup-password-input')).fill(password);
 
-    (await page.locator(getSelectorString('signup-success-message')).innerHTML()).startsWith('* Account created. Please check your email to verify your account');
+        await page.locator(getSelectorString('signup-confirm-password-input')).click();
+        await page.locator(getSelectorString('signup-confirm-password-input')).fill(password);
+
+        await page.locator(getSelectorString('signup-submit-button')).click();
+
+        (await page.locator(getSelectorString('signup-success-message')).innerHTML()).startsWith('* Account created. Please check your email to verify your account');
+    });
 });
 
 const getRandomEmail = () => {

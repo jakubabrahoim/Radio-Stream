@@ -331,6 +331,7 @@ function AudioPlayer(database: any) {
                 {user !== null && verified === true && (
                     <>
                         <button
+                            data-e2e='audio-player-like-button'
                             onClick={likeStation}
                             className={`rounded-full hover:bg-red-100 w-10 h-10 flex items-center justify-center ${
                                 currentRadioStation.streamUrl === '' &&
