@@ -52,7 +52,7 @@ function SearchResult() {
         });
 
         fetch(
-            `https://at1.api.radio-browser.info/json/stations/byname/${searchInput}?hidebroken=true&order=clickcount&reverse=true`,
+            `https://de1.api.radio-browser.info/json/stations/byname/${searchInput}?hidebroken=true&order=clickcount&reverse=true`,
             {
                 method: 'GET',
                 headers: {

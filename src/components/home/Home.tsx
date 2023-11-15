@@ -25,7 +25,7 @@ function Home() {
                 let userLocation = response.country_name;
 
                 return fetch(
-                    `https://at1.api.radio-browser.info/json/stations/bycountry/${userLocation}?hidebroken=true&order=clickcount&limit=10&reverse=true`,
+                    `https://de1.api.radio-browser.info/json/stations/bycountry/${userLocation}?hidebroken=true&order=clickcount&limit=10&reverse=true`,
                     {
                         method: 'GET',
                         headers: {
@@ -53,7 +53,7 @@ function Home() {
         event.preventDefault();
 
         fetch(
-            `https://at1.api.radio-browser.info/json/stations/byname/${searchInput}?hidebroken=true&order=clickcount&reverse=true`,
+            `https://de1.api.radio-browser.info/json/stations/byname/${searchInput}?hidebroken=true&order=clickcount&reverse=true`,
             {
                 method: 'GET',
                 headers: {

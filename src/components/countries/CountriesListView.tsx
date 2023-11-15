@@ -17,7 +17,7 @@ function CountriesListView({ setHoveredCountry }: Props) {
     /* Fetch all countries and users location */
     useEffect(() => {
         // Countries
-        fetch(`https://at1.api.radio-browser.info/json/countries`, {
+        fetch(`https://de1.api.radio-browser.info/json/countries`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ function CountriesListView({ setHoveredCountry }: Props) {
     /* Fetch stations for selected country and navigate to new page with these stations */
     function fetchRadioStationsForCountry(countryName: string): void {
         fetch(
-            `https://at1.api.radio-browser.info/json/stations/bycountry/${countryName}?hidebroken=true&order=clickcount&reverse=true`,
+            `https://de1.api.radio-browser.info/json/stations/bycountry/${countryName}?hidebroken=true&order=clickcount&reverse=true`,
             {
                 method: 'GET',
                 headers: {
