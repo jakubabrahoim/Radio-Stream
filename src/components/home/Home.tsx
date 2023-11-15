@@ -129,6 +129,7 @@ function Home() {
                             Search
                         </span>
                         <input
+                            data-e2e='home-search-input'
                             className='w-[250px] sm:w-[450px] h-12 mr-4 px-2 border rounded-lg outline-none focus:ring-2 focus:ring-gray-800 drop-shadow-md'
                             type='text'
                             value={searchInput}
@@ -140,6 +141,7 @@ function Home() {
                             Search
                         </span>
                         <input
+                            data-e2e='home-search-submit-button'
                             className='w-24 px-2 text-white bg-gray-800 hover:bg-gray-700 hover:cursor-pointer rounded-lg drop-shadow-md'
                             type='submit'
                             value='Search'
@@ -260,7 +262,10 @@ function Home() {
                     </section>
                 </article>
             ) : (
-                <article className='grid grid-flow-row grid-rows-1 justify-center align-middle'>
+                <article
+                    data-e2e='home-blocker-enabled-message'
+                    className='grid grid-flow-row grid-rows-1 justify-center align-middle'
+                >
                     <p className='text-lg text-red-400 text-center'>
                         Disable location blockers to see top stations in your
                         country. <br />

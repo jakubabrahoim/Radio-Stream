@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 import { getSelectorString } from './getSelectorString';
 
 test.beforeEach(async ({ page }) => {
@@ -12,6 +12,8 @@ test.beforeEach(async ({ page }) => {
 test('Home - check if popular stations visible + count', async ({ page }) => {
     await page.waitForLoadState('networkidle');
 
+    if (!await isGeolocationDisabled(page)) return;
+
     await page.locator(getSelectorString('home-popular-stations-container')).isVisible();
     const childCount = await page.locator(getSelectorString('home-popular-stations-container')).evaluate((el) => el.children.length);
     expect(childCount).toBeLessThanOrEqual(10);
@@ -19,6 +21,8 @@ test('Home - check if popular stations visible + count', async ({ page }) => {
 
 test('Home - use arrows to scroll left/right', async ({ page }) => {
     await page.waitForLoadState('networkidle');
+
+    if (!await isGeolocationDisabled(page)) return;
 
     await page.locator(getSelectorString('home-popular-station-scroll-left-button')).isVisible();
     await page.locator(getSelectorString('home-popular-station-scroll-right-button')).isVisible();
@@ -35,6 +39,8 @@ test('Home - use arrows to scroll left/right', async ({ page }) => {
 test('Home - check if every station has icon/logo, name and playbutton', async ({ page }) => {
     await page.waitForLoadState('networkidle');
 
+    if (!await isGeolocationDisabled(page)) return;
+
     for (let i = 0; i < 10; i++) {
         await page.locator(getSelectorString(`home-popular-station-name-${i}`)).isVisible();
         await page.locator(getSelectorString(`home-popular-station-logo-${i}`)).isVisible();
@@ -44,6 +50,8 @@ test('Home - check if every station has icon/logo, name and playbutton', async (
 
 test('Home - play a popular station', async ({ page }) => {
     await page.waitForLoadState('networkidle');
+
+    if (!await isGeolocationDisabled(page)) return;
 
     await page.locator(getSelectorString('home-popular-station-name-0')).isVisible();
     await page.locator(getSelectorString('home-popular-station-logo-0')).isVisible();
@@ -56,3 +64,9 @@ test('Home - play a popular station', async ({ page }) => {
     // If this icon is visible it means that audio is playing
     await page.locator(getSelectorString('audio-player-playing-icon')).isVisible();
 });
+
+const isGeolocationDisabled = async (page: Page) => {
+    const isGeolocationDisabled = await page.locator(getSelectorString('home-geolocation-disabled-message')).isVisible();
+
+    return isGeolocationDisabled;
+}

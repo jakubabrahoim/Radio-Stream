@@ -215,7 +215,7 @@ function AudioPlayer(database: any) {
                         </IconContext.Provider>
                     )}
                 </div>
-                <h1>{stationName}</h1>
+                <h1 data-e2e='audio-player-station-name'>{stationName}</h1>
             </div>
 
             {/* Radio play button */}

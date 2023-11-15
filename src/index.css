@@ -3,22 +3,23 @@
 @tailwind utilities;
 
 @layer components {
-    
     /* Navigation */
 
     .navigationButton {
-        @apply text-white mx-2 px-2 h-8 rounded-lg hover:bg-gray-500 flex items-center;        
+        @apply text-white mx-2 px-2 h-8 rounded-lg hover:bg-gray-500 flex items-center;
     }
 
     .dropdown {
-        @apply hidden absolute -inset-x-16 w-32 z-auto bg-gray-50 rounded-lg px-2 py-2 border border-gray-300
+        @apply hidden absolute -inset-x-16 w-32 z-auto bg-gray-50 rounded-lg px-2 py-2 border border-gray-300;
     }
 
     .avatar {
-        @apply relative block
+        @apply relative block;
     }
 
-    .avatar:hover .dropdown {display: block;}
+    .avatar:hover .dropdown {
+        display: block;
+    }
 
     /* Login and registration */
     .signUpContainer {
@@ -38,7 +39,8 @@
         @apply flex flex-col items-center;
     }
 
-    .form input[type=text], input[type=email] {
+    .form input[type='text'],
+    input[type='email'] {
         @apply border border-gray-300 hover:border hover:border-gray-400 rounded-md h-9 w-56 px-2 text-sm outline-none focus:ring-2 focus:ring-gray-800;
     }
 
@@ -47,7 +49,7 @@
     }
 
     .formPasswordIncorrect {
-        @apply border border-red-400 rounded-md h-9 w-56 px-2 ;
+        @apply border border-red-400 rounded-md h-9 w-56 px-2;
     }
 
     .formHeading {
