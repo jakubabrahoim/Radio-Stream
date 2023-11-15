@@ -26,8 +26,6 @@ test.describe('Favorite stations', () => {
 
         await page.locator(getSelectorString('login-submit-button')).click();
 
-        await page.waitForLoadState('networkidle');
-
         await expect(page).toHaveURL('https://radio-sh.web.app/home');
 
         // Search for a station
@@ -35,8 +33,6 @@ test.describe('Favorite stations', () => {
         await page.locator(getSelectorString('home-search-input')).fill('Fun Radio');
 
         await page.locator(getSelectorString('home-search-submit-button')).click();
-
-        await page.waitForLoadState('networkidle');
 
         // Play the station
         await page.locator(getSelectorString('search-station-result-play-button-0')).click();
@@ -47,6 +43,8 @@ test.describe('Favorite stations', () => {
         // Go to favorites
         await page.locator(getSelectorString('navigation-link-my-stations')).click();
         await expect(page).toHaveURL('https://radio-sh.web.app/my-stations');
+
+        await page.waitForTimeout(2000);
 
         const childCount = await page.locator(getSelectorString('liked-stations-container')).evaluate((el) => el.children.length);
         expect(childCount).toBe(1);

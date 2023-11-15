@@ -22,6 +22,8 @@ test.describe('Countries', () => {
 
         await page.locator(getSelectorString('countries-list-container')).isVisible();
 
+        await page.waitForTimeout(5000);
+
         const childCount = await page.locator(getSelectorString('countries-list-container')).evaluate((el) => el.children.length);
         expect(childCount).toBeGreaterThanOrEqual(193);
 
@@ -39,6 +41,8 @@ test.describe('Countries', () => {
         await page.locator(getSelectorString('countries-search-submit')).click();
 
         await page.locator(getSelectorString('countries-list-container')).isVisible();
+
+        await page.waitForTimeout(5000);
 
         const childCount = await page.locator(getSelectorString('countries-list-container')).evaluate((el) => el.children.length);
         expect(childCount).toBe(1);

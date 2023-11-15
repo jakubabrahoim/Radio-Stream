@@ -68,7 +68,7 @@ function Home() {
                     state: { stations: response },
                 });
             })
-            .catch((error) => console.log(error));
+            .catch((error) => console.log('toto je error', error));
     }
 
     function playRadioStation(

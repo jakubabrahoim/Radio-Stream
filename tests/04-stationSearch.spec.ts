@@ -20,8 +20,8 @@ test.describe('Search for radio stations', () => {
 
         await page.locator(getSelectorString('home-search-submit-button')).click();
 
-        await page.waitForLoadState('networkidle');
-        await page.waitForTimeout(3000);
+        await page.waitForLoadState('load');
+        //await page.waitForTimeout(5000);
 
         await expect(page).toHaveURL('https://radio-sh.web.app/search-result?query=Fun%20Radio');
 
@@ -33,7 +33,7 @@ test.describe('Search for radio stations', () => {
 
         await page.locator(getSelectorString('search-station-result-play-button-0')).click();
 
-        await page.waitForTimeout(2000);
+        await page.waitForTimeout(5000);
 
         const stationName = await page.locator(getSelectorString('search-station-result-name-0')).innerHTML();
 
@@ -51,7 +51,7 @@ test.describe('Search for radio stations', () => {
 
         await page.locator(getSelectorString('home-search-submit-button')).click();
 
-        await page.waitForLoadState('networkidle');
+        await page.waitForTimeout(5000);
 
         await page.locator(getSelectorString('search-station-filters-container')).isVisible();
 

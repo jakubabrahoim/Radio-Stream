@@ -31,7 +31,7 @@ export function WorldMap({ height, scale, hoveredCountry }: Props) {
 
     useEffect(() => {
         // Countries
-        fetch(`https://at1.api.radio-browser.info/json/countries`, {
+        fetch(`https://de1.api.radio-browser.info/json/countries`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export function WorldMap({ height, scale, hoveredCountry }: Props) {
     /* Fetch stations for selected country and navigate to new page with these stations */
     function fetchRadioStationsForCountry(countryName: string): void {
         fetch(
-            `https://at1.api.radio-browser.info/json/stations/bycountry/${countryName}?hidebroken=true&order=clickcount&reverse=true`,
+            `https://de1.api.radio-browser.info/json/stations/bycountry/${countryName}?hidebroken=true&order=clickcount&reverse=true`,
             {
                 method: 'GET',
                 headers: {
@@ -92,30 +92,45 @@ export function WorldMap({ height, scale, hoveredCountry }: Props) {
                         {({ geographies }) =>
                             geographies.map((geo) => {
                                 const country = countries.find(
-                                    (c) => c.iso_3166_1 === geo.properties['Alpha-2']
+                                    (c) =>
+                                        c.iso_3166_1 ===
+                                        geo.properties['Alpha-2']
                                 );
 
                                 const stations = country?.stationcount ?? 0;
 
                                 return (
                                     <Geography
-                                        className={
-                                            `${stations > 0 ? 'hover:cursor-pointer' : undefined}
-                                            ${hoveredCountry === country && 'bg-red-500'} bg-red-500`
+                                        className={`${
+                                            stations > 0
+                                                ? 'hover:cursor-pointer'
+                                                : undefined
                                         }
+                                            ${
+                                                hoveredCountry === country &&
+                                                'bg-red-500'
+                                            } bg-red-500`}
                                         key={geo.rsmKey}
                                         geography={geo}
                                         style={{
                                             default: { outline: 'none' },
                                             pressed: { outline: 'none' },
                                             hover: {
-                                                fill: stations > 0 ? '#ef4444' : undefined,
+                                                fill:
+                                                    stations > 0
+                                                        ? '#ef4444'
+                                                        : undefined,
                                                 outline: 'none',
                                             },
                                         }}
                                         onMouseEnter={() => {
                                             setTooltipContent(
-                                                `${geo.properties.name}: ${stations} ${stations === 1 ? 'station' : 'stations'
+                                                `${
+                                                    geo.properties.name
+                                                }: ${stations} ${
+                                                    stations === 1
+                                                        ? 'station'
+                                                        : 'stations'
                                                 } `
                                             );
                                         }}
@@ -124,10 +139,19 @@ export function WorldMap({ height, scale, hoveredCountry }: Props) {
                                         }}
                                         onClick={() => {
                                             if (country) {
-                                                fetchRadioStationsForCountry(country.name);
+                                                fetchRadioStationsForCountry(
+                                                    country.name
+                                                );
                                             }
                                         }}
-                                        fill={ country ? (hoveredCountry === country.iso_3166_1 ? '#ef4444' : colorsScale(stations)) : '#CDCDCD' }
+                                        fill={
+                                            country
+                                                ? hoveredCountry ===
+                                                  country.iso_3166_1
+                                                    ? '#ef4444'
+                                                    : colorsScale(stations)
+                                                : '#CDCDCD'
+                                        }
                                     />
                                 );
                             })
