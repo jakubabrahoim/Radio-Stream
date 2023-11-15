@@ -9,8 +9,6 @@ test.beforeEach(async ({ page }) => {
     await expect(page).toHaveURL('http://localhost:3000/home');
 });
 
-// Search a string, check if paginator is present, click on pages
-
 test('Station search - search, check station info, play station', async ({ page }) => {
     await page.locator(getSelectorString('home-search-input')).click();
     await page.locator(getSelectorString('home-search-input')).fill('Fun Radio');
