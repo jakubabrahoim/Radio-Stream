@@ -17,7 +17,7 @@ test.describe('Countries', () => {
         await expect(page).toHaveURL('https://radio-sh.web.app/countries');
     });
 
-    test('Countries (list view) - check if all countries present, open a country', async () => {
+    test('TC16 - Countries (list view) - check if all countries present, open a country', async () => {
         await waitForFetchAndRender(page);
 
         await page.locator(getSelectorString('countries-list-container')).isVisible();
@@ -32,7 +32,7 @@ test.describe('Countries', () => {
         await page.waitForLoadState('networkidle');
     });
 
-    test('Countries - search for a country, open it', async () => {
+    test('TC17 - Countries - search for a country, open it', async () => {
         await waitForFetchAndRender(page);
 
         await page.locator(getSelectorString('countries-search-input')).click();
@@ -54,7 +54,7 @@ test.describe('Countries', () => {
         await page.locator(getSelectorString('countries-list-item-number-of-stations-0')).isVisible();
     });
 
-    test('Countries - switch between views', async () => {
+    test('TC18 - Countries - switch between views', async () => {
         await waitForFetchAndRender(page);
 
         await page.locator(getSelectorString('countries-view-type-list')).click();

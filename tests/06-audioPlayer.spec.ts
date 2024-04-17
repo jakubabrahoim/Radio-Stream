@@ -14,7 +14,7 @@ test.describe('Audio player', () => {
         await expect(page).toHaveURL('https://radio-sh.web.app/home');
     });
 
-    test('Audio player functionality - play station, pause, volume slider, mute, information check', async () => {
+    test('TC19 - Audio player functionality - play station, pause, volume slider, mute, information check', async () => {
         // Search for a station
         await page.locator(getSelectorString('home-search-input')).click();
         await page.locator(getSelectorString('home-search-input')).fill('Fun Radio');

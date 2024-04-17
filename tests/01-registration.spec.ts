@@ -13,7 +13,7 @@ test.describe('Registration', () => {
         await page.locator(getSelectorString('navigation-link-signup')).click();
     });
 
-    test('Registration - wrong password format', async () => {
+    test('TC01 - Registration - wrong password format', async () => {
         const email = getRandomEmail();
         const password = '123456';
 
@@ -31,7 +31,7 @@ test.describe('Registration', () => {
         (await page.locator(getSelectorString('signup-required-password-format-message')).innerHTML()).startsWith('* Password must have:');
     });
 
-    test('Registration - already used email', async () => {
+    test('TC02 - Registration - already used email', async () => {
         const email = 'jakub.abrahoim@gmail.com';
         const password = 'VeryGoodPassword123@';
 
@@ -49,7 +49,7 @@ test.describe('Registration', () => {
         (await page.locator(getSelectorString('signup-email-already-exists-message')).innerHTML()).startsWith('* Account with this email address already exists');
     });
 
-    test('Registration - passwords don\'t match', async () => {
+    test('TC03 - Registration - passwords don\'t match', async () => {
         const email = 'jakub.abrahoim@gmail.com';
         const password = 'VeryGoodPassword123@';
 
@@ -67,7 +67,7 @@ test.describe('Registration', () => {
         (await page.locator(getSelectorString('signup-passwords-must-match-message')).innerHTML()).startsWith('* Passwords must match');
     });
 
-    test('Registration - successful registration', async () => {
+    test('TC04 - Registration - successful registration', async () => {
         const email = getRandomEmail();
         const password = 'VeryGoodPassword123@';
 

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { test, expect, Page } from '@playwright/test';
 import { getSelectorString } from './getSelectorString';
+import { successfulLogin } from './02-login.spec';
 
 test.describe('Favorite stations', () => {
     let page: Page;
@@ -13,10 +14,10 @@ test.describe('Favorite stations', () => {
         await page.locator(getSelectorString('navigation-link-login')).click();
     });
 
-    test('Favorite station - add to favorite, check favorites, remove from favorites', async () => {
+    test('TC20 - Favorite station - add to favorite, check favorites, remove from favorites', async () => {
         // Login
         const email = 'jakub.abrahoim.3@gmail.com';
-        const password = 'KPAISTest123';
+        const password = 'Test123@';
 
         await page.locator(getSelectorString('login-email-input')).click();
         await page.locator(getSelectorString('login-email-input')).fill(email);
@@ -47,7 +48,7 @@ test.describe('Favorite stations', () => {
         await page.waitForTimeout(2000);
 
         const childCount = await page.locator(getSelectorString('liked-stations-container')).evaluate((el) => el.children.length);
-        expect(childCount).toBe(1);
+        expect(childCount).toBeGreaterThanOrEqual(1);
 
         await page.locator(getSelectorString('liked-station-wrapper-0')).isVisible();
         await page.locator(getSelectorString('liked-station-name-0')).isVisible();

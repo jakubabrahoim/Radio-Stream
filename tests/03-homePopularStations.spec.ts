@@ -14,7 +14,7 @@ test.describe('Popular stations on homepage', () => {
         await expect(page).toHaveURL('https://radio-sh.web.app/home');
     });
 
-    test('Home - check if popular stations visible + count', async () => {
+    test('TC09 - Home - check if popular stations visible + count', async () => {
         await page.waitForLoadState('networkidle');
 
         if (!await isGeolocationDisabled(page)) return;
@@ -24,7 +24,7 @@ test.describe('Popular stations on homepage', () => {
         expect(childCount).toBeLessThanOrEqual(10);
     });
 
-    test('Home - use arrows to scroll left/right', async () => {
+    test('TC10 - Home - use arrows to scroll left/right', async () => {
         await page.waitForLoadState('networkidle');
 
         if (!await isGeolocationDisabled(page)) return;
@@ -41,7 +41,7 @@ test.describe('Popular stations on homepage', () => {
         }
     });
 
-    test('Home - check if every station has icon/logo, name and playbutton', async () => {
+    test('TC11 - Home - check if every station has icon/logo, name and playbutton', async () => {
         await page.waitForLoadState('networkidle');
 
         if (!await isGeolocationDisabled(page)) return;
@@ -53,7 +53,7 @@ test.describe('Popular stations on homepage', () => {
         }
     });
 
-    test('Home - play a popular station', async () => {
+    test('TC12 - Home - play a popular station', async () => {
         await page.waitForLoadState('networkidle');
 
         if (!await isGeolocationDisabled(page)) return;

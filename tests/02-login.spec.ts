@@ -14,7 +14,7 @@ test.describe('Login and logout', () => {
         await page.locator(getSelectorString('navigation-link-login')).click();
     });
 
-    test('Login - incorrect password', async () => {
+    test('TC05 - Login - incorrect password', async () => {
         const email = 'jakub.abrahoim.3@gmail.com';
         const password = 'KPAISTest123' + 'diff';
 
@@ -29,7 +29,7 @@ test.describe('Login and logout', () => {
         (await page.locator(getSelectorString('incorrect-username-or-password-message')).innerHTML()).startsWith('* Incorrect username or password');
     });
 
-    test('Login - incorrect email', async () => {
+    test('TC06 - Login - incorrect email', async () => {
         const email = 'jakub.abrahoim.3diff@gmail.com';
         const password = 'KPAISTest123';
 
@@ -44,11 +44,11 @@ test.describe('Login and logout', () => {
         (await page.locator(getSelectorString('incorrect-username-or-password-message')).innerHTML()).startsWith('* Incorrect username or password');
     });
 
-    test('Login - success', async () => {
+    test('TC07 - Login - success', async () => {
         await successfulLogin(page);
     });
 
-    test('Logout', async () => {
+    test('TC08 - Logout', async () => {
         await successfulLogin(page);
 
         // Logout
@@ -57,9 +57,9 @@ test.describe('Login and logout', () => {
     });
 });
 
-const successfulLogin = async (page: Page) => {
+export const successfulLogin = async (page: Page) => {
     const email = 'jakub.abrahoim.3@gmail.com';
-    const password = 'KPAISTest123';
+    const password = 'Test123@';
 
     await page.locator(getSelectorString('login-email-input')).click();
     await page.locator(getSelectorString('login-email-input')).fill(email);

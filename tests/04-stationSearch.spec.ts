@@ -14,7 +14,7 @@ test.describe('Search for radio stations', () => {
         await expect(page).toHaveURL('https://radio-sh.web.app/home');
     });
 
-    test('Station search - search, check station info, play station', async () => {
+    test('TC13 - Station search - search, check station info, play station', async () => {
         await page.locator(getSelectorString('home-search-input')).click();
         await page.locator(getSelectorString('home-search-input')).fill('Fun Radio');
 
@@ -45,7 +45,7 @@ test.describe('Search for radio stations', () => {
         expect(audioPlayerStationName).toBe(stationName);
     });
 
-    test('Station search - search, set filter/sorting and number of stations', async () => {
+    test('TC14 - Station search - search, set filter/sorting and number of stations', async () => {
         await page.locator(getSelectorString('home-search-input')).click();
         await page.locator(getSelectorString('home-search-input')).fill('Fun Radio');
 
@@ -65,7 +65,7 @@ test.describe('Search for radio stations', () => {
         await page.locator(getSelectorString('search-station-sort-order-select')).selectOption({ index: 1 });
     });
 
-    test('Station search - check if pagination is present', async () => {
+    test('TC15 - Station search - check if pagination is present', async () => {
         await page.locator(getSelectorString('home-search-input')).click();
         await page.locator(getSelectorString('home-search-input')).fill('Fun Radio');
 
